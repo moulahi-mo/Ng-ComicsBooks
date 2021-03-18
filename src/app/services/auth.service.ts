@@ -3,40 +3,74 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import * as authActions from '../store/auth/auth.action';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { User } from '../models/interfaces';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private fireAuth: AngularFireAuth, private store: Store) {}
+  currUser: User;
+  constructor(
+    private fireAuth: AngularFireAuth,
+    private store: Store,
+    private Cservice: UsersService
+  ) {}
 
   public signUp(email: string, pass: string) {
     return this.fireAuth.createUserWithEmailAndPassword(email, pass);
   }
-  public logout() {
-    return this.fireAuth.signOut();
-  }
-
   public login(email: string, pass: string) {
     return this.fireAuth.signInWithEmailAndPassword(email, pass);
   }
+  public logout() {
+    return this.fireAuth.signOut();
+  }
+  public getCurrUser() {
+    return this.currUser ? this.currUser : null;
+  }
+
+  public isAuth() {
+    return;
+  }
+
   //! auth listner if user is auth or not
-  public authState(): Observable<any | null> {
-    return this.fireAuth.user.pipe(
-      tap((user) => {
-        if (user.uid) {
-          //* on login success dispatch state to store
-          this.store.dispatch(authActions.login());
+  public authCheck() {
+    this.fireAuth.authState.pipe(catchError(this.HundleErrors)).subscribe(
+      (user) => {
+        if (user) {
+          this.store.dispatch(authActions.login({ uid: user.uid }));
+          this.Cservice.getUserById(user.uid).subscribe((user: User) => {
+            console.log(user);
+            this.currUser = user;
+          });
+          console.log('logged in', user);
         } else {
-          //* on login success dispatch state to store
           this.store.dispatch(authActions.logout());
+          this.currUser = null;
+          console.log('logout');
         }
-      }),
-      catchError(this.HundleErrors)
+      },
+      (err) => console.log(err)
     );
   }
+
+  public AuthChange() {
+    this.fireAuth.user.subscribe((user) => {
+      if (user) {
+        this.Cservice.getUserById(user.uid).subscribe((user: User) => {
+          console.log(user);
+        });
+
+        this.store.dispatch(authActions.login({ uid: user.uid }));
+      } else {
+        this.store.dispatch(authActions.logout());
+      }
+    });
+  }
+
   //! hundling errors
   private HundleErrors(error: HttpErrorResponse) {
     let err = 'Something bad happned !!';

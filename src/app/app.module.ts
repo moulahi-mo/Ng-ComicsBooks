@@ -13,7 +13,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { StoreModule } from '@ngrx/store';
 import { AuthGuard } from './auth.guard';
 import { FavoritesComponent } from './components/favorites/favorites/favorites.component';
-import { ComicsComponent } from './components/comics/comics/comics.component';
+import { ComicsComponent } from './components/comics/my-comics/comics.component';
 import { SocialComponent } from './components/auth/social/social.component';
 import { ComicsDetailsComponent } from './components/comics/comic-details/comics-details.component';
 import { ComicCardComponent } from './components/comics/comic-card/comic-card.component';
@@ -27,6 +27,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { UsersService } from './services/users.service';
 import { AuthReducer } from './store/auth/auth.reducer';
+import { ComicsService } from './services/comics.service';
+import { NoDataComponent } from './components/shared/no-data/no-data.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { AuthReducer } from './store/auth/auth.reducer';
     FiltersBarComponent,
     ErrorComponent,
     LoadingComponent,
+    NoDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,7 @@ import { AuthReducer } from './store/auth/auth.reducer';
     AngularFireAuthModule,
     AngularFirestoreModule,
   ],
-  providers: [AuthGuard, AuthService, UsersService],
+  providers: [AuthGuard, AuthService, UsersService, ComicsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

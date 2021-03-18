@@ -1,5 +1,7 @@
 export const environment = {
   production: false,
+  apiKey:
+    'apikey=be402e85ab9ef989286c587cbfb347a0&ts=1&hash=4f0ae9beafcb062814b405ac77d40322',
   firebase: {
     apiKey: 'AIzaSyCNRQpPKkCdj7bRpYUfiLs1KNbXMjIUaJ4',
     authDomain: 'comicbooks-ade4e.firebaseapp.com',

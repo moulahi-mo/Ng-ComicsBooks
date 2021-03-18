@@ -1,1 +1,95 @@
-<p>comic-card works!</p>
+<article class="bg-light mx-auto p-3 card my-4">
+  <div class="row row-cols-1 row-cols-md-2">
+    <!-- ! left side -->
+    <!-- * cover comic  -->
+    <div class="col d-flex">
+      <img
+        [src]="comic.cover"
+        [alt]="comic.title"
+        width="150px"
+        height="230px"
+        class="d-block my-3"
+      />
+      <!-- * details comic -->
+      <article class="d-flex flex-column justify-content-between ml-5 my-2">
+        <div class="d-flex flex-column justify-content-start mt-2">
+          <p class="details-value">
+            <span class="details-key">title : </span>
+            {{ comic.title | titlecase }}
+          </p>
+          <p class="details-value">
+            <span class="details-key">format : </span>
+            {{ comic.format | titlecase }}
+          </p>
+          <p class="details-value">
+            <span class="details-key">pages : </span> {{ comic.pages }}
+          </p>
+          <p class="details-value">
+            <span class="details-key">condition : </span>
+            {{ comic.condition | titlecase }}
+          </p>
+        </div>
+        <!-- * button info -->
+        <button
+          [routerLink]="['/comics', comic.id]"
+          type="button"
+          class="more-btn btn btn-outline-secondary btn-sm text-uppercase py-1 w-100 font-weight-bold mb-2"
+        >
+          more info
+        </button>
+      </article>
+    </div>
+    <!-- ! right side -->
+    <div
+      class="col d-flex flex-column justify-content-between mt-3 mx-auto mx-sm-0 align-items-end"
+    >
+      <!-- * price -->
+      <h4 class="font-weight-bold mr-3">
+        <span class="lead text-capitalize mr-2">price</span>
+        {{ comic.price | currency: "USD":"symbol" }}
+      </h4>
+
+      <div class="d-flex flex-column justify-content-around">
+        <!-- * buy botton -->
+        <button
+          *ngIf="!isCreator"
+          type="button"
+          class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
+        >
+          buy
+        </button>
+        <!-- * favorite botton -->
+        <button
+          type="button"
+          *ngIf="!isCreator"
+          class="btn btn-outline-secondary btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
+        >
+          <i
+            class="fa fa-heart-o h6 text-uppercase font-weight-bold"
+            aria-hidden="true"
+          ></i>
+          favorite
+        </button>
+
+        <!-- * edit botton -->
+        <button
+          type="button"
+          *ngIf="isCreator"
+          class="edit-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
+        >
+          edit
+        </button>
+        <div class="d-flex justify-content-end mt-1">
+          <!-- * infos creator -->
+          <p class="d-block mr-3 text-capitalize">
+            <span class="mr-2 font-weight-bold">created at</span>
+            02/12/2105
+          </p>
+          <p *ngIf="!isCreator" class="d-block mr-3 text-capitalize">
+            <span class="mr-2 font-weight-bold">by</span> jhon dean
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

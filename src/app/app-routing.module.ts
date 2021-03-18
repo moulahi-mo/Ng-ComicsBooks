@@ -4,17 +4,24 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { FavoritesComponent } from './components/favorites/favorites/favorites.component';
 import { HomeComponent } from './components/homePage/home/home.component';
-import { ComicsComponent } from './components/comics/comics/comics.component';
+import { ComicsComponent } from './components/comics/my-comics/comics.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuard } from './auth.guard';
+import { ComicsDetailsComponent } from './components/comics/comic-details/comics-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegisterComponent },
 
-  { path: 'favorites', component: FavoritesComponent },
+  {
+    path: 'favorites',
+    component: FavoritesComponent,
+    canActivate: [AuthGuard],
+  },
 
   { path: 'comics', component: ComicsComponent },
+  { path: 'comics/:id', component: ComicsDetailsComponent },
 
   { path: '**', component: NotFoundComponent },
 ];

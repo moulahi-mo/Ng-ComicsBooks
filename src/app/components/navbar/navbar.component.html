@@ -33,10 +33,11 @@
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
+
           <!-- * onlogin show  ( My comics / My favorites ) start   ------------------->
 
           <!-- ! my comics link -->
-          <li *ngIf="isAuth$" class="nav-item">
+          <li *ngIf="isAuth$ | async" class="nav-item">
             <a
               routerLink="comics"
               routerLinkActive="active"
@@ -47,7 +48,7 @@
             </a>
           </li>
           <!-- ! my favorites link -->
-          <li *ngIf="isAuth$" class="nav-item">
+          <li *ngIf="isAuth$ | async" class="nav-item">
             <a
               routerLink="favorites"
               routerLinkActive="active"
@@ -60,7 +61,7 @@
 
           <!-- * onlogin show  ( My comics / My favorites )  end   ------------------->
           <!-- ! register button -->
-          <li *ngIf="!isAuth$" class="nav-item">
+          <li *ngIf="!(isAuth$ | async)" class="nav-item">
             <button
               routerLink="/auth/register"
               type="button"
@@ -70,7 +71,7 @@
             </button>
           </li>
           <!-- ! login button -->
-          <li *ngIf="!isAuth$" class="nav-item">
+          <li *ngIf="!(isAuth$ | async)" class="nav-item">
             <button
               routerLink="/auth/login"
               type="button"
@@ -82,17 +83,18 @@
           <!-- * onlogin show  ( logout / user name ) start   ------------------->
 
           <!-- ! username link -->
-          <li *ngIf="isAuth$" class="nav-item">
+          <li *ngIf="isAuth$ | async" class="nav-item">
             <a class="nav-link">
               <small class="text-capitalize text-dark username">
-                brian pit
+                {{ username | titlecase }}
               </small>
             </a>
           </li>
 
           <!-- ! logout button -->
-          <li *ngIf="isAuth$" class="nav-item">
+          <li *ngIf="isAuth$ | async" class="nav-item">
             <button
+              (click)="onLogout()"
               type="button"
               class="nav-link btn btn-outline-secondary mt-3 mt-lg-0"
             >

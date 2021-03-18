@@ -3,11 +3,11 @@ import { Comic } from 'src/app/models/interfaces';
 import { ComicsService } from 'src/app/services/comics.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-comics',
+  templateUrl: './comics.component.html',
+  styleUrls: ['./comics.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class ComicsComponent implements OnInit {
   comics: Comic[] = [];
   isloading: boolean = false;
   isError: string = null;
