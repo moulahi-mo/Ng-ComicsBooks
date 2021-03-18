@@ -1,0 +1,108 @@
+<header class="header">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand">
+        <img
+          src="../../../assets/images/Logo.png"
+          alt="logo-marvel"
+          width="70px"
+          height="50px"
+        />
+      </a>
+      <button
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- ? M E N U------------------------------------------->
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
+          <!-- ! Home link -->
+          <li class="nav-item">
+            <a
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <!-- * onlogin show  ( My comics / My favorites ) start   ------------------->
+
+          <!-- ! my comics link -->
+          <li *ngIf="isAuth$" class="nav-item">
+            <a
+              routerLink="comics"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link"
+            >
+              my comics
+            </a>
+          </li>
+          <!-- ! my favorites link -->
+          <li *ngIf="isAuth$" class="nav-item">
+            <a
+              routerLink="favorites"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link"
+            >
+              my favorites
+            </a>
+          </li>
+
+          <!-- * onlogin show  ( My comics / My favorites )  end   ------------------->
+          <!-- ! register button -->
+          <li *ngIf="!isAuth$" class="nav-item">
+            <button
+              routerLink="/auth/register"
+              type="button"
+              class="nav-link btn btn-outline-accent my-3 my-lg-0"
+            >
+              register
+            </button>
+          </li>
+          <!-- ! login button -->
+          <li *ngIf="!isAuth$" class="nav-item">
+            <button
+              routerLink="/auth/login"
+              type="button"
+              class="nav-link btn text-light btn-danger"
+            >
+              login
+            </button>
+          </li>
+          <!-- * onlogin show  ( logout / user name ) start   ------------------->
+
+          <!-- ! username link -->
+          <li *ngIf="isAuth$" class="nav-item">
+            <a class="nav-link">
+              <small class="text-capitalize text-dark username">
+                brian pit
+              </small>
+            </a>
+          </li>
+
+          <!-- ! logout button -->
+          <li *ngIf="isAuth$" class="nav-item">
+            <button
+              type="button"
+              class="nav-link btn btn-outline-secondary mt-3 mt-lg-0"
+            >
+              log out
+            </button>
+          </li>
+
+          <!-- * onlogin show  ( logout / user name ) end ------------------>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,154 @@
+<section class="my-3 mx-auto d-flex flex-column register-page pb-4">
+  <img
+    src="../../../assets/images/Logo.png"
+    alt="logo-marvel"
+    width="80px"
+    height="50px"
+    class="d-block mx-auto mb-2"
+  />
+  <!-- ? if Error-->
+  <app-error *ngIf="isError" [message]="isError"></app-error>
+  <!-- ? is loading -->
+  <app-loading *ngIf="isLoading && !isError" class="my-5"></app-loading>
+
+  <!-- * Register Form  start---------------------------------------------------->
+  <section *ngIf="!isLoading" class="mx-auto w-100">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="w-50 mx-auto">
+      <!-- ! name ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid': name.invalid && (name.dirty || name.touched),
+            'is-valid': name.valid
+          }"
+          minlength="2"
+          required
+          #name="ngModel"
+          [(ngModel)]="user.name"
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Name"
+        />
+        <small
+          class="text-danger"
+          *ngIf="name.errors?.required && (name.dirty || name.touched)"
+        >
+          Name is required
+        </small>
+        <small class="text-danger" *ngIf="name.errors?.minlength">
+          Name must be 2 chars at least
+        </small>
+      </div>
+      <!-- ! email ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid': email.invalid && (email.dirty || email.touched),
+            'is-valid': email.valid
+          }"
+          pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)"
+          required
+          #email="ngModel"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          name="email"
+          type="email"
+          class="form-control"
+          aria-describedby="emailHelp"
+        />
+        <small
+          class="text-danger"
+          *ngIf="email.errors?.required && (email.dirty || email.touched)"
+        >
+          Email is required
+        </small>
+        <small class="text-danger" *ngIf="email.errors?.pattern">
+          Invalid email syntax
+        </small>
+      </div>
+      <!-- ! password ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid':
+              password.invalid && (password.dirty || password.touched),
+            'is-valid': password.valid
+          }"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}"
+          required
+          #password="ngModel"
+          [(ngModel)]="user.password"
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            password.errors?.required && (password.dirty || password.touched)
+          "
+        >
+          Password is required
+        </small>
+        <small class="text-danger" *ngIf="password.errors?.pattern">
+          Invalid password syntax
+        </small>
+      </div>
+      <!-- ! confirm password ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid':
+              cpassword.invalid && (cpassword.dirty || cpassword.touched),
+            'is-valid': cpassword.valid
+          }"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}"
+          required
+          #cpassword="ngModel"
+          [(ngModel)]="user.password"
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder=" Confirm Password"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            cpassword.errors?.required && (cpassword.dirty || cpassword.touched)
+          "
+        >
+          Please confirm your password
+        </small>
+        <small class="text-danger" *ngIf="cpassword.errors?.pattern">
+          password doesn't match
+        </small>
+      </div>
+      <!-- ! submit button ------------------------->
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        class="btn btn-accent btn-block mx-auto text-uppercase font-weight-bold py-3"
+      >
+        create account
+      </button>
+    </form>
+    <!-- * Register Form  End---------------------------------------------------->
+
+    <p class="text-center text-muted d-block my-4">Register account using</p>
+    <!-- ! social login  component-->
+    <app-social [auth]="'register'"></app-social>
+
+    <div class="d-flex ml-auto align-items-center justify-content-end mt-5">
+      <p class="text-muted d-inline-block mb-0">I already have a login</p>
+      <button
+        routerLink="/auth/login"
+        type="button"
+        class="btn btn-outline-dark text-uppercase font-weight-bold ml-3"
+      >
+        back to login
+      </button>
+    </div>
+  </section>
+</section>

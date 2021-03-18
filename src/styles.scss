@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+$theme-colors: (
+  "native": #000,
+  "accent": #dc042b,
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  background-color: #eee;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  button,
+  i,
+  img {
+    cursor: pointer;
+  }
+  button {
+    border-radius: 0 !important;
+    outline: 0;
+    border: 0;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "comicbooks-ade4e": {
+      "hosting": {
+        "comicBooks": [
+          "comicbooks-ade4e"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,102 @@
+<section
+  class="my-3 mx-auto d-flex flex-column Login-page pb-4 justify-self-center login"
+>
+  <img
+    src="../../../assets/images/Logo.png"
+    alt="logo-marvel"
+    width="80px"
+    height="50px"
+    class="d-block m-auto mb-4"
+  />
+  <!-- ? if Error-->
+  <app-error *ngIf="isError" [message]="isError"></app-error>
+  <!-- ? is loading -->
+  <app-loading *ngIf="isLoading && !isError" class="my-5"></app-loading>
+
+  <!-- * Login Form  start---------------------------------------------------->
+  <section *ngIf="!isLoading" class="mx-auto w-100">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="w-50 mx-auto">
+      <!-- ! email ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid': email.invalid && (email.dirty || email.touched),
+            'is-valid': email.valid
+          }"
+          pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)"
+          required
+          #email="ngModel"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          name="email"
+          type="email"
+          class="form-control"
+          aria-describedby="emailHelp"
+        />
+        <small
+          class="text-danger"
+          *ngIf="email.errors?.required && (email.dirty || email.touched)"
+        >
+          Email is required
+        </small>
+        <small class="text-danger" *ngIf="email.errors?.pattern">
+          Invalid email syntax
+        </small>
+      </div>
+      <!-- ! password ------------------------->
+      <div class="form-group">
+        <input
+          [ngClass]="{
+            'is-invalid':
+              password.invalid && (password.dirty || password.touched),
+            'is-valid': password.valid
+          }"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}"
+          required
+          #password="ngModel"
+          [(ngModel)]="user.password"
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            password.errors?.required && (password.dirty || password.touched)
+          "
+        >
+          Password is required
+        </small>
+        <small class="text-danger" *ngIf="password.errors?.pattern">
+          Invalid password syntax
+        </small>
+      </div>
+
+      <!-- ! submit button ------------------------->
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        class="btn btn-accent btn-block mx-auto text-uppercase font-weight-bold py-3"
+      >
+        login
+      </button>
+    </form>
+    <!-- * Login Form  End---------------------------------------------------->
+
+    <p class="text-center text-muted d-block my-4">or use Social Login</p>
+    <!-- ! social login  component-->
+    <app-social [auth]="'login'"></app-social>
+
+    <div class="d-flex ml-auto align-items-center justify-content-end mt-5">
+      <p class="text-muted d-inline-block mb-0">I Don't have Password</p>
+      <button
+        routerLink="/auth/register"
+        type="button"
+        class="btn btn-outline-danger text-dark text-uppercase font-weight-bold ml-3 px-3"
+      >
+        register now
+      </button>
+    </div>
+  </section>
+</section>
