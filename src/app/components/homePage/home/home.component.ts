@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+
 import { Comic } from 'src/app/models/interfaces';
 import { ComicsService } from 'src/app/services/comics.service';
 
@@ -7,14 +13,20 @@ import { ComicsService } from 'src/app/services/comics.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterContentChecked {
   comics: Comic[] = [];
   isloading: boolean = false;
   isError: string = null;
+  isFetched: boolean = false;
+
   constructor(private comicsService: ComicsService) {}
 
   ngOnInit(): void {
     this.fetchComics();
+  }
+
+  ngAfterContentChecked() {
+    this.isFetched = true;
   }
   public fetchComics() {
     this.isError = null;
@@ -36,12 +48,7 @@ export class HomeComponent implements OnInit {
               '/portrait_incredible.',
               res.thumbnail.extension
             ),
-            owner: res.creators.items[0]?.name,
             condition: 'good',
-            characters: {
-              count: res.characters.available,
-              items: res.characters.items,
-            },
           };
         });
         console.log(list);
@@ -53,5 +60,8 @@ export class HomeComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  public onScroll(e) {
+    console.log(e, 'scrolled');
   }
 }

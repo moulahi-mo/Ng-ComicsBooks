@@ -1,12 +1,25 @@
-<section class="my-5 homePage">
-  <app-filters-bar></app-filters-bar>
-  <app-error *ngIf="isError" [message]="isError"></app-error>
-  <app-loading *ngIf="isloading && !isError" class="d-block pt-5"></app-loading>
-  <app-comic-card
-    class="py-5"
-    *ngFor="let comic of comics"
-    [comic]="comic"
-  ></app-comic-card>
+<section class="homePage">
+  <div class="container my-5">
+    <app-filters-bar class="mt-5"></app-filters-bar>
+    <app-error *ngIf="isError" [message]="isError"></app-error>
+    <app-loading
+      *ngIf="isloading && !isError"
+      class="d-block pt-5"
+    ></app-loading>
+    <app-comic-card
+      class="py-5"
+      *ngFor="let comic of comics"
+      [comic]="comic"
+    ></app-comic-card>
+
+    <app-lazy-loading-scroll
+      (scrolled)="onScroll($event)"
+      *ngIf="isFetched && !isloading"
+      style="height: 400px; overflow-y: auto"
+    >
+      <h1>hi</h1>
+    </app-lazy-loading-scroll>
+  </div>
 </section>
 <!--! no data found -->
 <app-no-data *ngIf="comics.length < 0 && !isloading"></app-no-data>

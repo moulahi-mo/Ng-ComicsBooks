@@ -10,11 +10,13 @@ export interface Comic {
   id: string;
   title: string;
   format: string;
+  description?: string;
   cover: string;
   pages: number;
   condition: string;
   price: number;
   date: Date;
   owner: string;
-  characters: { count: number; items: [{ name: string; resourceURI: string }] };
+  characters: [{ name: string; image: string }];
+  poster?: string;
 }

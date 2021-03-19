@@ -1,11 +1,10 @@
 .app {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
+  justify-content: stretch;
   width: 100%;
   min-height: 100vh;
-  .container {
-    margin-top: 100px;
+  app-navbar {
+    margin-bottom: 100px;
   }
 }

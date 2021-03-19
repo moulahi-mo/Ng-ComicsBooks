@@ -1,21 +1,26 @@
 <section class="my-2 myComics">
-  <section class="d-flex">
-    <button
-      type="button"
-      class="add-btn btn btn-success btn-sm text-uppercase font-weight-bold flex-shrink-0 m-auto"
-    >
-      + add comic
-    </button>
-    <app-filters-bar class="flex-grow-1 ml-2"></app-filters-bar>
-  </section>
+  <div class="container">
+    <section class="d-flex">
+      <button
+        type="button"
+        class="add-btn btn btn-success btn-sm text-uppercase font-weight-bold flex-shrink-0 m-auto"
+      >
+        + add comic
+      </button>
+      <app-filters-bar class="flex-grow-1 ml-2"></app-filters-bar>
+    </section>
 
-  <app-error *ngIf="isError" [message]="isError"></app-error>
-  <app-loading *ngIf="isloading && !isError" class="d-block pt-5"></app-loading>
-  <app-comic-card
-    class="py-5"
-    *ngFor="let comic of comics"
-    [comic]="comic"
-  ></app-comic-card>
+    <app-error *ngIf="isError" [message]="isError"></app-error>
+    <app-loading
+      *ngIf="isloading && !isError"
+      class="d-block pt-5"
+    ></app-loading>
+    <app-comic-card
+      class="py-5"
+      *ngFor="let comic of comics"
+      [comic]="comic"
+    ></app-comic-card>
+  </div>
 </section>
 <!--! no data found -->
 <app-no-data *ngIf="comics.length == 0 && !isloading"></app-no-data>

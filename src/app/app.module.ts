@@ -29,6 +29,7 @@ import { UsersService } from './services/users.service';
 import { AuthReducer } from './store/auth/auth.reducer';
 import { ComicsService } from './services/comics.service';
 import { NoDataComponent } from './components/shared/no-data/no-data.component';
+import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scroll/lazy-loading-scroll.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { NoDataComponent } from './components/shared/no-data/no-data.component';
     ErrorComponent,
     LoadingComponent,
     NoDataComponent,
+    LazyLoadingScrollComponent,
   ],
   imports: [
     BrowserModule,
