@@ -20,3 +20,13 @@ export interface Comic {
   characters: { name: string; image: string }[];
   poster?: string;
 }
+export interface Character {
+  id: string;
+  name: string;
+  image: string;
+  description?: string;
+  comics: {
+    available: number;
+    items: { name: string; resourceURI: string }[];
+  };
+}

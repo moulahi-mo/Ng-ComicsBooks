@@ -1,15 +1,62 @@
-<section class="my-5">
+<section class="my-5 d-flex w-100">
   <!-- ! serach input-->
-  <form class="d-flex bg-white search-input">
+  <form (ngSubmit)="onSearch()" class="d-flex bg-white search-input">
     <input
+      name="search"
+      [(ngModel)]="search"
       class="form-control mr-sm-2 border-0"
       type="search"
       placeholder="I'm Looking for ..."
       aria-label="Search"
     />
-    <i
-      class="fa fa-search bg-white h3 text-secondary pr-2"
-      aria-hidden="true"
-    ></i>
+    <button type="submit">
+      <i
+        class="fa fa-search bg-white h3 text-secondary pr-2"
+        aria-hidden="true"
+      ></i>
+    </button>
   </form>
+  <!-- ! characters select-->
+  <div class="form-group">
+    <select
+      class="form-control my-2 char-list custom-select custom-select-lg"
+      (click)="onCharacter(character.value)"
+      #character
+    >
+      <option *ngFor="let char of characters" [value]="char.name">
+        <article class="d-flex">
+          <img
+            [src]="char.image"
+            [alt]="char.name"
+            class="d-block mr-2"
+            width="50px"
+            height="50px"
+          />
+          <h6>{{ char.name | titlecase }}</h6>
+        </article>
+      </option>
+    </select>
+  </div>
+
+  <!-- ! Order By-->
+  <div class="form-group">
+    <select class="form-control my-2" (change)="onOrderBy(order.value)" #order>
+      <option value="title" selected>Alphabetical</option>
+      <option value="-onsaleDate">Most Recent</option>
+      <option value="priceInc">Price - Low to High</option>
+      <option value="priceDesc">Price - High to Low</option>
+    </select>
+  </div>
+  <!-- ! quantity-->
+  <div class="form-group">
+    <select
+      class="form-control my-2"
+      (change)="onQuantity(quantity.value)"
+      #quantity
+    >
+      <option value="15">Show - 15</option>
+      <option value="30">Show - 30</option>
+      <option value="50">Show - 50</option>
+    </select>
+  </div>
 </section>

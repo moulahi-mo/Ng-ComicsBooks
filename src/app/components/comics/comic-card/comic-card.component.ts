@@ -8,11 +8,9 @@ import { Comic } from 'src/app/models/interfaces';
 })
 export class ComicCardComponent implements OnInit {
   @Input() comic: Comic;
-  isCreator: boolean;
+  @Input() isCreator: boolean;
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.isCreator = false;
-  }
+  ngOnInit(): void {}
 }

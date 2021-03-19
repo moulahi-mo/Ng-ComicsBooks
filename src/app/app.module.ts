@@ -31,6 +31,8 @@ import { ComicsService } from './services/comics.service';
 import { NoDataComponent } from './components/shared/no-data/no-data.component';
 import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scroll/lazy-loading-scroll.component';
 import { ComicMoreDetailsComponent } from './components/comics/comic-more-details/comic-more-details.component';
+import { LocalStorageService } from './services/local-storage.service';
+import { FiltersServiceService } from './services/filters-service.service';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,14 @@ import { ComicMoreDetailsComponent } from './components/comics/comic-more-detail
     AngularFireAuthModule,
     AngularFirestoreModule,
   ],
-  providers: [AuthGuard, AuthService, UsersService, ComicsService],
+  providers: [
+    AuthGuard,
+    AuthService,
+    UsersService,
+    ComicsService,
+    LocalStorageService,
+    FiltersServiceService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -79,14 +79,23 @@
         >
           edit
         </button>
+        <!-- * remove botton -->
+        <button
+          type="button"
+          *ngIf="isCreator"
+          class="remove-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
+        >
+          remove
+        </button>
         <div class="d-flex justify-content-end mt-1">
           <!-- * infos creator -->
           <p class="d-block mr-3 text-capitalize">
             <span class="mr-2 font-weight-bold">created at</span>
-            02/12/2105
+            {{ comic.date | date: "short" }}
           </p>
-          <p *ngIf="!isCreator" class="d-block mr-3 text-capitalize">
-            <span class="mr-2 font-weight-bold">by</span> jhon dean
+          <p *ngIf="comic.owner" class="d-block mr-3 text-capitalize">
+            <span class="mr-2 font-weight-bold">by</span>
+            {{ comic.owner | titlecase }}
           </p>
         </div>
       </div>
