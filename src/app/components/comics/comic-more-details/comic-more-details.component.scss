@@ -1,0 +1,22 @@
+.comic-card {
+  h6,
+  h5 {
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  color: #fff;
+
+  .data-card-infos {
+    p {
+      text-transform: capitalize;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0 30px;
+  }
+
+  .edit-btn {
+    background-color: #7b61ff;
+  }
+}

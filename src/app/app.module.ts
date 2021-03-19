@@ -30,6 +30,7 @@ import { AuthReducer } from './store/auth/auth.reducer';
 import { ComicsService } from './services/comics.service';
 import { NoDataComponent } from './components/shared/no-data/no-data.component';
 import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scroll/lazy-loading-scroll.component';
+import { ComicMoreDetailsComponent } from './components/comics/comic-more-details/comic-more-details.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scr
     LoadingComponent,
     NoDataComponent,
     LazyLoadingScrollComponent,
+    ComicMoreDetailsComponent,
   ],
   imports: [
     BrowserModule,

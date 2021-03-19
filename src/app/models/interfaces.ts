@@ -16,7 +16,7 @@ export interface Comic {
   condition: string;
   price: number;
   date: Date;
-  owner: string;
-  characters: [{ name: string; image: string }];
+  owner?: string;
+  characters: { name: string; image: string }[];
   poster?: string;
 }

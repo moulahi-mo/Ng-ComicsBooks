@@ -1,11 +1,8 @@
 <section class="homePage">
   <div class="container my-5">
-    <app-filters-bar class="mt-5"></app-filters-bar>
-    <app-error *ngIf="isError" [message]="isError"></app-error>
-    <app-loading
-      *ngIf="isloading && !isError"
-      class="d-block pt-5"
-    ></app-loading>
+    <app-filters-bar class="mb-5"></app-filters-bar>
+    <app-error *ngIf="isError" [message]="isError" class="mt-5"></app-error>
+    <app-loading *ngIf="isloading && !isError" class="d-block"></app-loading>
     <app-comic-card
       class="py-5"
       *ngFor="let comic of comics"

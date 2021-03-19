@@ -1,89 +1,63 @@
-<section class="comic-details mt-0">
-  <!-- * background image blured poster  -->
-  <img class="poster-background" [src]="comic.poster" [alt]="comic.title" />
-  <div class="container mt-0 pt-0">
-    <article class="d-flex flex-column card-details bg-transparent mt-0">
-      <!-- * back botton -->
-      <button
-        routerLink="/"
-        type="button"
-        class="btn btn-outline-white text-uppercase text-white d-block font-weight-bold mr-auto p-3 mb-3"
-      >
-        <i
-          class="fa fa-arrow-left font-weight-bold text-white"
-          aria-hidden="true"
-        ></i>
-        back
-      </button>
-      <!-- ! card details comic----------------------------------------------------------->
-      <!-- ! left side -->
-      <div class="row">
-        <div class="col-9"></div>
-        <!-- ! right side -->
-        <div
-          class="col-3 col d-flex flex-column justify-content-start ml-auto mx-sm-0"
-        >
-          <!-- * price -->
-          <h4 class="font-weight-bold text-white text-left ml-auto mb-3">
-            <span class="lead text-capitalize mr-2">price</span>
-            {{ 524 | currency: "USD":"symbol" }}
-          </h4>
+<section class="my-comics">
+  <!--! no data found -->
+  <app-no-data *ngIf="!comic.id && !isloading && !isError"></app-no-data>
+  <!--! is error -->
+  <app-error *ngIf="isError" [message]="isError" class="my-5"></app-error>
 
-          <!-- * buy botton -->
-          <button
-            *ngIf="!isCreator"
-            type="button"
-            class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
-          >
-            buy
-          </button>
-          <!-- * favorite botton -->
-          <button
-            type="button"
-            *ngIf="!isCreator"
-            class="btn btn-outline-light btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
-          >
-            <i
-              class="fa fa-heart-o h6 text-white text-uppercase font-weight-bold"
-              aria-hidden="true"
-            ></i>
-            favorite
-          </button>
-
-          <!-- * edit botton -->
-          <button
-            type="button"
-            *ngIf="isCreator"
-            class="edit-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
-          >
-            edit
-          </button>
-        </div>
-      </div>
-    </article>
-    <!-- ! chars section lis ---------------------------------------------------------------------------->
-    <section class="characters text-white">
-      <h3 class="font-weight-bold text-left text-capitalize my-2">
-        characters
-      </h3>
-      <ul class="row list-unstyled char-list mb-0">
-        <div
-          class="col-12 col-sm-6 col-md-4 col-lg-2 my-3"
-          *ngFor="let character of comic?.characters | async"
+  <section *ngIf="!isError && comic.id" class="comic-details mt-0">
+    <!-- * background image blured poster  -->
+    <img class="poster-background" [src]="comic?.poster" [alt]="comic?.title" />
+    <div class="container mt-0 pt-0">
+      <article class="d-flex flex-column card-details bg-transparent mt-0">
+        <!-- * back botton -->
+        <button
+          routerLink="/"
+          type="button"
+          class="btn btn-outline-light text-uppercase text-white d-block font-weight-bold mr-auto p-2 px-3 mt-5"
         >
-          <li class="char-card">
-            <img
-              [src]="character.image"
-              [alt]="character.name"
-              width="150px"
-              height="200px"
-            />
-            <h5 class="char-name font-weight-bold text-left text-capitalize">
-              {{ character.name }}
-            </h5>
-          </li>
-        </div>
-      </ul>
-    </section>
-  </div>
+          <i
+            class="fa fa-arrow-left font-weight-bold text-white"
+            aria-hidden="true"
+          ></i>
+          back
+        </button>
+
+        <!--! is loading -->
+        <app-loading
+          *ngIf="isloading && !isError"
+          class="d-block pt-5"
+        ></app-loading>
+        <!-- ! card details comic----------------------------------------------------------->
+        <app-comic-more-details
+          [comic]="comic"
+          *ngIf="!isloading"
+          class="row my-5"
+        ></app-comic-more-details>
+      </article>
+      <!-- ! chars section lis ---------------------------------------------------------------------------->
+      <section *ngIf="!isloading" class="characters text-white">
+        <h3 class="font-weight-bold text-left text-capitalize my-2">
+          characters
+        </h3>
+        <ul class="row list-unstyled char-list mb-0">
+          <div
+            class="col-12 col-sm-6 col-md-4 col-lg-2 my-3"
+            *ngFor="let character of comic?.characters"
+          >
+            <li class="char-card mx-auto mx-sm-0 d-block">
+              <img
+                [src]="character.image"
+                [alt]="character.name"
+                width="150px"
+                height="200px"
+              />
+              <h5 class="char-name font-weight-bold text-left text-capitalize">
+                {{ character.name }}
+              </h5>
+            </li>
+          </div>
+        </ul>
+      </section>
+    </div>
+  </section>
 </section>

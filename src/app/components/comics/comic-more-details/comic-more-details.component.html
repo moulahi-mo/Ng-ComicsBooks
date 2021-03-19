@@ -1,0 +1,82 @@
+<div *ngIf="!isloading" class="row my-5 comic-card">
+  <!--? COVER  -->
+  <div class="col-12 col-lg-3">
+    <img [src]="comic.cover" [alt]="comic.title" width="220px" height="330px" />
+  </div>
+  <!-- ? details  -->
+  <div
+    class="col-12 col-lg-6 d-flex flex-column justify-content-between mr-auto align-items-start"
+  >
+    <h4>{{ comic.title | titlecase }}</h4>
+    <div class="d-flex justify-content-start w-100 align-items-start mt-2">
+      <article class="data-card-infos ml-0">
+        <h6>Pages</h6>
+        <p>{{ comic.pages }}</p>
+      </article>
+      <article class="data-card-infos">
+        <h6>Format</h6>
+        <p>{{ comic.format }}</p>
+      </article>
+      <article class="data-card-infos">
+        <h6>Condition</h6>
+        <p>{{ comic.condition }}</p>
+      </article>
+    </div>
+    <article>
+      <h6 class="">Description</h6>
+      <p class="text-withe font-weight-light">
+        {{ comic.description }}
+      </p>
+    </article>
+    <div class="d-flex justify-content-end mt-1">
+      <p class="d-block mr-3 text-capitalize">
+        <span class="mr-2 font-weight-bold">created at</span>
+        02/12/2105
+      </p>
+      <p *ngIf="!isCreator" class="d-block mr-3 text-capitalize">
+        <span class="mr-2 font-weight-bold">by</span> jhon dean
+      </p>
+    </div>
+  </div>
+  <!--? Price / Buttons  -->
+
+  <div
+    class="col-12 col-lg-3 d-flex flex-column justify-content-start ml-auto mx-sm-0"
+  >
+    <!-- * price -->
+    <h4 class="font-weight-bold text-white text-left ml-auto mb-3">
+      <span class="lead text-capitalize mr-2">price</span>
+      {{ 524 | currency: "USD":"symbol" }}
+    </h4>
+
+    <!-- * buy botton -->
+    <button
+      *ngIf="!isCreator"
+      type="button"
+      class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
+    >
+      buy
+    </button>
+    <!-- * favorite botton -->
+    <button
+      type="button"
+      *ngIf="!isCreator"
+      class="btn btn-outline-light btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
+    >
+      <i
+        class="fa fa-heart-o h6 text-white text-uppercase font-weight-bold"
+        aria-hidden="true"
+      ></i>
+      favorite
+    </button>
+
+    <!-- * edit botton -->
+    <button
+      type="button"
+      *ngIf="isCreator"
+      class="edit-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
+    >
+      edit
+    </button>
+  </div>
+</div>
