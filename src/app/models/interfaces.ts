@@ -19,6 +19,7 @@ export interface Comic {
   owner?: string;
   characters: { name: string; image: string }[];
   poster?: string;
+  uid?: string;
 }
 export interface Character {
   id: number;
@@ -30,3 +31,10 @@ export interface Character {
     items: { name: string; resourceURI: string }[];
   };
 }
+
+// export interface NewComic extends Comic {
+//   condition: string;
+//   price: string;
+//   description: string;
+
+// }

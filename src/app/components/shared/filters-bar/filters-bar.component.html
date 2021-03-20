@@ -24,9 +24,7 @@
       (change)="onCharacterSelected(character.value)"
       #character
     >
-      <option disable selected>
-        <span class="text-muted"> Character</span>
-      </option>
+      <option hidden><span class="text-muted"> Character</span></option>
       <option *ngFor="let char of characters" [value]="char.id">
         <article class="d-flex w-100">
           <img
@@ -45,7 +43,8 @@
   <!-- ! Order By-->
   <div class="form-group">
     <select class="form-control my-2" (change)="onOrderBy(order.value)" #order>
-      <option value="title" selected><h6 class="">Alphabetical</h6></option>
+      <option hidden>Alphabetical</option>
+      <option value="title"><h6 class="">Alphabetical</h6></option>
       <option value="-onsaleDate">Most Recent</option>
       <option value="priceInc">Price - Low to High</option>
       <option value="priceDesc">Price - High to Low</option>

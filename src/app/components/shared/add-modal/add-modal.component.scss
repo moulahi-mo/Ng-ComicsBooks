@@ -1,0 +1,33 @@
+.modal-dialog {
+  max-width: 700px;
+  .modal-content {
+    max-width: 700px;
+    .search-box {
+      position: relative;
+      .list-Searchs {
+        cursor: pointer;
+        position: absolute;
+        width: 100%;
+        max-height: 461px;
+        top: 43px;
+        left: 0;
+        overflow: auto;
+        background-color: #fff;
+
+        p {
+          span {
+            font-weight: bold;
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+
+    input,
+    textarea,
+    select {
+      border: 0;
+      outline: 0;
+    }
+  }
+}

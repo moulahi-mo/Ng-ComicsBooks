@@ -1,0 +1,162 @@
+<div
+  class="modal fade"
+  [id]="id"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content bg-light mx-auto">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-uppercase">+ add comic</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="fa fa-times-circle h4 text-secondary"></i>
+        </button>
+      </div>
+      <div class="modal-body d-flex flex-column">
+        <!-- ! serach input-->
+        <div
+          *ngIf="!isSelected"
+          class="d-flex bg-white search-input p-0 my-3 search-box"
+        >
+          <input
+            name="search"
+            (keyup)="onSearch($event)"
+            class="form-control mr-sm-2 border-0"
+            type="search"
+            placeholder="Search By Title On Marvel API ..."
+            aria-label="Search"
+          />
+          <button type="button">
+            <i
+              class="fa fa-search bg-white h3 text-secondary pr-2"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <!--  * results serach input List-->
+          <aside
+            *ngIf="isSearching"
+            class="list-Searchs d-flex flex-column justify-content-around p-2"
+          >
+            <div
+              (click)="onSelect(comic)"
+              *ngFor="let comic of comics"
+              class="d-flex my-2"
+            >
+              <img
+                [src]="comic.cover"
+                [alt]="comic.title"
+                width="50px"
+                height="70px"
+              />
+              <div
+                class="d-flex flex-column justify-content-start align-items-start ml-3 mt-0"
+              >
+                <p class="mb-0">
+                  title: <span>{{ comic.title | titlecase }} </span>
+                </p>
+                <p class="my-1">
+                  format: <span>{{ comic.format | titlecase }}</span>
+                </p>
+                <p>
+                  pages number:
+                  <span> {{ comic.pageCount ? comic.pageCount : 0 }}</span>
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- !Selected Comic Card  -->
+
+        <article *ngIf="isSelected">
+          <div class="card d-flex justify-content-between my-3">
+            <aside class="list-Searchs d-flex justify-content-between p-3">
+              <div class="d-flex my-2 w-75">
+                <img
+                  [src]="selectedComic.cover"
+                  [alt]="selectedComic.title"
+                  width="60px"
+                  height="80px"
+                />
+                <div
+                  class="d-flex flex-column justify-content-start align-items-start ml-3 mt-0"
+                >
+                  <p class="mb-0">
+                    title: <span>{{ selectedComic.title | titlecase }} </span>
+                  </p>
+                  <p class="my-1">
+                    format: <span>{{ selectedComic.format | titlecase }}</span>
+                  </p>
+                  <p>
+                    pages number:
+                    <span>
+                      {{
+                        selectedComic.pageCount ? selectedComic.pageCount : 0
+                      }}</span
+                    >
+                  </p>
+                </div>
+              </div>
+              <i
+                (click)="isSelected = false"
+                class="fa fa-trash h4 text-secondary d-block"
+                aria-hidden="true"
+              ></i>
+            </aside>
+          </div>
+        </article>
+
+        <!-- !Form Add ********************-->
+        <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+          <!-- * Condition -->
+          <div class="form-group">
+            <select
+              class="form-control"
+              name="condition"
+              [(ngModel)]="addOptions.condition"
+            >
+              <option hidden>Condition</option>
+              <option value="Like New">Like New</option>
+              <option value="Very Good">Very Good</option>
+              <option value="Good">Good</option>
+              <option value="Acceptable">Acceptable</option>
+              <option value="New">New</option>
+            </select>
+          </div>
+
+          <!-- * price-->
+          <div class="form-group">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Price"
+              name="price"
+              [(ngModel)]="addOptions.price"
+            />
+          </div>
+          <!-- * description-->
+          <div class="form-group">
+            <textarea
+              [(ngModel)]="addOptions.description"
+              class="form-control"
+              name="description"
+              placeholder="Description"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- ! add button-->
+          <button type="submit" class="btn btn-accent btn-block text-uppercase">
+            + add comic
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

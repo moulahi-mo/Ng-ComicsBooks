@@ -3,36 +3,41 @@
     <!--! add button -->
     <section class="d-flex">
       <button
+        data-toggle="modal"
+        data-target="#addModal"
         type="button"
         class="add-btn btn btn-success btn-sm text-uppercase font-weight-bold flex-shrink-0 m-auto"
       >
         + add comic
       </button>
-        <!--! filter-bar -->
-          <app-filters-bar
-      [comicsList]="comics"
-      (onSearchComic)="onSearchComic($event)"
-      (onOrderComic)="onOrderComic($event)"
-      (onQuantityComic)="onQuantityComic($event)"
-      (onSingleCharacterSelected)="onSingleCharacterSelected($event)"
-      class="mb-5 flex-grow-1"
-    ></app-filters-bar>
+      <!--! filter-bar -->
+      <app-filters-bar
+        [comicsList]="comics"
+        (onSearchComic)="onSearchComic($event)"
+        (onOrderComic)="onOrderComic($event)"
+        (onQuantityComic)="onQuantityComic($event)"
+        (onSingleCharacterSelected)="onSingleCharacterSelected($event)"
+        class="mb-5 flex-grow-1"
+      ></app-filters-bar>
     </section>
-  <!--! error -->
+    <!--! error -->
     <app-error *ngIf="isError" [message]="isError"></app-error>
-      <!--! loading-->
+    <!--! loading-->
     <app-loading
       *ngIf="isloading && !isError"
       class="d-block pt-5"
     ></app-loading>
     <!--! no data found -->
-<app-no-data [message]="'no comics yet created in your space , click add to add comic'" *ngIf="comics.length == 0 && !isloading"></app-no-data>
-   <!--! selcted comic badge --> 
+    <app-no-data
+      [message]="'no comics yet created in your space , click add to add comic'"
+      *ngIf="comics.length == 0 && !isloading"
+    ></app-no-data>
+    <!--! selcted comic badge -->
     <app-character-badge
       *ngIf="character.id"
       [character]="character"
     ></app-character-badge>
-  <!--! comics list -->
+    <!--! comics list -->
     <app-comic-card
       class="py-5"
       *ngFor="let comic of comics"
@@ -41,4 +46,10 @@
     ></app-comic-card>
   </div>
 </section>
-
+<!-- !  modal ADD -->
+<app-add-modal
+  (onNewComicAdded)="onNewComicAdded($event)"
+  [id]="'addModal'"
+></app-add-modal>
+<!-- !  modal REMOVE -->
+<app-alert></app-alert>

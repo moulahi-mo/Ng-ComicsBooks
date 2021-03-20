@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Comic } from 'src/app/models/interfaces';
+import { Character, Comic } from 'src/app/models/interfaces';
 import { ComicsService } from 'src/app/services/comics.service';
+import { MyComicsService } from 'src/app/services/my-comics.service';
 
 @Component({
   selector: 'app-comics',
@@ -9,60 +10,28 @@ import { ComicsService } from 'src/app/services/comics.service';
 })
 export class ComicsComponent implements OnInit {
   comics: Comic[] = [];
+  comic: Comic;
   character: Character;
   isloading: boolean = false;
+  isNoData: boolean = false;
+  isNotClosed: boolean;
   isError: string = null;
-  constructor(private comicsService: ComicsService) {}
+  constructor(
+    private comicsService: ComicsService,
+    private Mycomics: MyComicsService
+  ) {}
 
   ngOnInit(): void {
+    this.isNotClosed = true;
     this.character = {
       id: null,
       image: null,
       name: null,
     };
-
+    this.getPersonalComics();
   }
-  // public fetchComics() {
-  //   this.isError = null;
-  //   this.isloading = true;
-  //   this.comicsService.getComics().subscribe(
-  //     (data: any) => {
-  //       let list = data.data.results;
 
-  //       list = list.map((res) => {
-  //         this.isloading = false;
-  //         return {
-  //           id: res.id,
-  //           format: res.format,
-  //           pages: res.pageCount,
-  //           title: res.title,
-  //           price: res.prices[0].price,
-  //           date: res.dates[0].date,
-  //           cover: res.thumbnail.path.concat(
-  //             '/portrait_incredible.',
-  //             res.thumbnail.extension
-  //           ),
-  //           owner: res.creators.items[0]?.name,
-  //           condition: 'good',
-  //           characters: {
-  //             count: res.characters.available,
-  //             items: res.characters.items,
-  //           },
-  //         };
-  //       });
-  //       console.log(list);
-  //       this.comics = list;
-  //     },
-  //     (err) => {
-  //       this.isloading = false;
-  //       this.isError = err;
-  //       console.log(err);
-  //     }
-  //   );
-  // }
-
-
-    //! on search
+  //! on search
   public onSearchComic(comicsByTile: Comic[]) {
     if (comicsByTile.length > 0) {
       this.comics = comicsByTile;
@@ -97,5 +66,36 @@ export class ComicsComponent implements OnInit {
     console.log(selectedComic);
     this.comics = selectedComic.comics;
     this.character = selectedComic.character;
+  }
+
+  //! add button new comic
+  public onNewComicAdded(newComic: Comic) {
+    console.log(newComic);
+    this.isNotClosed = false;
+    //! store it to firebase db
+    if (newComic.id) {
+      this.Mycomics.addNewComic(newComic).subscribe(
+        (data: any) => {
+          console.log('data added successfully');
+        },
+        (err) => (this.isError = err)
+      );
+    }
+  }
+  //! add button new comic
+  public getPersonalComics() {
+    this.isError = null;
+    this.isloading = true;
+    this.Mycomics.getAllComics().subscribe(
+      (comics: Comic[]) => {
+        this.comics = comics;
+        this.isloading = false;
+      },
+      (err) => {
+        this.isloading = false;
+        this.isError = err;
+        console.log(err);
+      }
+    );
   }
 }

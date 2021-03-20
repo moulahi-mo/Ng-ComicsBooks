@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import * as authActions from '../store/auth/auth.action';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../models/interfaces';
 import { UsersService } from './users.service';
@@ -12,10 +12,12 @@ import { UsersService } from './users.service';
   providedIn: 'root',
 })
 export class AuthService {
+  uid$: Observable<string>;
   currUser: User;
+  idUser: string;
   constructor(
     private fireAuth: AngularFireAuth,
-    private store: Store,
+    private store: Store<{ auth: string }>,
     private Cservice: UsersService
   ) {}
 
@@ -28,8 +30,16 @@ export class AuthService {
   public logout() {
     return this.fireAuth.signOut();
   }
-  public getCurrUser() {
-    return this.currUser ? this.currUser : null;
+  public getCurrUserUid(): string | null {
+    this.uid$ = this.store.select('auth');
+    this.uid$.subscribe(
+      (uid) => {
+        console.log(uid);
+        this.idUser = uid;
+      },
+      (err) => null
+    );
+    return this.idUser ? this.idUser : null;
   }
 
   public isAuth() {
