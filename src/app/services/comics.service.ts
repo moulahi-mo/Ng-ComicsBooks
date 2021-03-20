@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -22,31 +18,27 @@ export class ComicsService {
     return this.http
       .get<Comic[]>(this.url + '?' + this.apiKey + '&orderBy=title')
       .pipe(
-        // map((data: any) => {
-        //   let res: any = null;
-        //   res = data.data.results;
-        //   console.log(res);
-        //   const mapped = {
-        //     id: res.id,
-        //     format: res.format,
-        //     pageCount: res.pageCount,
-        //     title: res.title,
-        //     price: res.prices[0].price,
-        //     date: res.dates[0].date,
-        //     cover: res.thumbnail.path.concat(
-        //       '/portrait_incredible.',
-        //       res.thumbnail.extension
-        //     ),
-        //     owner: res.creators.items[0].name,
-        //     condition: 'good',
-        //     characters: {
-        //       count: res.characters.available,
-        //       items: res.characters.items,
-        //     },
-        //   };
-        //   console.log(mapped);
-        //   return mapped;
-        // }),
+        map((data: any) => {
+          let list = data.data.results;
+
+          list = list.map((res) => {
+            return {
+              id: res.id,
+              format: res.format,
+              pages: res.pageCount,
+              title: res.title,
+              price: res.prices[0].price,
+              date: res.dates[0].date,
+              owner: res.creators.items[0]?.name,
+              cover: res.thumbnail.path.concat(
+                '/portrait_incredible.',
+                res.thumbnail.extension
+              ),
+              condition: 'good',
+            };
+          });
+          return list;
+        }),
 
         catchError(this.HundleErrors)
       );
@@ -106,6 +98,8 @@ export class ComicsService {
       return;
     }
   }
+
+  //! fetch chars infos after getting the comic by id
 
   private fetchCharsInfos = async (char: any) => {
     try {

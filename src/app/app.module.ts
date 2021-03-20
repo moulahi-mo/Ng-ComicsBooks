@@ -33,6 +33,7 @@ import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scr
 import { ComicMoreDetailsComponent } from './components/comics/comic-more-details/comic-more-details.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { FiltersServiceService } from './services/filters-service.service';
+import { CharacterBadgeComponent } from './components/comics/character-badge/character-badge.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { FiltersServiceService } from './services/filters-service.service';
     NoDataComponent,
     LazyLoadingScrollComponent,
     ComicMoreDetailsComponent,
+    CharacterBadgeComponent,
   ],
   imports: [
     BrowserModule,

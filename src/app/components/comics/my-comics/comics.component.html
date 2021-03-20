@@ -1,5 +1,6 @@
 <section class="my-2 myComics">
   <div class="container">
+    <!--! add button -->
     <section class="d-flex">
       <button
         type="button"
@@ -7,14 +8,31 @@
       >
         + add comic
       </button>
-      <app-filters-bar class="flex-grow-1 ml-2"></app-filters-bar>
+        <!--! filter-bar -->
+          <app-filters-bar
+      [comicsList]="comics"
+      (onSearchComic)="onSearchComic($event)"
+      (onOrderComic)="onOrderComic($event)"
+      (onQuantityComic)="onQuantityComic($event)"
+      (onSingleCharacterSelected)="onSingleCharacterSelected($event)"
+      class="mb-5 flex-grow-1"
+    ></app-filters-bar>
     </section>
-
+  <!--! error -->
     <app-error *ngIf="isError" [message]="isError"></app-error>
+      <!--! loading-->
     <app-loading
       *ngIf="isloading && !isError"
       class="d-block pt-5"
     ></app-loading>
+    <!--! no data found -->
+<app-no-data [message]="'no comics yet created in your space , click add to add comic'" *ngIf="comics.length == 0 && !isloading"></app-no-data>
+   <!--! selcted comic badge --> 
+    <app-character-badge
+      *ngIf="character.id"
+      [character]="character"
+    ></app-character-badge>
+  <!--! comics list -->
     <app-comic-card
       class="py-5"
       *ngFor="let comic of comics"
@@ -23,5 +41,4 @@
     ></app-comic-card>
   </div>
 </section>
-<!--! no data found -->
-<app-no-data *ngIf="comics.length == 0 && !isloading"></app-no-data>
+

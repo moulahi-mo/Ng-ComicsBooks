@@ -16,6 +16,7 @@ export class FiltersServiceService {
   apiKey: string = environment.apiKey;
   url: string = `http://gateway.marvel.com/v1/public/comics?${this.apiKey}`;
   urlChar: string = `http://gateway.marvel.com/v1/public/characters?${this.apiKey}`;
+
   constructor(private http: HttpClient) {}
 
   // ! search title comic
@@ -52,7 +53,7 @@ export class FiltersServiceService {
 
   //! get characters
 
-  public getCharacters(): Observable<any> {
+  public getCharacters(): Observable<Character[]> {
     return this.http.get<Character[]>(this.urlChar).pipe(
       map((data: any) => {
         return data.data.results.map((res) => {
@@ -64,15 +65,24 @@ export class FiltersServiceService {
               '/portrait_medium.',
               res.thumbnail.extension
             ),
-            comics: {
-              available: res.comics.available,
-              // items: [{ name: res.comics.items.name, resourceURI: res.comics.items.resourceURI }],
-            },
           };
         });
       }),
       catchError(this.HundleErrors)
     );
+  }
+  // ! get single character comics list
+  public getSingleCharacterComicsList(id: number): Observable<Comic[]> {
+    return this.http
+      .get<Comic[]>(
+        `http://gateway.marvel.com/v1/public/characters/${id}/comics?${this.apiKey}`
+      )
+      .pipe(
+        map((data: any) => {
+          return this.mapResults(data);
+        }),
+        catchError(this.HundleErrors)
+      );
   }
 
   //! map results

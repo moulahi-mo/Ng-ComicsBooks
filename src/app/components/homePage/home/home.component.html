@@ -5,6 +5,7 @@
       (onSearchComic)="onSearchComic($event)"
       (onOrderComic)="onOrderComic($event)"
       (onQuantityComic)="onQuantityComic($event)"
+      (onSingleCharacterSelected)="onSingleCharacterSelected($event)"
       class="mb-5"
     ></app-filters-bar>
     <!--! is error-->
@@ -15,6 +16,12 @@
     <app-no-data
       *ngIf="(comics.length < 0 && !isloading) || isNoData"
     ></app-no-data>
+    <!--! selcted comic badge -->
+    <app-character-badge
+      *ngIf="character.id"
+      [character]="character"
+    ></app-character-badge>
+    <!--! comics list-->
     <app-comic-card
       [id]="comic.id"
       class="py-5"

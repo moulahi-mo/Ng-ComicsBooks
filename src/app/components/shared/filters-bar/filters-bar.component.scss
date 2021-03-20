@@ -1,7 +1,16 @@
-.search-input {
-  outline: 0;
-  border: 0;
-}
-.char-list {
-  overflow: auto;
+.filter-bar {
+  justify-content: space-evenly;
+  .search-input {
+    outline: 0;
+    border: 0;
+  }
+  .char-list {
+    overflow: auto;
+  }
+  .custom-select {
+    min-width: 250px;
+    option {
+      margin: 10px 0;
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { Character, Comic } from 'src/app/models/interfaces';
+
 import { FiltersServiceService } from 'src/app/services/filters-service.service';
 
 @Component({
@@ -11,8 +13,12 @@ export class FiltersBarComponent implements OnInit {
   @Output() onSearchComic: EventEmitter<string> = new EventEmitter();
   @Output() onOrderComic: EventEmitter<Comic[]> = new EventEmitter();
   @Output() onQuantityComic: EventEmitter<Comic[]> = new EventEmitter();
+  @Output()
+  onSingleCharacterSelected: EventEmitter<object> = new EventEmitter();
+
   @Input() comicsList: Comic[];
-  characters: Character[] = [];
+  characters: Character[];
+  selectedChar: Character | any;
   search: string;
   isError: string = null;
   constructor(private comicFilter: FiltersServiceService) {}
@@ -30,18 +36,41 @@ export class FiltersBarComponent implements OnInit {
     );
   }
 
-  //! characters
-  public onCharacter(quantity: number) {
-    console.log(quantity);
+  //! characters list clicked
+  public onCharacterClicked() {
     this.comicFilter.getCharacters().subscribe(
-      (char: any) => {
-        console.log(char);
-        this.characters = char;
+      (chars: any) => {
+        this.characters = chars;
+        console.log(this.characters);
+      },
+      (err) => (this.isError = err)
+    );
+  }
+  //! character selected
+  public onCharacterSelected(id: number) {
+    //! stock selected char
+    this.selectedCharacter(id);
+    //! get comics by selected char id
+    this.comicFilter.getSingleCharacterComicsList(id).subscribe(
+      (comics: Comic[]) => {
+        console.log(comics);
+        //!emit the result to the parent
+        this.onSingleCharacterSelected.emit({
+          comics: [...comics],
+          character: this.selectedChar[0],
+        });
       },
       (err) => (this.isError = err)
     );
   }
 
+  //TODO helpers : Selected character
+  public selectedCharacter(id: number) {
+    this.selectedChar = this.characters.filter((char) => {
+      return char.id == id;
+    });
+    console.log(this.selectedChar);
+  }
   //! order comics
   public onOrderBy(selected: string) {
     console.log(selected);

@@ -21,11 +21,11 @@ export interface Comic {
   poster?: string;
 }
 export interface Character {
-  id: string;
+  id: number;
   name: string;
   image: string;
   description?: string;
-  comics: {
+  comics?: {
     available: number;
     items: { name: string; resourceURI: string }[];
   };
