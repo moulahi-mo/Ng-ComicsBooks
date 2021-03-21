@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { Character, Comic } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
+import { FiltersServiceService } from 'src/app/services/filters-service.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { MyComicsService } from 'src/app/services/my-comics.service';
 
@@ -29,12 +30,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   uid: string;
   isCreator: boolean;
   myComicsList: Comic[] = [];
+  limit: number = 20;
+  skip: number = 0;
   constructor(
     private comicsService: ComicsService,
     private localService: LocalStorageService,
     private auth: AuthService,
     private myComics: MyComicsService,
-    private store: Store<{ auth: string }>
+    private store: Store<{ auth: string }>,
+    private filterService: FiltersServiceService
   ) {}
 
   ngOnInit(): void {
@@ -176,5 +180,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     console.log(selectedComic);
     this.comics = selectedComic.comics;
     this.character = selectedComic.character;
+  }
+
+  //!  on scrolling lazy loading
+  public onScroll() {
+    this.skip += this.limit;
+    console.log('is loading');
+    this.filterService
+      .getComicsByLazyLoading(this.limit, this.skip)
+      .subscribe((comics: Comic[]) => {
+        this.isFetched = true;
+        this.comics = [...this.comics, ...comics];
+        console.log(comics);
+      });
   }
 }

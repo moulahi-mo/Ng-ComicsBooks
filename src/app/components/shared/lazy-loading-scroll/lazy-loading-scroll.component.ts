@@ -1,12 +1,12 @@
 import {
   Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
   OnInit,
   Output,
+  EventEmitter,
+  ElementRef,
   ViewChild,
+  Input,
+  OnDestroy,
 } from '@angular/core';
 
 @Component({
@@ -17,7 +17,7 @@ import {
 export class LazyLoadingScrollComponent implements OnInit, OnDestroy {
   @Input() options = {};
   @Output() scrolled = new EventEmitter();
-  @ViewChild('anchor') anchor: ElementRef<HTMLElement>;
+  @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
 
   private observer: IntersectionObserver;
 
@@ -34,11 +34,10 @@ export class LazyLoadingScrollComponent implements OnInit, OnDestroy {
     };
 
     this.observer = new IntersectionObserver(([entry]) => {
-      entry.isIntersecting && this.scrolled.emit(true);
+      entry.isIntersecting && this.scrolled.emit();
     }, options);
-    setTimeout(() => {
-      this.observer.observe(this.anchor.nativeElement);
-    }, 4000);
+
+    this.observer.observe(this.anchor.nativeElement);
   }
 
   private isHostScrollable() {

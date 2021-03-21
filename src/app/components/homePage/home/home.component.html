@@ -29,13 +29,15 @@
       [comic]="comic"
       [page]="'home'"
     ></app-comic-card>
-
-    <!-- <app-lazy-loading-scroll
-      (scrolled)="onScroll($event)"
-      *ngIf="isFetched && !isloading"
-      style="height: 400px; overflow-y: auto"
-    >
-      <h1>hi</h1>
-    </app-lazy-loading-scroll> -->
+    <app-lazy-loading-scroll (scrolled)="onScroll()">
+      <img
+        src="../../../../assets/images/spinner.gif"
+        alt="spinner"
+        width="50px"
+        height="50px"
+        class="d-block mx-auto my-5"
+      />
+    </app-lazy-loading-scroll>
+    <!-- *ngIf="isFetched && !isloading" -->
   </div>
 </section>

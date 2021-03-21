@@ -19,6 +19,18 @@ export class FiltersServiceService {
 
   constructor(private http: HttpClient) {}
 
+  // ! get comic by lazy loading scrolling
+  public getComicsByLazyLoading(limit: number, skip: number): Observable<any> {
+    return this.http
+      .get<Comic[]>(this.url + `&limit=${limit}&offset=${skip}`)
+      .pipe(
+        map((data: any) => {
+          return this.mapResults(data);
+        }),
+        catchError(this.HundleErrors)
+      );
+  }
+
   // ! search title comic
   public getComicByTitle(title: string): Observable<any> {
     return this.http.get<Comic[]>(this.url + '&titleStartsWith=' + title).pipe(
@@ -71,6 +83,32 @@ export class FiltersServiceService {
       catchError(this.HundleErrors)
     );
   }
+
+  // ! get comic by lazy loading scrolling
+  public getCharactersByLazyLoading(
+    limit: number,
+    skip: number
+  ): Observable<any> {
+    return this.http
+      .get<Comic[]>(this.urlChar + `&limit=${limit}&offset=${skip}`)
+      .pipe(
+        map((data: any) => {
+          return data.data.results.map((res) => {
+            return {
+              id: res.id,
+              name: res.name,
+              description: res.description,
+              image: res.thumbnail.path.concat(
+                '/portrait_medium.',
+                res.thumbnail.extension
+              ),
+            };
+          });
+        }),
+        catchError(this.HundleErrors)
+      );
+  }
+
   // ! get single character comics list
   public getSingleCharacterComicsList(id: number): Observable<Comic[]> {
     return this.http

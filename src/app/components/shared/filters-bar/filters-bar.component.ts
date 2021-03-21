@@ -23,6 +23,8 @@ export class FiltersBarComponent implements OnInit {
   isClicked: boolean = false;
   search: string;
   isError: string = null;
+  limit: number = 20;
+  skip: number = 0;
   constructor(private comicFilter: FiltersServiceService) {}
 
   ngOnInit(): void {
@@ -123,5 +125,20 @@ export class FiltersBarComponent implements OnInit {
       },
       (err) => (this.isError = err)
     );
+  }
+
+  //!  on scrolling lazy loading chars
+  public onScroll() {
+    this.skip += this.limit;
+    console.log('is loading');
+    this.comicFilter
+      .getCharactersByLazyLoading(this.limit, this.skip)
+      .subscribe(
+        (chars: any) => {
+          this.characters = [...this.characters, ...chars];
+          console.log(this.characters);
+        },
+        (err) => (this.isError = err)
+      );
   }
 }
