@@ -29,12 +29,12 @@ export class FavoritesComponent implements OnInit {
         }
       });
       //* sorting by most recent date
-      this.comics = [...new Set(filtredFavorites)].sort(
+      this.comics = filtredFavorites.sort(
         (a, b) =>
           new Date(b.favorite_date).getTime() -
           new Date(a.favorite_date).getTime()
       );
-      console.log(filtredFavorites);
+      console.log(this.comics);
     });
   }
 }

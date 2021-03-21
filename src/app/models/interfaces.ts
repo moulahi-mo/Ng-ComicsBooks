@@ -22,6 +22,7 @@ export interface Comic {
   uid?: string;
   pageCount?: number;
   favorite_date?: Date;
+  mycomic_date?: Date;
 }
 export interface Character {
   id: number;

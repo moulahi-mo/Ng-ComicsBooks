@@ -9,7 +9,7 @@
     ></app-loading>
     <!--! no data found -->
     <app-no-data
-      [message]="'no comics yet created in your space , click add to add comic'"
+      [message]="'no comics yet in your Favorites '"
       *ngIf="comics.length == 0 && !isloading"
     ></app-no-data>
     <!--! comics list -->
@@ -17,9 +17,8 @@
       class="py-5"
       *ngFor="let comic of comics"
       [comic]="comic"
-      [isCreator]="true"
       [page]="'favorites'"
-      [isCreator]="false"
+      [isCreator]="'false'"
     ></app-comic-card>
   </div>
 </section>

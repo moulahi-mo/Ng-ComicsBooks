@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Comic } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
+import { MyComicsService } from 'src/app/services/my-comics.service';
 
 @Component({
   selector: 'app-comics-details',
@@ -17,6 +18,7 @@ export class ComicsDetailsComponent implements OnInit {
 
   constructor(
     private comicsService: ComicsService,
+    private myComicService: MyComicsService,
     private route: ActivatedRoute
   ) {}
 
@@ -51,27 +53,45 @@ export class ComicsDetailsComponent implements OnInit {
   public fetchComicDetails(id: string) {
     this.isError = null;
     this.isloading = true;
-    this.comicsService.getSingleComic(id).subscribe(
-      (comic: Comic) => {
-        // const truncateNames = comic.characters.map((char) => {
-        //   const index = char.name.indexOf('(');
-        //   if (index > 10) {
-        //     return char.name.split('(', 1);
-        //   } else {
-        //     return char.name;
-        //   }
-        // });
-        // console.log(truncateNames);
-        this.isloading = false;
-        comic.owner = comic.owner ? comic.owner : '';
-        this.comic = comic;
-        console.log(this.comic);
-      },
-      (err) => {
-        this.isloading = false;
-        this.isError = err;
-        console.log(err);
-      }
-    );
+    //! if it is my comic get it from firebase db
+    if (this.isCreator) {
+      this.myComicService.getComicById(id).subscribe(
+        (comic: Comic) => {
+          this.isloading = false;
+          comic.owner = comic.owner ? comic.owner : '';
+          this.comic = comic;
+          console.log(this.comic);
+        },
+        (err) => {
+          this.isloading = false;
+          this.isError = err;
+          console.log(err);
+        }
+      );
+    } else {
+      //! if it is an ordinaire  comic get it from firebase Marvel APi
+      this.comicsService.getSingleComic(id).subscribe(
+        (comic: Comic) => {
+          // const truncateNames = comic.characters.map((char) => {
+          //   const index = char.name.indexOf('(');
+          //   if (index > 10) {
+          //     return char.name.split('(', 1);
+          //   } else {
+          //     return char.name;
+          //   }
+          // });
+          // console.log(truncateNames);
+          this.isloading = false;
+          comic.owner = comic?.owner ? comic?.owner : '';
+          this.comic = comic;
+          console.log(this.comic);
+        },
+        (err) => {
+          this.isloading = false;
+          this.isError = err;
+          console.log(err);
+        }
+      );
+    }
   }
 }

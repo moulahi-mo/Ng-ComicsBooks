@@ -56,16 +56,24 @@
       {{ comic.price | currency: "USD":"symbol" }}
     </h4>
 
+    <!-- * favorite / buy botton -->
+    <app-favorite-buy
+      [page]="page"
+      class="w-100"
+      *ngIf="!isCreator || page === 'favorites' || page === 'details'"
+      [comic]="comic"
+    ></app-favorite-buy>
+
     <!-- * buy botton -->
-    <button
+    <!-- <button
       *ngIf="!isCreator"
       type="button"
       class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
     >
       buy
-    </button>
+    </button> -->
     <!-- * favorite botton -->
-    <button
+    <!-- <button
       type="button"
       *ngIf="!isCreator"
       class="btn btn-outline-light btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
@@ -75,7 +83,7 @@
         aria-hidden="true"
       ></i>
       favorite
-    </button>
+    </button> -->
 
     <!-- * edit botton -->
     <button

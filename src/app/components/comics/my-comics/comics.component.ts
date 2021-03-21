@@ -88,7 +88,10 @@ export class ComicsComponent implements OnInit {
     this.isNotClosed = false;
     //! store it to firebase db
     if (newComic.id) {
-      this.Mycomics.addNewComic(newComic).subscribe(
+      this.Mycomics.addNewComic({
+        ...newComic,
+        mycomic_date: new Date(),
+      }).subscribe(
         (data: any) => {
           console.log(data, 'data added successfully');
         },
@@ -103,6 +106,12 @@ export class ComicsComponent implements OnInit {
     this.Mycomics.getAllComics().subscribe(
       (comics: Comic[]) => {
         console.log(comics);
+        //* sorting by most recent date
+        this.comics = [...new Set(comics)].sort(
+          (a, b) =>
+            new Date(b.mycomic_date).getTime() -
+            new Date(a.mycomic_date).getTime()
+        );
         this.comics = comics;
         this.isloading = false;
       },

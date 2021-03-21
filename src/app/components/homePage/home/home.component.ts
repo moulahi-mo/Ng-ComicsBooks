@@ -61,18 +61,27 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       (err) => console.log(err)
     );
     // ! init listing of comics
-    this.getlocalComics('comics');
+    this.getlocalComics();
   }
 
   ngAfterContentChecked() {
     this.isFetched = true;
   }
   //! get cached comics or from api if no cache found
-  private getlocalComics(item) {
-    const myComics = this.localService.getItem('myComics');
-    this.comics = [...this.localService.getItem(item), ...myComics];
+  private getlocalComics() {
+    const myComics = this.localService.getItem('comics');
 
-    if (this.comics.length <= 0) {
+    // this.comics = [...this.localService.getItem('comics'), ...myComics];
+    // //* filtring list from any double comic
+    // const temporary = this.comics;
+    // const filtredFavorites = this.comics.filter((comic) => {
+    //   for (let item of temporary) {
+    //     return comic.id !== item.id;
+    //   }
+    // });
+    // this.comics = filtredFavorites;
+    this.comics = myComics;
+    if (myComics.length <= 0) {
       this.fetchComics();
     }
   }
@@ -84,7 +93,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         console.log(myComics);
         this.myComicsList = myComics;
         this.comics = [...this.comics, ...this.myComicsList];
-        this.localService.setItem('myComics', this.myComicsList);
+        const temporary = this.comics;
+        const filtredFavorites = this.comics.filter((comic) => {
+          for (let item of temporary) {
+            return comic.id !== item.id;
+          }
+        });
+        this.comics = filtredFavorites;
+
+        // this.localService.setItem('myComics', this.myComicsList);
       },
       (err) => {
         this.isloading = false;
@@ -107,8 +124,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
             this.comics = [...list, ...myComics];
             this.isloading = false;
             console.log(this.comics);
-            this.localService.setItem('myComics', this.myComicsList);
             this.localService.setItem('comics', this.comics);
+            // this.localService.setItem('myComics', this.myComicsList);
           },
           (err) => {
             this.isloading = false;

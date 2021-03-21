@@ -22,7 +22,11 @@ export class ComicCardComponent implements OnInit {
   ngOnInit(): void {
     //! check if user is auth
     this.uid = this.auth.getCurrUserUid();
-    if (this.comic.uid && this.uid === this.comic.uid) {
+    if (
+      this.comic.uid &&
+      this.uid === this.comic.uid &&
+      this.page != 'favorites'
+    ) {
       this.isCreator = true;
     } else {
       this.isCreator = false;
@@ -34,7 +38,7 @@ export class ComicCardComponent implements OnInit {
 
     //! store it to firebase db
     if (comicEdited.id) {
-      this.myComicService.addNewComic(comicEdited).subscribe(
+      this.myComicService.editComic(comicEdited).subscribe(
         (data: any) => {
           this.comic = comicEdited;
           console.log(data, 'comic edited success successfully');

@@ -102,6 +102,7 @@ export class FiltersServiceService {
         ),
         owner: res.creators.items[0]?.name,
         condition: 'good',
+        poster: res.images[0]?.path.concat('.', res.images[0].extension),
       };
     });
   }

@@ -42,6 +42,7 @@ export class FavoriteBuyComponent implements OnInit {
 
   // ! onfavorite add favorite to db
   public onFavorite() {
+    delete this.comic.characters;
     console.log(this.comic);
     const favoriteComic = { ...this.comic, favorite_date: new Date() };
     this.favoriteService

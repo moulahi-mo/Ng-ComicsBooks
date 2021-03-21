@@ -53,12 +53,12 @@
                 height="200px"
               />
               <h5 class="char-name font-weight-bold text-left text-capitalize">
-                {{ character.name | titlecase }}
+                {{ character?.name | titlecase }}
               </h5>
             </li>
           </div>
         </ul>
-        <div *ngIf="comic.characters.length > 0">
+        <div *ngIf="comic.characters?.length > 0">
           <h5 class="text-capitalise text-muted mt-5">
             no characters found for thie comic
           </h5>
