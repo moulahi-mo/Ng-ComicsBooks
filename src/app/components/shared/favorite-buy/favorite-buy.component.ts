@@ -1,10 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Comic } from 'src/app/models/interfaces';
 import { FavoritesService } from 'src/app/services/favorites.service';
-declare var $: any;
-$('[data-toggle="popover"]').popover();
 
 @Component({
   selector: 'app-favorite-buy',
@@ -12,6 +10,7 @@ $('[data-toggle="popover"]').popover();
   styleUrls: ['./favorite-buy.component.scss'],
 })
 export class FavoriteBuyComponent implements OnInit {
+  @Input() page: string;
   isAuth$: Observable<string>;
   isAuth: boolean;
   isFavorite: boolean;
@@ -44,9 +43,15 @@ export class FavoriteBuyComponent implements OnInit {
   // ! onfavorite
   public onFavorite() {
     console.log(this.comic);
-    this.favoriteService.addNewFavorite(this.comic).subscribe((data: any) => {
-      console.log('added favorite', data, this.isAuth);
-      this.isFavorite = true;
-    });
+    const favoriteComic = { ...this.comic, favorite_date: new Date() };
+    this.favoriteService
+      .addNewFavorite(favoriteComic)
+      .subscribe((data: any) => {
+        console.log('added favorite', data, this.isAuth);
+        this.isFavorite = true;
+      });
   }
+}
+function jquery(arg0: string) {
+  throw new Error('Function not implemented.');
 }

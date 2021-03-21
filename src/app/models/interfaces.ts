@@ -21,6 +21,7 @@ export interface Comic {
   poster?: string;
   uid?: string;
   pageCount?: number;
+  favorite_date?: Date;
 }
 export interface Character {
   id: number;

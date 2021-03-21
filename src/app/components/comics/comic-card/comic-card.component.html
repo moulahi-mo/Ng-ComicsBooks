@@ -59,6 +59,7 @@
       <div class="d-flex flex-column justify-content-around">
         <!-- * favorite / buy botton -->
         <app-favorite-buy
+          [page]="page"
           class="w-100"
           *ngIf="!isCreator || page === 'favorites'"
           [comic]="comic"

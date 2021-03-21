@@ -21,7 +21,12 @@ export class FavoritesComponent implements OnInit {
 
   public getAllFavorites() {
     this.favoritesService.getAllFavorites().subscribe((comics: Comic[]) => {
-      this.comics = comics;
+      //* sortin by most recent
+      this.comics = comics.sort(
+        (a, b) =>
+          new Date(b.favorite_date).getTime() -
+          new Date(a.favorite_date).getTime()
+      );
       console.log(comics);
     });
   }

@@ -1,17 +1,20 @@
-<section class="my-5 d-flex w-100 filter-bar">
+<section class="my-5 d-flex w-100 filter-bar justify-content-around">
   <!-- ! serach input-->
-  <form (ngSubmit)="onSearch()" class="d-flex bg-white search-input p-0">
+  <form
+    (ngSubmit)="onSearch()"
+    class="form-search d-flex bg-white p-0 mt-2 w-50 form-group bg-white"
+  >
     <input
       name="search"
       [(ngModel)]="search"
-      class="form-control mr-sm-2 border-0"
+      class="form-control mr-sm-2 search-input border-0"
       type="search"
       placeholder="I'm Looking for ..."
       aria-label="Search"
     />
     <button type="submit">
       <i
-        class="fa fa-search bg-white h3 text-secondary pr-2"
+        class="fa fa-search bg-white h3 text-secondary pr-2 bg-transparent"
         aria-hidden="true"
       ></i>
     </button>

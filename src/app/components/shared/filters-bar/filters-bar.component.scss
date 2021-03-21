@@ -1,9 +1,39 @@
 .filter-bar {
-  justify-content: space-evenly;
-  .search-input {
+  .form-group {
+    margin: 0 5px;
+
+    .form-control {
+      border-radius: 0 !important;
+      outline: 0 !important;
+      border: 0 !important;
+    }
+  }
+  .form-search {
+    position: relative;
+    background-color: #fff !important;
     outline: 0;
     border: 0;
+    height: 38px;
+    .search-input {
+      outline: 0;
+      border: 0;
+      background-color: transparent;
+    }
+    button[type="submit"] {
+      display: none;
+    }
+    i {
+      position: absolute;
+      margin-left: 5px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      top: 7px;
+      right: 13px;
+    }
   }
+  justify-content: space-evenly;
+
   .char-list {
     overflow: auto;
   }

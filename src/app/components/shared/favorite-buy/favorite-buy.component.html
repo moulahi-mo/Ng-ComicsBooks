@@ -6,20 +6,14 @@
     *ngIf="!isAuth"
     routerLink="/soon"
     [queryParams]="{ type: 'buy' }"
-    data-toggle="popover"
-    data-placement="top"
-    data-content="test"
     type="button"
     class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
   >
     buy
   </button>
-  <!-- * buy botton if user is AUth-->
+  <!-- ! buy botton if user is AUth-->
   <button
     *ngIf="isAuth"
-    data-toggle="popover"
-    data-placement="top"
-    data-content="test"
     type="button"
     class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
   >
@@ -39,12 +33,12 @@
     ></i>
     favorite
   </button>
-  <!-- * favorite botton if user is auth -->
+  <!-- ! favorite botton if user is auth -->
   <button
     *ngIf="isAuth"
     (click)="onFavorite()"
     type="button"
-    [disabled]="isFavorite"
+    [disabled]="isFavorite || page === 'favorites'"
     class="btn btn-outline-secondary btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
   >
     <i
