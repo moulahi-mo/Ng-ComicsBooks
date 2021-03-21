@@ -19,6 +19,8 @@ export class FiltersBarComponent implements OnInit {
   @Input() comicsList: Comic[];
   characters: Character[];
   selectedChar: Character | any;
+  isSelected: boolean = false;
+  isClicked: boolean = false;
   search: string;
   isError: string = null;
   constructor(private comicFilter: FiltersServiceService) {}
@@ -38,6 +40,7 @@ export class FiltersBarComponent implements OnInit {
 
   //! characters list clicked
   public onCharacterClicked() {
+    this.isClicked = !this.isClicked;
     this.comicFilter.getCharacters().subscribe(
       (chars: any) => {
         this.characters = chars;
@@ -48,6 +51,8 @@ export class FiltersBarComponent implements OnInit {
   }
   //! character selected
   public onCharacterSelected(id: number) {
+    this.isClicked = false;
+    this.isSelected = true;
     //! stock selected char
     this.selectedCharacter(id);
     //! get comics by selected char id

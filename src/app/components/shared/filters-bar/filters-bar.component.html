@@ -20,27 +20,41 @@
     </button>
   </form>
   <!-- ! characters select-->
-  <div class="form-group">
-    <select
-      class="form-control my-2 char-list custom-select"
+  <div class="form-group char-wrapper">
+    <input
       (click)="onCharacterClicked()"
-      (change)="onCharacterSelected(character.value)"
-      #character
+      type="text"
+      class="form-control my-2 char-list"
+      aria-describedby="helpId"
+      placeholder="Character"
+    />
+
+    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+    <!-- * list characters-->
+
+    <aside
+      *ngIf="isClicked"
+      class="list-chars d-flex flex-column justify-content-around d-block pt-2"
     >
-      <option hidden><span class="text-muted"> Character</span></option>
-      <option *ngFor="let char of characters" [value]="char.id">
-        <article class="d-flex w-100">
+      <div
+        (click)="onCharacterSelected(char.id)"
+        *ngFor="let char of characters"
+        class="d-flex my-2 pt-3 pl-2"
+      >
+        <article class="d-flex align-items-center p-2 w-100">
           <img
             [src]="char.image"
             [alt]="char.name"
-            class="d-block mr-2"
+            class="d-block mr-4"
             width="50px"
             height="50px"
           />
-          <h6>{{ char.name | titlecase }}</h6>
+          <h6>
+            {{ char.name | titlecase }}
+          </h6>
         </article>
-      </option>
-    </select>
+      </div>
+    </aside>
   </div>
 
   <!-- ! Order By-->
@@ -60,6 +74,7 @@
       (change)="onQuantity(quantity.value)"
       #quantity
     >
+      <option hidden>Show - 15</option>
       <option value="15">Show - 15</option>
       <option value="30">Show - 30</option>
       <option value="50">Show - 50</option>

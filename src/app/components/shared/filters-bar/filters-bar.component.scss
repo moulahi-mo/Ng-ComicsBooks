@@ -6,6 +6,7 @@
       border-radius: 0 !important;
       outline: 0 !important;
       border: 0 !important;
+      cursor: pointer;
     }
   }
   .form-search {
@@ -20,7 +21,9 @@
       background-color: transparent;
     }
     button[type="submit"] {
-      display: none;
+      height: 0;
+      width: 0;
+      background-color: #fff !important;
     }
     i {
       position: absolute;
@@ -35,12 +38,31 @@
   justify-content: space-evenly;
 
   .char-list {
-    overflow: auto;
   }
-  .custom-select {
-    min-width: 250px;
-    option {
-      margin: 10px 0;
+  .char-wrapper {
+    position: relative;
+    max-width: 300px;
+    i {
+      position: absolute;
+      margin-left: 5px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      top: 15px;
+      right: 8px;
+      color: grey;
+      font-size: 0.7rem;
+    }
+    .list-chars {
+      cursor: pointer;
+      position: absolute;
+      min-width: 400px;
+      max-height: 400px;
+      overflow: auto;
+      top: 32;
+      left: 0;
+      background-color: #fff;
+      z-index: 100;
     }
   }
 }
