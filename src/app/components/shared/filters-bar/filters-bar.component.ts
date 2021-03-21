@@ -73,34 +73,38 @@ export class FiltersBarComponent implements OnInit {
   }
   //! order comics
   public onOrderBy(selected: string) {
-    console.log(selected);
-    //* Alphabetic  or Most recent comics
-    if (selected === 'title' || selected === '-onsaleDate') {
-      this.comicFilter.orderComicByOption(selected).subscribe(
-        (comics: Comic[]) => {
-          console.log(comics);
-          this.onOrderComic.emit(comics);
-        },
-        (err) => (this.isError = err)
-      );
-    } else {
-      switch (selected) {
-        //* Price Hight to Low
-        case 'priceInc':
-          this.comicsList = this.comicsList.sort((a, b) => a.price - b.price);
-          this.onOrderComic.emit(this.comicsList);
-          console.log('priceInc', this.comicsList);
-          break;
-        // * Price Low to Hight
-        case 'priceDesc':
-          this.comicsList = this.comicsList.sort((a, b) => b.price - a.price);
-          this.onOrderComic.emit(this.comicsList);
-          console.log('priceDesc', this.comicsList);
-          break;
+    switch (selected) {
+      //* Alphabetic
+      case 'title':
+        this.comicsList = this.comicsList.sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
+        this.onOrderComic.emit(this.comicsList);
+        console.log('title', this.comicsList);
+        break;
+      //* Most recent
+      case '-onsaleDate':
+        this.comicsList = this.comicsList.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        this.onOrderComic.emit(this.comicsList);
+        console.log('title', this.comicsList);
+        break;
+      //* Price Hight to Low
+      case 'priceInc':
+        this.comicsList = this.comicsList.sort((a, b) => a.price - b.price);
+        this.onOrderComic.emit(this.comicsList);
+        console.log('priceInc', this.comicsList);
+        break;
+      // * Price Low to Hight
+      case 'priceDesc':
+        this.comicsList = this.comicsList.sort((a, b) => b.price - a.price);
+        this.onOrderComic.emit(this.comicsList);
+        console.log('priceDesc', this.comicsList);
+        break;
 
-        default:
-          '';
-      }
+      default:
+        '';
     }
   }
 

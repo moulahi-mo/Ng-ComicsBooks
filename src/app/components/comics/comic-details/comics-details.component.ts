@@ -21,8 +21,10 @@ export class ComicsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //! query
+    const query = this.route.snapshot.queryParams.creator;
     //! check if user is auth
-    this.isCreator = false;
+    this.isCreator = query === 'true' ? true : false;
 
     this.isError = null;
     this.isloading = false;

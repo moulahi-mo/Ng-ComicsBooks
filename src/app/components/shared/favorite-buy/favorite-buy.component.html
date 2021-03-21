@@ -1,0 +1,56 @@
+<aside
+  class="w-100 ml-auto d-flex flex-column justify-content-end align-items-center"
+>
+  <!-- * buy botton if not auth-->
+  <button
+    *ngIf="!isAuth"
+    routerLink="/soon"
+    [queryParams]="{ type: 'buy' }"
+    data-toggle="popover"
+    data-placement="top"
+    data-content="test"
+    type="button"
+    class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
+  >
+    buy
+  </button>
+  <!-- * buy botton if user is AUth-->
+  <button
+    *ngIf="isAuth"
+    data-toggle="popover"
+    data-placement="top"
+    data-content="test"
+    type="button"
+    class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
+  >
+    buy
+  </button>
+  <!-- * favorite botton if user not auth -->
+  <button
+    *ngIf="!isAuth"
+    routerLink="/soon"
+    [queryParams]="{ type: 'favorite' }"
+    type="button"
+    class="btn btn-outline-secondary btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
+  >
+    <i
+      class="fa fa-heart-o h6 text-uppercase font-weight-bold"
+      aria-hidden="true"
+    ></i>
+    favorite
+  </button>
+  <!-- * favorite botton if user is auth -->
+  <button
+    *ngIf="isAuth"
+    (click)="onFavorite()"
+    type="button"
+    [disabled]="isFavorite"
+    class="btn btn-outline-secondary btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
+  >
+    <i
+      class="fa fa-heart-o h6 text-uppercase font-weight-bold"
+      aria-hidden="true"
+    ></i>
+    favorite
+  </button>
+</aside>

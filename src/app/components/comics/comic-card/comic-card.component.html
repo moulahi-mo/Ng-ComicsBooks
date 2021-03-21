@@ -1,4 +1,9 @@
 <article class="bg-light mx-auto p-3 card my-4">
+  <!-- * drag/drop icon  -->
+  <i
+    *ngIf="page === 'favorites'"
+    class="fa fa-bars bg-light p-0 m-0 text-secondary"
+  ></i>
   <div class="row row-cols-1 row-cols-md-2">
     <!-- ! left side -->
     <!-- * cover comic  -->
@@ -33,6 +38,7 @@
         <!-- * button info -->
         <button
           [routerLink]="['/comics', comic.id]"
+          [queryParams]="{ creator: isCreator ? true : false }"
           type="button"
           class="more-btn btn btn-outline-secondary btn-sm text-uppercase py-1 w-100 font-weight-bold mb-2"
         >
@@ -51,33 +57,19 @@
       </h4>
 
       <div class="d-flex flex-column justify-content-around">
-        <!-- * buy botton -->
-        <button
-          *ngIf="!isCreator"
-          type="button"
-          class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
-        >
-          buy
-        </button>
-        <!-- * favorite botton -->
-        <button
-          type="button"
-          *ngIf="!isCreator"
-          class="btn btn-outline-secondary btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
-        >
-          <i
-            class="fa fa-heart-o h6 text-uppercase font-weight-bold"
-            aria-hidden="true"
-          ></i>
-          favorite
-        </button>
+        <!-- * favorite / buy botton -->
+        <app-favorite-buy
+          class="w-100"
+          *ngIf="!isCreator || page === 'favorites'"
+          [comic]="comic"
+        ></app-favorite-buy>
 
         <!-- * edit botton -->
         <button
           data-toggle="modal"
           data-target="#editModal"
           type="button"
-          *ngIf="isCreator"
+          *ngIf="isCreator && page !== 'favorites'"
           class="edit-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
         >
           edit
@@ -87,7 +79,7 @@
           data-toggle="modal"
           data-target="#removeModal"
           type="button"
-          *ngIf="isCreator && page !== 'home'"
+          *ngIf="isCreator && page !== 'home' && page !== 'favorites'"
           class="remove-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
         >
           remove
@@ -98,7 +90,10 @@
             <span class="mr-2 font-weight-bold">created at </span>
             {{ comic.date | date: "shortDate" }}
           </p>
-          <p *ngIf="comic.owner" class="d-block mr-3 text-capitalize">
+          <p
+            *ngIf="comic.owner && !isCreator"
+            class="d-block mr-3 text-capitalize"
+          >
             <span class="mr-2 font-weight-bold">by</span>
             {{ comic.owner | titlecase }}
           </p>

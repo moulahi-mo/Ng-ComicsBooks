@@ -39,6 +39,9 @@ import { AddModalComponent } from './components/shared/modals/add-modal/add-moda
 import { MyComicsService } from './services/my-comics.service';
 import { RemoveModalComponent } from './components/shared/modals/remove-modal/remove-modal.component';
 import { EditModalComponent } from './components/shared/modals/edit-modal/edit-modal.component';
+import { FavoriteBuyComponent } from './components/shared/favorite-buy/favorite-buy.component';
+import { SoonComponent } from './components/shared/soon/soon.component';
+import { FavoritesService } from './services/favorites.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,8 @@ import { EditModalComponent } from './components/shared/modals/edit-modal/edit-m
     AddModalComponent,
     RemoveModalComponent,
     EditModalComponent,
+    FavoriteBuyComponent,
+    SoonComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +90,7 @@ import { EditModalComponent } from './components/shared/modals/edit-modal/edit-m
     LocalStorageService,
     FiltersServiceService,
     MyComicsService,
+    FavoritesService,
   ],
   bootstrap: [AppComponent],
 })

@@ -4,6 +4,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { Character, Comic } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,6 +19,7 @@ import { MyComicsService } from 'src/app/services/my-comics.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterContentChecked {
+  isAuth$: Observable<string>;
   comics: Comic[] = [];
   character: Character;
   isloading: boolean = false;
@@ -25,15 +28,17 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   isNoData: boolean = false;
   uid: string;
   isCreator: boolean;
+  myComicsList: Comic[] = [];
   constructor(
     private comicsService: ComicsService,
     private localService: LocalStorageService,
     private auth: AuthService,
-    private myComics: MyComicsService
+    private myComics: MyComicsService,
+    private store: Store<{ auth: string }>
   ) {}
 
   ngOnInit(): void {
-    //! check if user is auth
+    //! check if curr user is the creator of comics
     this.auth.getCurrUserUid()
       ? (this.isCreator = true)
       : (this.isCreator = false);
@@ -42,6 +47,20 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       image: null,
       name: null,
     };
+    //! check if user is auth
+    this.isAuth$ = this.store.select('auth');
+    this.isAuth$.subscribe(
+      (uid) => {
+        if (uid) {
+          //* if user auth ok fetch my comics after login
+          if (this.myComicsList.length <= 0) {
+            this.fetchMyComics();
+          }
+        }
+      },
+      (err) => console.log(err)
+    );
+    // ! init listing of comics
     this.getlocalComics('comics');
   }
 
@@ -50,11 +69,31 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   //! get cached comics or from api if no cache found
   private getlocalComics(item) {
-    this.comics = this.localService.getItem(item);
+    const myComics = this.localService.getItem('myComics');
+    this.comics = [...this.localService.getItem(item), ...myComics];
+
     if (this.comics.length <= 0) {
       this.fetchComics();
     }
   }
+
+  //! fetch my comics {
+  public fetchMyComics() {
+    this.myComics.getAllComics().subscribe(
+      (myComics: Comic[]) => {
+        console.log(myComics);
+        this.myComicsList = myComics;
+        this.comics = [...this.comics, ...this.myComicsList];
+        this.localService.setItem('myComics', this.myComicsList);
+      },
+      (err) => {
+        this.isloading = false;
+        this.isError = err;
+        console.log(err);
+      }
+    );
+  }
+
   // ! fetch comics
   public fetchComics() {
     this.isError = null;
@@ -64,9 +103,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         this.comics = list;
         this.myComics.getAllComics().subscribe(
           (myComics: Comic[]) => {
+            this.myComicsList = myComics;
             this.comics = [...list, ...myComics];
             this.isloading = false;
             console.log(this.comics);
+            this.localService.setItem('myComics', this.myComicsList);
             this.localService.setItem('comics', this.comics);
           },
           (err) => {
@@ -102,9 +143,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
   //!on quantity
-  public onQuantityComic(comicsByOrder: Comic[]) {
-    if (comicsByOrder.length > 0) {
-      this.comics = comicsByOrder;
+  public onQuantityComic(comicsByQuantity: Comic[]) {
+    if (comicsByQuantity.length > 0) {
+      this.comics = [...comicsByQuantity, ...this.myComicsList];
       this.isNoData = false;
     } else {
       this.isNoData = true;

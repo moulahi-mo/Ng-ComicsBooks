@@ -8,6 +8,7 @@ import { ComicsComponent } from './components/comics/my-comics/comics.component'
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './auth.guard';
 import { ComicsDetailsComponent } from './components/comics/comic-details/comics-details.component';
+import { SoonComponent } from './components/shared/soon/soon.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,8 @@ const routes: Routes = [
 
   { path: 'comics', component: ComicsComponent },
   { path: 'comics/:id', component: ComicsDetailsComponent },
+
+  { path: 'soon', component: SoonComponent },
 
   { path: '**', component: NotFoundComponent },
 ];

@@ -1,1 +1,25 @@
-<p>favorites works!</p>
+<section class="mt-2 mb-5 favorites">
+  <div class="container">
+    <!--! error -->
+    <app-error *ngIf="isError" [message]="isError"></app-error>
+    <!--! loading-->
+    <app-loading
+      *ngIf="isloading && !isError"
+      class="d-block pt-5"
+    ></app-loading>
+    <!--! no data found -->
+    <app-no-data
+      [message]="'no comics yet created in your space , click add to add comic'"
+      *ngIf="comics.length == 0 && !isloading"
+    ></app-no-data>
+    <!--! comics list -->
+    <app-comic-card
+      class="py-5"
+      *ngFor="let comic of comics"
+      [comic]="comic"
+      [isCreator]="true"
+      [page]="'favorites'"
+      [isCreator]="false"
+    ></app-comic-card>
+  </div>
+</section>
