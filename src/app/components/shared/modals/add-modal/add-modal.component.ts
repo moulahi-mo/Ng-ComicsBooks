@@ -156,4 +156,8 @@ export class AddModalComponent implements OnInit {
     this.isSearching = false;
     this.isSelected = false;
   }
+  // ! on sent
+  public onSent(form: NgForm) {
+    this.onSubmit(form);
+  }
 }

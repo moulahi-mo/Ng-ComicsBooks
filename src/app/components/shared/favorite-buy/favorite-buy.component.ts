@@ -40,7 +40,7 @@ export class FavoriteBuyComponent implements OnInit {
     );
   }
 
-  // ! onfavorite
+  // ! onfavorite add favorite to db
   public onFavorite() {
     console.log(this.comic);
     const favoriteComic = { ...this.comic, favorite_date: new Date() };
@@ -51,7 +51,4 @@ export class FavoriteBuyComponent implements OnInit {
         this.isFavorite = true;
       });
   }
-}
-function jquery(arg0: string) {
-  throw new Error('Function not implemented.');
 }

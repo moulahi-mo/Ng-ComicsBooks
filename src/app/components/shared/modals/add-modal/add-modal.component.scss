@@ -5,6 +5,17 @@
     max-width: 700px;
     .search-box {
       position: relative;
+      i {
+        position: absolute;
+        margin-left: 5px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        top: 6px;
+        right: 11px;
+        color: grey;
+        font-size: 1.2rem;
+      }
       .list-Searchs {
         cursor: pointer;
         position: absolute;
@@ -24,6 +35,9 @@
       }
     }
     form {
+      .form-group {
+        margin: 15px 0;
+      }
       input,
       textarea,
       select {
@@ -37,7 +51,10 @@
         font-weight: 700;
         opacity: 1;
         padding: 13px;
-        margin: 15px 0 30px 0;
+        margin: 20px 0 25px 0;
+      }
+      textarea {
+        resize: none;
       }
       .close {
       }

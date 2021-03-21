@@ -42,7 +42,7 @@ export class ComicsComponent implements OnInit {
       name: null,
     };
 
-    // this.getPersonalComics();
+    this.getPersonalComics();
   }
 
   //! on search

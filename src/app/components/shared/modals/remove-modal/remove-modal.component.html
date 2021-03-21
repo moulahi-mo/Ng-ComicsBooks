@@ -26,14 +26,16 @@
           <button
             (click)="onRemove()"
             type="button"
-            class="btn btn-success btn-block text-uppercase d-block mr-2"
+            class="btn btn-yes close btn-success btn-block text-uppercase d-block mr-2"
+            data-dismiss="modal"
+            aria-label="Close"
           >
             yes
           </button>
           <button
             type="button"
             data-dismiss="modal"
-            class="close btn btn-accent btn-block text-uppercase d-block ml-2 mt-0"
+            class="btn-no close btn btn-accent btn-block text-uppercase d-block ml-2 mt-0"
           >
             no
           </button>

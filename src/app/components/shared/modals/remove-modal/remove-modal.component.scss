@@ -1,10 +1,18 @@
 .modal-content {
   min-height: 300px;
-  .close {
+  .btn-no,
+  .btn-yes {
     background-color: red;
     color: #fff;
     font-size: 1rem;
     font-weight: 400;
     opacity: 1;
+    padding: 13px;
+  }
+  .btn-yes {
+    background-color: green;
+  }
+  .fa-exclamation-triangle {
+    font-size: 5.5rem;
   }
 }
