@@ -17,9 +17,10 @@ export interface Comic {
   price: number;
   date: Date;
   owner?: string;
-  characters: { name: string; image: string }[];
+  characters?: { name: string; image: string }[];
   poster?: string;
   uid?: string;
+  pageCount?: number;
 }
 export interface Character {
   id: number;

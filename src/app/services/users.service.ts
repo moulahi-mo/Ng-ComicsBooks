@@ -26,7 +26,7 @@ export class UsersService {
     let err = 'Something bad happned !!';
     if (error) {
       return throwError(
-        error.error.message ? error.error.message : error.message
+        error.error?.message ? error.error?.message : error?.message
       );
     } else {
       return throwError(err);

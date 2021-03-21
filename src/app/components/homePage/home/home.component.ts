@@ -6,8 +6,10 @@ import {
 } from '@angular/core';
 
 import { Character, Comic } from 'src/app/models/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { MyComicsService } from 'src/app/services/my-comics.service';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +23,20 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   isError: string = null;
   isFetched: boolean = false;
   isNoData: boolean = false;
+  uid: string;
+  isCreator: boolean;
   constructor(
     private comicsService: ComicsService,
-    private localService: LocalStorageService
+    private localService: LocalStorageService,
+    private auth: AuthService,
+    private myComics: MyComicsService
   ) {}
 
   ngOnInit(): void {
+    //! check if user is auth
+    this.auth.getCurrUserUid()
+      ? (this.isCreator = true)
+      : (this.isCreator = false);
     this.character = {
       id: null,
       image: null,
@@ -51,10 +61,20 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.isloading = true;
     this.comicsService.getComics().subscribe(
       (list: any) => {
-        this.isloading = false;
-        console.log(list);
         this.comics = list;
-        this.localService.setItem('comics', this.comics);
+        this.myComics.getAllComics().subscribe(
+          (myComics: Comic[]) => {
+            this.comics = [...list, ...myComics];
+            this.isloading = false;
+            console.log(this.comics);
+            this.localService.setItem('comics', this.comics);
+          },
+          (err) => {
+            this.isloading = false;
+            this.isError = err;
+            console.log(err);
+          }
+        );
       },
       (err) => {
         this.isloading = false;

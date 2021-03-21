@@ -22,7 +22,8 @@
             {{ comic.format | titlecase }}
           </p>
           <p class="details-value">
-            <span class="details-key">pages : </span> {{ comic.pages }}
+            <span class="details-key">pages : </span>
+            {{ comic.pages ? comic.pages : 0 }}
           </p>
           <p class="details-value">
             <span class="details-key">condition : </span>
@@ -73,6 +74,8 @@
 
         <!-- * edit botton -->
         <button
+          data-toggle="modal"
+          data-target="#editModal"
           type="button"
           *ngIf="isCreator"
           class="edit-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
@@ -81,8 +84,10 @@
         </button>
         <!-- * remove botton -->
         <button
+          data-toggle="modal"
+          data-target="#removeModal"
           type="button"
-          *ngIf="isCreator"
+          *ngIf="isCreator && page !== 'home'"
           class="remove-btn btn text-white btn-sm text-uppercase m-2 w-50 ml-auto py-2 px-0 font-weight-bold"
         >
           remove
@@ -90,8 +95,8 @@
         <div class="d-flex justify-content-end mt-1">
           <!-- * infos creator -->
           <p class="d-block mr-3 text-capitalize">
-            <span class="mr-2 font-weight-bold">created at</span>
-            {{ comic.date | date: "short" }}
+            <span class="mr-2 font-weight-bold">created at </span>
+            {{ comic.date | date: "shortDate" }}
           </p>
           <p *ngIf="comic.owner" class="d-block mr-3 text-capitalize">
             <span class="mr-2 font-weight-bold">by</span>
@@ -102,3 +107,23 @@
     </div>
   </div>
 </article>
+
+<!-- ? remove Modal -->
+
+<app-remove-modal
+  *ngIf="isCreator"
+  [id]="'removeModal'"
+  [comicId]="comic.id"
+></app-remove-modal>
+
+<!-- ? edit Modal -->
+<app-add-modal
+  [page]="'myComics'"
+  *ngIf="isCreator"
+  (onComicEdited)="onComicEdited($event)"
+  [id]="'editModal'"
+  [comicId]="comic.id"
+  [mode]="'edit'"
+  [comicDetailsIsHere]="comic"
+>
+</app-add-modal>

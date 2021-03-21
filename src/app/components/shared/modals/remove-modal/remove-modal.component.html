@@ -1,0 +1,44 @@
+<div
+  class="modal fade"
+  [id]="id"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-light mx-auto">
+      <div
+        class="modal-body border-0 d-flex flex-column justify-content-around align-items-center"
+      >
+        <i
+          class="fa fa-exclamation-triangle h1 text-danger"
+          aria-hidden="true"
+        ></i>
+
+        <h5 class="modal-title text-capitalize font-weight-bold text-center">
+          Warning
+        </h5>
+        <p class="text-capitalize font-weight-bold lead">
+          do you realy want to remove this comic ?
+        </p>
+        <!-- !  buttons -->
+        <div class="d-flex justify-content-around w-100">
+          <button
+            (click)="onRemove()"
+            type="button"
+            class="btn btn-success btn-block text-uppercase d-block mr-2"
+          >
+            yes
+          </button>
+          <button
+            type="button"
+            data-dismiss="modal"
+            class="close btn btn-accent btn-block text-uppercase d-block ml-2 mt-0"
+          >
+            no
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

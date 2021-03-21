@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Character, Comic } from 'src/app/models/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
 import { MyComicsService } from 'src/app/services/my-comics.service';
 
@@ -16,18 +17,31 @@ export class ComicsComponent implements OnInit {
   isNoData: boolean = false;
   isNotClosed: boolean;
   isError: string = null;
-  constructor(
-    private comicsService: ComicsService,
-    private Mycomics: MyComicsService
-  ) {}
+  comicDetailsIsHere: Comic;
+  constructor(private Mycomics: MyComicsService) {}
 
   ngOnInit(): void {
+    this.comicDetailsIsHere = {
+      id: null,
+      format: null,
+      pages: null,
+      title: null,
+      description: null,
+      price: null,
+      date: null,
+      cover: null,
+      owner: null,
+      condition: null,
+      characters: null,
+      poster: null,
+    };
     this.isNotClosed = true;
     this.character = {
       id: null,
       image: null,
       name: null,
     };
+
     this.getPersonalComics();
   }
 
@@ -76,18 +90,19 @@ export class ComicsComponent implements OnInit {
     if (newComic.id) {
       this.Mycomics.addNewComic(newComic).subscribe(
         (data: any) => {
-          console.log('data added successfully');
+          console.log(data, 'data added successfully');
         },
         (err) => (this.isError = err)
       );
     }
   }
-  //! add button new comic
+  //! get all comics for the user
   public getPersonalComics() {
     this.isError = null;
     this.isloading = true;
     this.Mycomics.getAllComics().subscribe(
       (comics: Comic[]) => {
+        console.log(comics);
         this.comics = comics;
         this.isloading = false;
       },

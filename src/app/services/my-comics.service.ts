@@ -22,16 +22,43 @@ export class MyComicsService {
     const uid = this.auth.getCurrUserUid();
     console.log(this.uid);
     const comicWithUser = { ...comic, uid };
-    return from(this.Afirestore.collection(`comics`).add(comicWithUser)).pipe(
-      catchError(this.HundleErrors)
-    );
+    return from(
+      // * set document id = creator uid + comic id
+      this.Afirestore.doc(`comics/${uid}${comic.id}`).set(comicWithUser)
+    ).pipe(catchError(this.HundleErrors));
   }
 
   //! get all personal comics
   public getAllComics(): Observable<any[]> {
-    return from(this.Afirestore.collection('comics').valueChanges()).pipe(
+    const uid = this.auth.getCurrUserUid();
+    return from(
+      this.Afirestore.collection('comics', (ref) =>
+        ref.where('uid', '==', uid)
+      ).valueChanges()
+    ).pipe(catchError(this.HundleErrors));
+  }
+
+  //! remove comic by id
+  public removeComic(comicId: string): Observable<any> {
+    return from(this.Afirestore.doc(`comics/${comicId}`).delete()).pipe(
       catchError(this.HundleErrors)
     );
+  }
+
+  //! get mycomic by id
+  public getComicById(comicId: string): Observable<any> {
+    const uid = this.auth.getCurrUserUid();
+    return from(
+      this.Afirestore.doc(`comics/${uid + comicId}`).valueChanges()
+    ).pipe(catchError(this.HundleErrors));
+  }
+
+  //! edit mycomic
+  public editComic(comic: Comic): Observable<any> {
+    const uid = this.auth.getCurrUserUid();
+    return from(
+      this.Afirestore.doc(`comics/${uid + comic.id}`).update(comic)
+    ).pipe(catchError(this.HundleErrors));
   }
 
   //! hundling errors
@@ -39,7 +66,7 @@ export class MyComicsService {
     let err = 'Something bad happned !!';
     if (error) {
       return throwError(
-        error.error.message ? error.error.message : error.message
+        error.error?.message ? error.error?.message : error.message
       );
     } else {
       return throwError(err);

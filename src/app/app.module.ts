@@ -35,8 +35,10 @@ import { LocalStorageService } from './services/local-storage.service';
 import { FiltersServiceService } from './services/filters-service.service';
 import { CharacterBadgeComponent } from './components/comics/character-badge/character-badge.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
-import { AddModalComponent } from './components/shared/add-modal/add-modal.component';
+import { AddModalComponent } from './components/shared/modals/add-modal/add-modal.component';
 import { MyComicsService } from './services/my-comics.service';
+import { RemoveModalComponent } from './components/shared/modals/remove-modal/remove-modal.component';
+import { EditModalComponent } from './components/shared/modals/edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { MyComicsService } from './services/my-comics.service';
     CharacterBadgeComponent,
     AlertComponent,
     AddModalComponent,
+    RemoveModalComponent,
+    EditModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Comic } from 'src/app/models/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
 
 @Component({
@@ -20,10 +21,13 @@ export class ComicsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //! check if user is auth
+    this.isCreator = false;
+
     this.isError = null;
     this.isloading = false;
     const id = this.route.snapshot.paramMap.get('id');
-    this.isCreator = true;
+
     this.comic = {
       id: null,
       format: null,
@@ -37,6 +41,7 @@ export class ComicsDetailsComponent implements OnInit {
       condition: null,
       characters: null,
       poster: null,
+      pageCount: null,
     };
 
     this.fetchComicDetails(id);
@@ -56,6 +61,7 @@ export class ComicsDetailsComponent implements OnInit {
         // });
         // console.log(truncateNames);
         this.isloading = false;
+        comic.owner = comic.owner ? comic.owner : '';
         this.comic = comic;
         console.log(this.comic);
       },

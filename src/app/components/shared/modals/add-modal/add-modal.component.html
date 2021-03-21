@@ -5,10 +5,12 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content bg-light mx-auto">
       <div class="modal-header border-0">
-        <h5 class="modal-title text-uppercase">+ add comic</h5>
+        <h5 class="modal-title text-uppercase">
+          {{ mode === "edit" ? "edit comic" : "+ add comic" }}
+        </h5>
         <button
           type="button"
           class="close"
@@ -79,8 +81,8 @@
             <aside class="list-Searchs d-flex justify-content-between p-3">
               <div class="d-flex my-2 w-75">
                 <img
-                  [src]="selectedComic.cover"
-                  [alt]="selectedComic.title"
+                  [src]="selectedComic?.cover"
+                  [alt]="selectedComic?.title"
                   width="60px"
                   height="80px"
                 />
@@ -88,16 +90,16 @@
                   class="d-flex flex-column justify-content-start align-items-start ml-3 mt-0"
                 >
                   <p class="mb-0">
-                    title: <span>{{ selectedComic.title | titlecase }} </span>
+                    title: <span>{{ selectedComic?.title | titlecase }} </span>
                   </p>
                   <p class="my-1">
-                    format: <span>{{ selectedComic.format | titlecase }}</span>
+                    format: <span>{{ selectedComic?.format | titlecase }}</span>
                   </p>
                   <p>
                     pages number:
                     <span>
                       {{
-                        selectedComic.pageCount ? selectedComic.pageCount : 0
+                        selectedComic?.pageCount ? selectedComic?.pageCount : 0
                       }}</span
                     >
                   </p>
@@ -152,8 +154,10 @@
           </div>
 
           <!-- ! add button-->
-          <button type="submit" class="btn btn-accent btn-block text-uppercase">
-            + add comic
+
+          <button type="submit" class="btn btn-danger btn-block text-uppercase">
+            <span hidden data-dismiss="modal" class="close"></span>
+            {{ mode === "edit" ? "save" : "+ add comic" }}
           </button>
         </form>
       </div>

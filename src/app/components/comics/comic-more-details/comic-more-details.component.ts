@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comic } from 'src/app/models/interfaces';
+import { MyComicsService } from 'src/app/services/my-comics.service';
 
 @Component({
   selector: 'app-comic-more-details',
@@ -12,7 +13,22 @@ export class ComicMoreDetailsComponent implements OnInit {
   isloading: boolean = false;
   isError: string = null;
 
-  constructor() {}
+  constructor(private myComicService: MyComicsService) {}
 
   ngOnInit(): void {}
+
+  public onComicEdited(comicEdited: Comic) {
+    console.log(comicEdited);
+    comicEdited.pages = comicEdited.pages ? comicEdited.pages : 0;
+    //! store it to firebase db
+    if (comicEdited.id) {
+      this.myComicService.addNewComic(comicEdited).subscribe(
+        (data: any) => {
+          this.comic = comicEdited;
+          console.log(data, 'comic edited success successfully');
+        },
+        (err) => console.log(err)
+      );
+    }
+  }
 }
