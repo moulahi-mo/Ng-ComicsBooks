@@ -86,7 +86,7 @@
           <li *ngIf="isAuth$ | async" class="nav-item">
             <a class="nav-link">
               <small class="text-capitalize text-dark username">
-                {{ username | titlecase }}
+                {{ LogginUser | async }}
               </small>
             </a>
           </li>

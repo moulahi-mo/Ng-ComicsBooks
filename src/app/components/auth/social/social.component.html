@@ -1,5 +1,6 @@
 <section class="d-flex justify-content-center">
   <button
+    (click)="authService.googleSignin()"
     [ngClass]="auth === 'login' ? 'rounded-button' : ''"
     type="button"
     class="btn google-btn text-capitalize mr-3 py-1 px-4"
@@ -8,6 +9,7 @@
     google
   </button>
   <button
+    (click)="authService.FacebookAuth()"
     [ngClass]="auth === 'login' ? 'rounded-button' : ''"
     type="button"
     class="btn facebook-btn text-capitalize ml-3 mr-3 py-1 px-4"

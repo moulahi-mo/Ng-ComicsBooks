@@ -1,14 +1,91 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { from, Observable, throwError } from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
+import { from, Observable, of, throwError } from 'rxjs';
 import { User } from '../models/interfaces';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import firebase from 'firebase/app';
+
+import 'firebase/auth';
+// const auth = firebase.auth();
+
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private Afirestore: AngularFirestore) {}
+  user$: Observable<User>;
+
+  constructor(
+    private afAuth: AngularFireAuth,
+    private Afirestore: AngularFirestore,
+    private router: Router
+  ) {
+    // Get the auth state, then fetch the Firestore user document or return null
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap((user) => {
+        // Logged in
+        if (user) {
+          return this.Afirestore.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          // Logged out
+          return of(null);
+        }
+      })
+    );
+  }
+
+  // ...omitted
+
+  async googleSignin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    // const provider = new auth.GoogleAuthProvider();
+    const credential = await this.afAuth.signInWithPopup(provider);
+    return this.updateUserData(credential.user);
+  }
+
+  private updateUserData(user) {
+    // Sets user data to firestore on login
+    const userRef: AngularFirestoreDocument<User> = this.Afirestore.doc(
+      `users/${user.uid}`
+    );
+
+    const data = {
+      uid: user.uid,
+      email: user.displayName,
+      name: user.name,
+    };
+
+    return userRef.set(data, { merge: true });
+  }
+
+  async signOut() {
+    await this.afAuth.signOut();
+    this.router.navigate(['/']);
+  }
+
+  // Sign in with Facebook
+  public FacebookAuth() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.AuthLogin(provider);
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log('You have been successfully logged in!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   //! add new user
   public addNewUser(user: User) {
     return from(this.Afirestore.doc(`users/${user.uid}`).set(user)).pipe(

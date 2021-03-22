@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, SubscribableOrPromise, Subscription } from 'rxjs';
 import { User } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -14,6 +14,8 @@ import { UsersService } from 'src/app/services/users.service';
 export class NavbarComponent implements OnInit {
   isAuth$: Observable<string>;
   username: string;
+  LogginUser: User;
+  unsb: Subscription;
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -28,9 +30,16 @@ export class NavbarComponent implements OnInit {
       if (id) {
         console.log(id);
         this.getCurrUser(id);
+        this.LogginUser = this.auth.getUser();
+        console.log(this.LogginUser);
       } else {
         console.log('no user found');
       }
+    });
+    //! onDestroy
+    this.unsb = this.auth.UserInfos.subscribe((user) => {
+      this.LogginUser = user;
+      console.log(this.LogginUser);
     });
   }
 

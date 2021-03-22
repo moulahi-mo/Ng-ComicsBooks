@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import * as authActions from '../store/auth/auth.action';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../models/interfaces';
 import { UsersService } from './users.service';
@@ -15,6 +15,7 @@ export class AuthService {
   uid$: Observable<string>;
   currUser: User;
   idUser: string;
+  UserInfos = new BehaviorSubject<User>(null);
   constructor(
     private fireAuth: AngularFireAuth,
     private store: Store<{ auth: string }>,
@@ -54,12 +55,14 @@ export class AuthService {
           this.store.dispatch(authActions.login({ uid: user.uid }));
           this.Cservice.getUserById(user.uid).subscribe((user: User) => {
             console.log(user);
+            this.UserInfos.next({ ...user });
             this.currUser = user;
           });
           console.log('logged in', user);
         } else {
           this.store.dispatch(authActions.logout());
           this.currUser = null;
+          this.UserInfos.next(null);
           console.log('logout');
         }
       },
@@ -79,6 +82,10 @@ export class AuthService {
         this.store.dispatch(authActions.logout());
       }
     });
+  }
+
+  public getUser() {
+    return this.currUser;
   }
 
   //! hundling errors
