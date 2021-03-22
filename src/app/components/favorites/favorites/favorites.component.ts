@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Comic } from 'src/app/models/interfaces';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-favorites',
@@ -13,6 +14,7 @@ export class FavoritesComponent implements OnInit {
   isloading: boolean = false;
   isNoData: boolean = false;
   isError: string = null;
+
   constructor(private favoritesService: FavoritesService) {}
 
   ngOnInit(): void {
@@ -37,4 +39,10 @@ export class FavoritesComponent implements OnInit {
       console.log(this.comics);
     });
   }
+
+  // ! drag drop
+  public drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.comics, event.previousIndex, event.currentIndex);
+  }
+  public onDrag() {}
 }

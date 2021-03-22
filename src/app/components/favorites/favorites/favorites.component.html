@@ -12,13 +12,22 @@
       [message]="'no comics yet in your Favorites '"
       *ngIf="comics.length == 0 && !isloading"
     ></app-no-data>
-    <!--! comics list -->
-    <app-comic-card
-      class="py-5"
-      *ngFor="let comic of comics"
-      [comic]="comic"
-      [page]="'favorites'"
-      [isCreator]="'false'"
-    ></app-comic-card>
+    <!--! drag drop directives -->
+    <div class="w-100" cdkDropList (cdkDropListDropped)="drop($event)">
+      <!--! comics list -->
+      <app-comic-card
+        [ngStyle]="{ cursor: 'all-scroll' }"
+        cdkDrag
+        class="py-5 w-100"
+        *ngFor="let comic of comics"
+        [comic]="comic"
+        [page]="'favorites'"
+        [isCreator]="'false'"
+      >
+        <div class="placeholder-drop invisible display-1" *cdkDragPlaceholder>
+          droped element placeholder
+        </div>
+      </app-comic-card>
+    </div>
   </div>
 </section>

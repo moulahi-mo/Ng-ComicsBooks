@@ -1,3 +1,5 @@
+<ng-content></ng-content>
+
 <aside
   class="w-100 ml-auto d-flex flex-column justify-content-end align-items-center"
 >
@@ -13,6 +15,7 @@
   </button>
   <!-- ! buy botton if user is AUth-->
   <button
+    (click)="onBuy()"
     *ngIf="isAuth"
     type="button"
     class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"

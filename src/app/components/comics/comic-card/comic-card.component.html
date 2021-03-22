@@ -1,3 +1,5 @@
+<ng-content></ng-content>
+
 <article class="bg-light mx-auto p-3 card my-4">
   <!-- * drag/drop icon  -->
   <i
@@ -68,11 +70,20 @@
       <div class="d-flex flex-column justify-content-around">
         <!-- * favorite / buy botton -->
         <app-favorite-buy
+          (onBuyClicked)="onBuyClicked($event)"
           [page]="page"
           class="w-100"
           *ngIf="!isCreator || page === 'favorites'"
           [comic]="comic"
-        ></app-favorite-buy>
+        >
+          <!-- ? toast  -->
+          <app-toast
+            (onCloseToast)="onCloseToast()"
+            *ngIf="isToast"
+            [comic]="comic"
+            [message]="'will be available in our market soon, Thank you.'"
+          ></app-toast>
+        </app-favorite-buy>
 
         <!-- * edit botton -->
         <button

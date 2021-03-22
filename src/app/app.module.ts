@@ -42,7 +42,8 @@ import { EditModalComponent } from './components/shared/modals/edit-modal/edit-m
 import { FavoriteBuyComponent } from './components/shared/favorite-buy/favorite-buy.component';
 import { SoonComponent } from './components/shared/soon/soon.component';
 import { FavoritesService } from './services/favorites.service';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ToastComponent } from './components/shared/toast/toast.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +71,7 @@ import { FavoritesService } from './services/favorites.service';
     EditModalComponent,
     FavoriteBuyComponent,
     SoonComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ import { FavoritesService } from './services/favorites.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    DragDropModule,
   ],
   providers: [
     AuthGuard,

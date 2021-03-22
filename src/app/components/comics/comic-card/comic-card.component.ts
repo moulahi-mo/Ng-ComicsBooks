@@ -17,6 +17,7 @@ export class ComicCardComponent implements OnInit {
   isAuth$: Observable<string>;
   uid: string = null;
   isInit: boolean = true;
+  isToast: boolean = false;
   constructor(
     private myComicService: MyComicsService,
     private auth: AuthService,
@@ -68,5 +69,15 @@ export class ComicCardComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+  }
+
+  public onBuyClicked(id: string) {
+    if (id == this.comic.id) {
+      this.isToast = true;
+    }
+  }
+
+  public onCloseToast() {
+    this.isToast = false;
   }
 }

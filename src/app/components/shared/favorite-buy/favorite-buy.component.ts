@@ -1,4 +1,11 @@
-import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Comic } from 'src/app/models/interfaces';
@@ -11,6 +18,8 @@ import { FavoritesService } from 'src/app/services/favorites.service';
 })
 export class FavoriteBuyComponent implements OnInit {
   @Input() page: string;
+  @Output() onBuyClicked: EventEmitter<string> = new EventEmitter();
+
   isAuth$: Observable<string>;
   isAuth: boolean;
   isFavorite: boolean;
@@ -21,6 +30,10 @@ export class FavoriteBuyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // $('.showtoast').click(function () {
+    //   $('.toast').toast('show');
+    // });
+
     this.checkAuth();
   }
 
@@ -51,5 +64,9 @@ export class FavoriteBuyComponent implements OnInit {
         console.log('added favorite', data, this.isAuth);
         this.isFavorite = true;
       });
+  }
+  // ! on buy button clicked
+  public onBuy() {
+    this.onBuyClicked.emit(this.comic.id);
   }
 }
