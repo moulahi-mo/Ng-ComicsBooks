@@ -1,3 +1,4 @@
+<ng-content></ng-content>
 <div *ngIf="!isloading" class="row my-5 comic-card">
   <!--? COVER  -->
   <div class="col-12 col-lg-3 mb-5 mb-lg-0">
@@ -58,32 +59,25 @@
 
     <!-- * favorite / buy botton -->
     <app-favorite-buy
+      (onBuyClicked)="onBuyClicked($event)"
+      (onFavClicked)="onFavClicked($event)"
       [page]="page"
       class="w-100"
       *ngIf="!isCreator || page === 'favorites' || page === 'details'"
       [comic]="comic"
-    ></app-favorite-buy>
-
-    <!-- * buy botton -->
-    <!-- <button
-      *ngIf="!isCreator"
-      type="button"
-      class="btn btn-accent btn-sm text-uppercase m-2 w-50 ml-auto py-2 font-weight-bold"
     >
-      buy
-    </button> -->
-    <!-- * favorite botton -->
-    <!-- <button
-      type="button"
-      *ngIf="!isCreator"
-      class="btn btn-outline-light btn-sm text-uppercase m-2 w-50 ml-auto font-weight-bold"
-    >
-      <i
-        class="fa fa-heart-o h6 text-white text-uppercase font-weight-bold"
-        aria-hidden="true"
-      ></i>
-      favorite
-    </button> -->
+      <!-- ? toast  -->
+      <app-toast
+        (onCloseToast)="onCloseToast()"
+        *ngIf="isToast"
+        [comic]="comic"
+        [message]="
+          isBuyOrFav === 'buy'
+            ? 'will be available in our market soon, Thank you.'
+            : 'Fav successfully added to your favorites '
+        "
+      ></app-toast>
+    </app-favorite-buy>
 
     <!-- * edit botton -->
     <button

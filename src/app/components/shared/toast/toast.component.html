@@ -15,7 +15,7 @@
         height="20px"
       />
       <strong class="mr-auto">Marvel</strong>
-      <small>Soon ..</small>
+      <small> {{ message.includes("favorites") ? "Favorites" : "Buy" }} </small>
       <button
         (click)="onCloseToastFn()"
         type="button"

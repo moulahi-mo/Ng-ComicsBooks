@@ -18,6 +18,7 @@ export class ComicCardComponent implements OnInit {
   uid: string = null;
   isInit: boolean = true;
   isToast: boolean = false;
+  isBuyOrFav: 'fav' | 'buy';
   constructor(
     private myComicService: MyComicsService,
     private auth: AuthService,
@@ -70,8 +71,16 @@ export class ComicCardComponent implements OnInit {
       );
     }
   }
-
+  // ! toast actions
   public onBuyClicked(id: string) {
+    this.isBuyOrFav = 'buy';
+    if (id == this.comic.id) {
+      this.isToast = true;
+    }
+  }
+
+  public onFavClicked(id: string) {
+    this.isBuyOrFav = 'fav';
     if (id == this.comic.id) {
       this.isToast = true;
     }

@@ -71,6 +71,7 @@
         <!-- * favorite / buy botton -->
         <app-favorite-buy
           (onBuyClicked)="onBuyClicked($event)"
+          (onFavClicked)="onFavClicked($event)"
           [page]="page"
           class="w-100"
           *ngIf="!isCreator || page === 'favorites'"
@@ -81,7 +82,11 @@
             (onCloseToast)="onCloseToast()"
             *ngIf="isToast"
             [comic]="comic"
-            [message]="'will be available in our market soon, Thank you.'"
+            [message]="
+              isBuyOrFav === 'buy'
+                ? 'will be available in our market soon, Thank you.'
+                : 'Fav successfully added to your favorites '
+            "
           ></app-toast>
         </app-favorite-buy>
 

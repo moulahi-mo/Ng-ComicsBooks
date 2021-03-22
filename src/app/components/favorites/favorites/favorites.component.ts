@@ -22,22 +22,32 @@ export class FavoritesComponent implements OnInit {
   }
 
   public getAllFavorites() {
-    this.favoritesService.getAllFavorites().subscribe((comics: Comic[]) => {
-      // *make sure that the comics dont be doubled in the favorite list ( ... new Set )
-      const temporary = comics;
-      const filtredFavorites = comics.filter((comic) => {
-        for (let item of temporary) {
-          return comic.id !== item.id;
-        }
-      });
-      //* sorting by most recent date
-      this.comics = filtredFavorites.sort(
-        (a, b) =>
-          new Date(b.favorite_date).getTime() -
-          new Date(a.favorite_date).getTime()
-      );
-      console.log(this.comics);
-    });
+    this.isError = null;
+    this.isloading = true;
+    this.favoritesService.getAllFavorites().subscribe(
+      (comics: Comic[]) => {
+        // *make sure that the comics dont be doubled in the favorite list ( ... new Set )
+        const temporary = comics;
+        const filtredFavorites = comics.filter((comic) => {
+          for (let item of temporary) {
+            return comic.id !== item.id;
+          }
+        });
+        //* sorting by most recent date
+        this.comics = filtredFavorites.sort(
+          (a, b) =>
+            new Date(b.favorite_date).getTime() -
+            new Date(a.favorite_date).getTime()
+        );
+        console.log(this.comics);
+        this.isloading = false;
+      },
+      (err) => {
+        this.isloading = false;
+        this.isError = err;
+        console.log(err);
+      }
+    );
   }
 
   // ! drag drop

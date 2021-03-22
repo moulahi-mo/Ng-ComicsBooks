@@ -58,9 +58,9 @@
             </li>
           </div>
         </ul>
-        <div *ngIf="comic.characters?.length > 0">
+        <div *ngIf="comic.characters == 'undefined'">
           <h5 class="text-capitalise text-muted mt-5">
-            no characters found for thie comic
+            no characters found for this comic
           </h5>
         </div>
       </section>

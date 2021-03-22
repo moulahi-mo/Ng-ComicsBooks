@@ -19,6 +19,7 @@ import { FavoritesService } from 'src/app/services/favorites.service';
 export class FavoriteBuyComponent implements OnInit {
   @Input() page: string;
   @Output() onBuyClicked: EventEmitter<string> = new EventEmitter();
+  @Output() onFavClicked: EventEmitter<string> = new EventEmitter();
 
   isAuth$: Observable<string>;
   isAuth: boolean;
@@ -61,6 +62,7 @@ export class FavoriteBuyComponent implements OnInit {
     this.favoriteService
       .addNewFavorite(favoriteComic)
       .subscribe((data: any) => {
+        this.onFavClicked.emit(this.comic.id);
         console.log('added favorite', data, this.isAuth);
         this.isFavorite = true;
       });

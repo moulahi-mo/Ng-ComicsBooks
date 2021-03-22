@@ -12,6 +12,8 @@ export class ComicMoreDetailsComponent implements OnInit {
   @Input() isCreator: boolean;
   isloading: boolean = false;
   isError: string = null;
+  isToast: boolean = false;
+  isBuyOrFav: 'fav' | 'buy';
 
   constructor(private myComicService: MyComicsService) {}
 
@@ -30,5 +32,24 @@ export class ComicMoreDetailsComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+  }
+
+  // ! toast actions
+  public onBuyClicked(id: string) {
+    this.isBuyOrFav = 'buy';
+    if (id == this.comic.id) {
+      this.isToast = true;
+    }
+  }
+
+  public onFavClicked(id: string) {
+    this.isBuyOrFav = 'fav';
+    if (id == this.comic.id) {
+      this.isToast = true;
+    }
+  }
+
+  public onCloseToast() {
+    this.isToast = false;
   }
 }

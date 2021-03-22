@@ -10,7 +10,7 @@
     <!--! no data found -->
     <app-no-data
       [message]="'no comics yet in your Favorites '"
-      *ngIf="comics.length == 0 && !isloading"
+      *ngIf="comics.length == 0 && !isloading && !isError"
     ></app-no-data>
     <!--! drag drop directives -->
     <div class="w-100" cdkDropList (cdkDropListDropped)="drop($event)">

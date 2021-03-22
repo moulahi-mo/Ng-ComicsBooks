@@ -38,7 +38,7 @@ import { AlertComponent } from './components/shared/alert/alert.component';
 import { AddModalComponent } from './components/shared/modals/add-modal/add-modal.component';
 import { MyComicsService } from './services/my-comics.service';
 import { RemoveModalComponent } from './components/shared/modals/remove-modal/remove-modal.component';
-import { EditModalComponent } from './components/shared/modals/edit-modal/edit-modal.component';
+
 import { FavoriteBuyComponent } from './components/shared/favorite-buy/favorite-buy.component';
 import { SoonComponent } from './components/shared/soon/soon.component';
 import { FavoritesService } from './services/favorites.service';
@@ -68,7 +68,7 @@ import { ToastComponent } from './components/shared/toast/toast.component';
     AlertComponent,
     AddModalComponent,
     RemoveModalComponent,
-    EditModalComponent,
+
     FavoriteBuyComponent,
     SoonComponent,
     ToastComponent,

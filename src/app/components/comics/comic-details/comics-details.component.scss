@@ -1,6 +1,7 @@
 .my-comics {
   min-height: 100vh;
   .comic-details {
+    margin-top: -25px !important;
     h6,
     h5 {
       font-weight: bold;
@@ -30,6 +31,7 @@
       z-index: -10;
       filter: blur(8px);
       -webkit-filter: blur(8px);
+      margin-top: -23px;
     }
 
     .edit-btn {
