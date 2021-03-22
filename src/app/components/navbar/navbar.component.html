@@ -20,8 +20,20 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!-- ? S P I N N E R------------------------------------------>
+      <div
+        *ngIf="isInit"
+        class="mx-auto d-block spinner-grow spinner-grow-sm"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
       <!-- ? M E N U------------------------------------------->
-      <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <div
+        *ngIf="!isInit"
+        class="collapse navbar-collapse"
+        id="collapsibleNavId"
+      >
         <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
           <!-- ! Home link -->
           <li class="nav-item">
@@ -82,11 +94,19 @@
           </li>
           <!-- * onlogin show  ( logout / user name ) start   ------------------->
 
+          <!-- ? S P I N N E R if user name not yet render------------------------------------------>
+          <div
+            *ngIf="!LogginUser?.name"
+            class="mx-auto d-block spinner-grow spinner-grow-sm"
+            role="status"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
           <!-- ! username link -->
           <li *ngIf="isAuth$ | async" class="nav-item">
             <a class="nav-link">
               <small class="text-capitalize text-dark username">
-                {{ LogginUser | async }}
+                {{ LogginUser.name ? LogginUser.name : "" }}
               </small>
             </a>
           </li>

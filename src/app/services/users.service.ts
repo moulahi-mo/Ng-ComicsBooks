@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 
 import 'firebase/auth';
-// const auth = firebase.auth();
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +24,7 @@ export class UsersService {
     private Afirestore: AngularFirestore,
     private router: Router
   ) {
-    // Get the auth state, then fetch the Firestore user document or return null
+    //! Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         // Logged in
@@ -39,51 +38,34 @@ export class UsersService {
     );
   }
 
-  // ...omitted
+  // ! Google sign in
 
-  async googleSignin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    // const provider = new auth.GoogleAuthProvider();
+  public async googleSignin() {
+    const provider = await new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+    this.returnNewSocialUser(credential);
   }
 
-  private updateUserData(user) {
-    // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.Afirestore.doc(
-      `users/${user.uid}`
-    );
-
-    const data = {
-      uid: user.uid,
-      email: user.displayName,
-      name: user.name,
+  //! set new social user
+  public returnNewSocialUser(credential: any) {
+    const newSocialUser = {
+      uid: credential.user.uid,
+      name: credential.user.displayName,
+      email: credential.user.email,
+      joind_date: new Date(),
     };
+    this.addNewUser(newSocialUser)
+      .pipe(catchError(this.HundleErrors))
+      .subscribe((data) => data);
 
-    return userRef.set(data, { merge: true });
+    return newSocialUser;
   }
 
-  async signOut() {
-    await this.afAuth.signOut();
-    this.router.navigate(['/']);
-  }
-
-  // Sign in with Facebook
-  public FacebookAuth() {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    return this.AuthLogin(provider);
-  }
-
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        console.log('You have been successfully logged in!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // ! Sign in with Facebook
+  public async FacebookAuth() {
+    const provider = await new firebase.auth.FacebookAuthProvider();
+    const credential = await this.afAuth.signInWithPopup(provider);
+    this.returnNewSocialUser(credential);
   }
 
   //! add new user
@@ -98,6 +80,7 @@ export class UsersService {
       .valueChanges()
       .pipe(catchError(this.HundleErrors));
   }
+
   //! hundling errors
   private HundleErrors(error: HttpErrorResponse) {
     let err = 'Something bad happned !!';

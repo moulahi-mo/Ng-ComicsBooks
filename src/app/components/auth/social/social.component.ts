@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/users.service';
 declare var gapi: any;
@@ -9,7 +10,28 @@ declare var gapi: any;
 })
 export class SocialComponent implements OnInit {
   @Input() auth: 'login' | 'register';
-  constructor(public authService: UsersService) {}
+  isError: string;
+  constructor(public authService: UsersService, private router: Router) {}
 
   ngOnInit(): void {}
+
+  public onGoogleSignin() {
+    this.authService
+      .googleSignin()
+      .then((user) => {
+        console.log(user, 'is here google');
+        this.router.navigate(['/']);
+      })
+      .catch((err) => (this.isError = err));
+  }
+
+  public onFacebookSignin() {
+    this.authService
+      .FacebookAuth()
+      .then((user) => {
+        console.log(user, 'is here facebook');
+        this.router.navigate(['/']);
+      })
+      .catch((err) => (this.isError = err));
+  }
 }

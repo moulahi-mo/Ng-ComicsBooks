@@ -1,6 +1,9 @@
+<!-- ? if Error-->
+<app-error *ngIf="isError" [message]="isError"></app-error>
 <section class="d-flex justify-content-center">
+  <!-- ? google button-->
   <button
-    (click)="authService.googleSignin()"
+    (click)="onGoogleSignin()"
     [ngClass]="auth === 'login' ? 'rounded-button' : ''"
     type="button"
     class="btn google-btn text-capitalize mr-3 py-1 px-4"
@@ -8,8 +11,9 @@
     <i class="fa fa-google mr-2" aria-hidden="true"></i>
     google
   </button>
+  <!-- ? facebook button-->
   <button
-    (click)="authService.FacebookAuth()"
+    (click)="onFacebookSignin()"
     [ngClass]="auth === 'login' ? 'rounded-button' : ''"
     type="button"
     class="btn facebook-btn text-capitalize ml-3 mr-3 py-1 px-4"

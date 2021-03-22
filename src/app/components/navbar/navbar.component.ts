@@ -1,51 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable, SubscribableOrPromise, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
-import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isAuth$: Observable<string>;
   username: string;
   LogginUser: User;
   unsb: Subscription;
+  isInit: boolean = true;
   constructor(
     private auth: AuthService,
     private router: Router,
-    private store: Store<{ auth: string }>,
-    private usersService: UsersService
+    private store: Store<{ auth: string }>
   ) {}
 
   ngOnInit() {
-    this.username = 'guest';
-    this.isAuth$ = this.store.select('auth');
-    this.isAuth$.subscribe((id: string) => {
-      if (id) {
-        console.log(id);
-        this.getCurrUser(id);
-        this.LogginUser = this.auth.getUser();
-        console.log(this.LogginUser);
-      } else {
-        console.log('no user found');
-      }
-    });
-    //! onDestroy
-    this.unsb = this.auth.UserInfos.subscribe((user) => {
-      this.LogginUser = user;
-      console.log(this.LogginUser);
-    });
+    this.AuthListener();
+    this.getCurrentUser();
   }
 
-  public getCurrUser(uid: string) {
-    this.usersService.getUserById(uid).subscribe((user: User) => {
+  public getCurrentUser() {
+    this.unsb = this.auth.UserInfos.subscribe((user) => {
       console.log(user);
+      this.LogginUser = user;
     });
   }
 
@@ -56,5 +41,21 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/']);
       })
       .catch((error) => console.log(error));
+  }
+
+  public AuthListener() {
+    this.isAuth$ = this.store.select('auth');
+    this.isAuth$.subscribe((id: string) => {
+      if (id) {
+        this.isInit = false;
+        console.log(id);
+      } else {
+        console.log('no user found');
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsb.unsubscribe();
   }
 }

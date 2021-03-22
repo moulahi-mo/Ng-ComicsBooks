@@ -22,15 +22,56 @@ export class AuthService {
     private Cservice: UsersService
   ) {}
 
-  public signUp(email: string, pass: string) {
-    return this.fireAuth.createUserWithEmailAndPassword(email, pass);
+  public async signUp(email: string, pass: string) {
+    return await this.fireAuth.createUserWithEmailAndPassword(email, pass);
   }
-  public login(email: string, pass: string) {
-    return this.fireAuth.signInWithEmailAndPassword(email, pass);
+  public async login(email: string, pass: string) {
+    return await this.fireAuth.signInWithEmailAndPassword(email, pass);
   }
-  public logout() {
-    return this.fireAuth.signOut();
+  public async logout() {
+    return await this.fireAuth.signOut();
   }
+
+  //! auth listner if user is auth or not
+  public async authCheck() {
+    this.fireAuth.authState.pipe(catchError(this.HundleErrors)).subscribe(
+      (user) => {
+        if (user) {
+          this.store.dispatch(authActions.login({ uid: user.uid }));
+          console.log(user);
+          this.getUser(user);
+        } else {
+          this.store.dispatch(authActions.logout());
+          this.currUser = null;
+          this.UserInfos.next(null);
+          console.log('logout');
+        }
+      },
+      (err) => console.log(err)
+    );
+  }
+
+  // ! get logged in user
+  public getUser(user: any) {
+    ///* if social user
+    if (user.displayName) {
+      this.currUser = {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+      };
+      this.UserInfos.next({ ...this.currUser });
+      return this.currUser;
+    } else if (user.displayName == null) {
+      ///* if regular user
+      this.Cservice.getUserById(user.uid).subscribe((user: User) => {
+        console.log(user);
+        this.UserInfos.next({ ...user });
+        return user;
+      });
+    }
+  }
+  // !get user Uid
   public getCurrUserUid(): string | null {
     this.uid$ = this.store.select('auth');
     this.uid$.subscribe(
@@ -45,47 +86,6 @@ export class AuthService {
 
   public isAuth() {
     return;
-  }
-
-  //! auth listner if user is auth or not
-  public authCheck() {
-    this.fireAuth.authState.pipe(catchError(this.HundleErrors)).subscribe(
-      (user) => {
-        if (user) {
-          this.store.dispatch(authActions.login({ uid: user.uid }));
-          this.Cservice.getUserById(user.uid).subscribe((user: User) => {
-            console.log(user);
-            this.UserInfos.next({ ...user });
-            this.currUser = user;
-          });
-          console.log('logged in', user);
-        } else {
-          this.store.dispatch(authActions.logout());
-          this.currUser = null;
-          this.UserInfos.next(null);
-          console.log('logout');
-        }
-      },
-      (err) => console.log(err)
-    );
-  }
-
-  public AuthChange() {
-    this.fireAuth.user.subscribe((user) => {
-      if (user) {
-        this.Cservice.getUserById(user.uid).subscribe((user: User) => {
-          console.log(user);
-        });
-
-        this.store.dispatch(authActions.login({ uid: user.uid }));
-      } else {
-        this.store.dispatch(authActions.logout());
-      }
-    });
-  }
-
-  public getUser() {
-    return this.currUser;
   }
 
   //! hundling errors
