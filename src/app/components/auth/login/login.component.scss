@@ -3,8 +3,29 @@
   padding: 150px 0 280px 0;
   .form-group {
     margin: 15px 0;
+    position: relative;
     .form-control {
       padding: 25px 15px !important;
+      border-radius: 0 !important;
+      outline: 0 !important;
+      border: 0 !important;
     }
+
+    .fa {
+      position: absolute;
+      margin-left: 5px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      top: 15px;
+      right: 30px;
+      color: rgb(173, 173, 173);
+      font-size: 1.2rem;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .btn-accent {
+    padding: 10px 0 !important;
   }
 }

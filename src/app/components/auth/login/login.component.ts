@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   user: User;
   isError: string;
   isLoading: boolean;
+  isHiden: boolean = true;
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {

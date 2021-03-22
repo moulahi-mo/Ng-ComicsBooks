@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,9 +12,11 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('form') form: NgForm;
   user: User;
   isError: string;
   isLoading: boolean;
+  confirmPasswordError: boolean = false;
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -31,6 +33,20 @@ export class RegisterComponent implements OnInit {
       password: null,
     };
   }
+  //! compare confirm password
+  public checkPassword(e: Event) {
+    const password = this.form.value.password;
+    const confirm_new_password = (e.target as any).value;
+
+    if (password !== undefined) {
+      if (confirm_new_password !== password) {
+        this.confirmPasswordError = true;
+      } else {
+        this.confirmPasswordError = false;
+      }
+    }
+  }
+  // ! on register
 
   public onSubmit(form: NgForm) {
     this.isLoading = true;

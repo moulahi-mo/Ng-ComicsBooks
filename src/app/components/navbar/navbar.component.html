@@ -36,7 +36,7 @@
       >
         <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
           <!-- ! Home link -->
-          <li class="nav-item">
+          <li *ngIf="!isInit" class="nav-item">
             <a
               routerLink="/"
               routerLinkActive="active"
@@ -96,8 +96,8 @@
 
           <!-- ? S P I N N E R if user name not yet render------------------------------------------>
           <div
-            *ngIf="!LogginUser?.name"
-            class="mx-auto d-block spinner-grow spinner-grow-sm"
+            *ngIf="!LogginUser?.name && isAuth$ | async"
+            class="mx-auto d-block spinner-grow spinner-grow-sm mt-2 ml-3"
             role="status"
           >
             <span class="sr-only">Loading...</span>
@@ -106,7 +106,7 @@
           <li *ngIf="isAuth$ | async" class="nav-item">
             <a class="nav-link">
               <small class="text-capitalize text-dark username">
-                {{ LogginUser.name ? LogginUser.name : "" }}
+                {{ LogginUser?.name ? LogginUser?.name : "" }}
               </small>
             </a>
           </li>

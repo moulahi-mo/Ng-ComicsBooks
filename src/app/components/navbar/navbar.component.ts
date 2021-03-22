@@ -26,15 +26,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.AuthListener();
     this.getCurrentUser();
   }
-
+  // ! get curr auth user
   public getCurrentUser() {
     this.unsb = this.auth.UserInfos.subscribe((user) => {
       console.log(user);
       this.LogginUser = user;
     });
   }
-
+  //! signout
   public onLogout() {
+    this.isInit = false;
     this.auth
       .logout()
       .then(() => {
@@ -42,7 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       })
       .catch((error) => console.log(error));
   }
-
+  //! listen to auth state
   public AuthListener() {
     this.isAuth$ = this.store.select('auth');
     this.isAuth$.subscribe((id: string) => {
@@ -50,6 +51,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.isInit = false;
         console.log(id);
       } else {
+        this.isInit = false;
         console.log('no user found');
       }
     });

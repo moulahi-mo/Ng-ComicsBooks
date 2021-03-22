@@ -4,7 +4,16 @@
     *ngIf="page === 'favorites'"
     class="fa fa-bars bg-light p-0 m-0 text-secondary"
   ></i>
-  <div class="row row-cols-1 row-cols-md-2">
+  <!-- ? S P I N N E R if user name not yet render------------------------------------------>
+  <div
+    *ngIf="isInit"
+    class="mx-auto d-block spinner-grow spinner-grow-lg mt-2 ml-3"
+    role="status"
+  >
+    <span class="sr-only">Loading...</span>
+  </div>
+  <!--  ! C A R D Content------------------------------------------>
+  <div *ngIf="!isInit" class="row row-cols-1 row-cols-md-2">
     <!-- ! left side -->
     <!-- * cover comic  -->
     <div class="col d-flex">

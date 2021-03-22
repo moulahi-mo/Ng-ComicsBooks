@@ -4,6 +4,12 @@
     margin: 20px 0;
     .form-control {
       padding: 25px 15px !important;
+      border-radius: 0 !important;
+      outline: 0 !important;
+      border: 0 !important;
     }
+  }
+  .btn-accent {
+    padding: 10px 0 !important;
   }
 }
