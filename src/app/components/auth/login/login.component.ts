@@ -4,13 +4,16 @@ import { Router } from '@angular/router';
 
 import { User } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
+import fadeAnimation from 'src/app/shared/animations/fade.animation';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [fadeAnimation],
 })
 export class LoginComponent implements OnInit {
+  isShown: boolean = false;
   user: User;
   isError: string;
   isLoading: boolean;
@@ -18,6 +21,11 @@ export class LoginComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    //* set timeout for animation intro
+    setTimeout(() => {
+      this.isShown = true;
+    }, 500);
+
     this.isError = null;
     this.isLoading = false;
 

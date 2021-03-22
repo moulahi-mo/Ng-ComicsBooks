@@ -38,7 +38,7 @@
     <div class="d-flex justify-content-end mt-1">
       <p class="d-block mr-3 text-capitalize">
         <span class="mr-2 font-weight-bold">created at</span>
-        {{ comic.date | date: "shortDate" }}
+        {{ comic.date | date: "MM/dd/yyyy" }}
       </p>
       <p *ngIf="!isCreator && comic.owner" class="d-block mr-3 text-capitalize">
         <span class="mr-2 font-weight-bold">by</span>

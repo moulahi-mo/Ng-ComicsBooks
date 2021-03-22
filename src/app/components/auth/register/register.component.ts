@@ -5,14 +5,17 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
+import fadeAnimation from 'src/app/shared/animations/fade.animation';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  animations: [fadeAnimation],
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('form') form: NgForm;
+  isShown: boolean = false;
   user: User;
   isError: string;
   isLoading: boolean;
@@ -24,6 +27,10 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //* set timeout for animation intro
+    setTimeout(() => {
+      this.isShown = true;
+    }, 500);
     this.isError = null;
     this.isLoading = false;
 

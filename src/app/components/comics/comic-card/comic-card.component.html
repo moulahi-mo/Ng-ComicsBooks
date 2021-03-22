@@ -1,6 +1,9 @@
 <ng-content></ng-content>
 
-<article class="bg-light mx-auto p-3 card my-4">
+<article
+  [ngClass]="page === 'favorites' ? 'py-0 ' : ''"
+  class="bg-light mx-auto p-3 card my-4"
+>
   <!-- * drag/drop icon  -->
   <i
     *ngIf="page === 'favorites'"
@@ -58,6 +61,8 @@
       </article>
     </div>
     <!-- ! right side -->
+
+    <!-- ? other Pages ------------------------------------------------------->
     <div
       class="col d-flex flex-column justify-content-between mt-3 mx-auto mx-sm-0 align-items-end"
     >
@@ -67,7 +72,7 @@
         {{ comic.price | currency: "USD":"symbol" }}
       </h4>
 
-      <div class="d-flex flex-column justify-content-around">
+      <div class="d-flex flex-column justify-content-around w-50 mt-5">
         <!-- * favorite / buy botton -->
         <app-favorite-buy
           (onBuyClicked)="onBuyClicked($event)"
@@ -110,20 +115,20 @@
         >
           remove
         </button>
-        <div class="d-flex justify-content-end mt-1">
-          <!-- * infos creator -->
-          <p class="d-block mr-3 text-capitalize">
-            <span class="mr-2 font-weight-bold">created at </span>
-            {{ comic.date | date: "shortDate" }}
-          </p>
-          <p
-            *ngIf="comic.owner && !isCreator"
-            class="d-block mr-3 text-capitalize"
-          >
-            <span class="mr-2 font-weight-bold">by</span>
-            {{ comic.owner | titlecase }}
-          </p>
-        </div>
+      </div>
+      <!-- * infos owner / date -->
+      <div class="d-flex justify-content-end mt-0 pt-0">
+        <h6 class="d-block mr-3 text-capitalize font-weight-normal ml-auto">
+          <span class="mr-2 font-weight-bold">created at </span>
+          {{ comic.date | date: "MM/dd/yyyy" }}
+        </h6>
+        <h6
+          *ngIf="comic.owner && !isCreator"
+          class="d-block mr-3 text-capitalize font-weight-normal"
+        >
+          <span class="mr-2 font-weight-bold">by</span>
+          {{ comic.owner | titlecase }}
+        </h6>
       </div>
     </div>
   </div>

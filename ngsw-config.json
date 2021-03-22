@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap",
+          "https://fonts.gstatic.com/**"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "products",
+      "urls": [
+        "http://gateway.marvel.com/v1/public/comics?apikey=87c0e8fefe1df530b86527bf6ace82c3&ts=1&hash=db5deddc59c2d1f5910075b14ec388ff"
+      ],
+      "cacheConfig": {
+        "maxAge": "6h",
+        "maxSize": 10,
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}

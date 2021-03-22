@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +46,7 @@ import { SoonComponent } from './components/shared/soon/soon.component';
 import { FavoritesService } from './services/favorites.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToastComponent } from './components/shared/toast/toast.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +79,7 @@ import { ToastComponent } from './components/shared/toast/toast.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({ auth: AuthReducer }, {}),
     FormsModule,
@@ -84,6 +88,7 @@ import { ToastComponent } from './components/shared/toast/toast.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     DragDropModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     AuthGuard,

@@ -21,8 +21,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  { path: 'comics', component: ComicsComponent, canActivate: [AuthGuard] },
-  { path: 'comics/:id', component: ComicsDetailsComponent },
+  {
+    path: 'comics',
+    component: ComicsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'comics/:id',
+    component: ComicsDetailsComponent,
+  },
 
   { path: 'soon', component: SoonComponent },
 
