@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +47,8 @@ import { FavoritesService } from './services/favorites.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CoreModule } from './modules/core/core.module';
+import { AuthModule } from './modules/feature_modules/auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,11 +56,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NavbarComponent,
     HomeComponent,
     NotFoundComponent,
-    LoginComponent,
-    RegisterComponent,
+    // LoginComponent,
+    // RegisterComponent,
     FavoritesComponent,
     ComicsComponent,
-    SocialComponent,
+    // SocialComponent,
     ComicsDetailsComponent,
     ComicCardComponent,
     FiltersBarComponent,
@@ -79,26 +81,19 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CoreModule,
+    AuthModule,
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({ auth: AuthReducer }, {}),
     FormsModule,
-    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     DragDropModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-  ],
-  providers: [
-    AuthGuard,
-    AuthService,
-    UsersService,
-    ComicsService,
-    LocalStorageService,
-    FiltersServiceService,
-    MyComicsService,
-    FavoritesService,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   bootstrap: [AppComponent],
 })

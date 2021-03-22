@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
 import { FavoritesComponent } from './components/favorites/favorites/favorites.component';
 import { HomeComponent } from './components/homePage/home/home.component';
 import { ComicsComponent } from './components/comics/my-comics/comics.component';
@@ -12,8 +10,6 @@ import { SoonComponent } from './components/shared/soon/soon.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'auth/login', component: LoginComponent },
-  { path: 'auth/register', component: RegisterComponent },
 
   {
     path: 'favorites',
@@ -29,6 +25,15 @@ const routes: Routes = [
   {
     path: 'comics/:id',
     component: ComicsDetailsComponent,
+  },
+
+  {
+    path: 'auth',
+
+    loadChildren: () =>
+      import('../app/modules/feature_modules/auth/auth.module').then(
+        (m) => m.AuthModule
+      ),
   },
 
   { path: 'soon', component: SoonComponent },
