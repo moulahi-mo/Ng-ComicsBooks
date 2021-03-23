@@ -20,7 +20,7 @@ export class FavoritesService {
   public addNewFavorite(comic: Comic): Observable<any> {
     //* getting the current creator uid before adding the new comic
     const uid = this.auth.getCurrUserUid();
-    console.log(this.uid);
+
     const favoriteWithUser = { ...comic, uid };
     return from(
       // * set document id = creator uid + comic id
@@ -33,6 +33,7 @@ export class FavoritesService {
     const uid = this.auth.getCurrUserUid();
     return from(
       this.Afirestore.collection('favorites', (ref) =>
+        //! fetch only the favorites with the same uid / the currrent auth user not other users
         ref.where('uid', '==', uid)
       ).valueChanges()
     ).pipe(catchError(this.HundleErrors));

@@ -26,13 +26,13 @@ const routes: Routes = [
     path: 'comics/:id',
     component: ComicsDetailsComponent,
   },
-
+  //! making the auth route as a lazy loading bundle
   {
     path: 'auth',
 
     loadChildren: () =>
       import('../app/modules/feature_modules/auth/auth.module').then(
-        (m) => m.AuthModule
+        (module) => module.AuthModule
       ),
   },
 

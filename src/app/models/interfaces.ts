@@ -35,10 +35,3 @@ export interface Character {
     items: { name: string; resourceURI: string }[];
   };
 }
-
-// export interface NewComic extends Comic {
-//   condition: string;
-//   price: string;
-//   description: string;
-
-// }

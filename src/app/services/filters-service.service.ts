@@ -19,7 +19,7 @@ export class FiltersServiceService {
 
   constructor(private http: HttpClient) {}
 
-  // ! get comic by lazy loading scrolling
+  // ! get comics by lazy loading scrolling (skip and limit )
   public getComicsByLazyLoading(limit: number, skip: number): Observable<any> {
     return this.http
       .get<Comic[]>(this.url + `&limit=${limit}&offset=${skip}`)
@@ -84,7 +84,7 @@ export class FiltersServiceService {
     );
   }
 
-  // ! get comic by lazy loading scrolling
+  // ! get Characters by lazy loading scrolling  (skip and limit )
   public getCharactersByLazyLoading(
     limit: number,
     skip: number
@@ -123,7 +123,7 @@ export class FiltersServiceService {
       );
   }
 
-  //! map results
+  //! helper function to map results
   private mapResults(data) {
     return data.data.results.map((res) => {
       return {

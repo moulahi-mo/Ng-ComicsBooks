@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    //! get the auth state from store if it is not authorized to go to the route redirect to login page
     this.isAuth$.subscribe((uid) => {
       if (!uid) {
         console.log('guard is not auth');

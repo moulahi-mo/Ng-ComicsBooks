@@ -19,8 +19,6 @@ import { ComicsComponent } from './components/comics/my-comics/comics.component'
 import { ComicsDetailsComponent } from './components/comics/comic-details/comics-details.component';
 import { ComicCardComponent } from './components/comics/comic-card/comic-card.component';
 import { FiltersBarComponent } from './components/shared/filters-bar/filters-bar.component';
-import { ErrorComponent } from './components/shared/error/error.component';
-import { LoadingComponent } from './components/shared/loading/loading.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -29,7 +27,6 @@ import { environment } from 'src/environments/environment';
 
 import { AuthReducer } from './store/auth/auth.reducer';
 
-import { NoDataComponent } from './components/shared/no-data/no-data.component';
 import { LazyLoadingScrollComponent } from './components/shared/lazy-loading-scroll/lazy-loading-scroll.component';
 import { ComicMoreDetailsComponent } from './components/comics/comic-more-details/comic-more-details.component';
 
@@ -47,6 +44,7 @@ import { ToastComponent } from './components/shared/toast/toast.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from './modules/core/core.module';
 import { AuthModule } from './modules/feature_modules/auth/auth.module';
+import { SharedModule } from './modules/shared_modules/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,23 +52,17 @@ import { AuthModule } from './modules/feature_modules/auth/auth.module';
     NavbarComponent,
     HomeComponent,
     NotFoundComponent,
-
     FavoritesComponent,
     ComicsComponent,
-
     ComicsDetailsComponent,
     ComicCardComponent,
     FiltersBarComponent,
-    ErrorComponent,
-    LoadingComponent,
-    NoDataComponent,
+
     LazyLoadingScrollComponent,
     ComicMoreDetailsComponent,
     CharacterBadgeComponent,
-
     AddModalComponent,
     RemoveModalComponent,
-
     FavoriteBuyComponent,
     SoonComponent,
     ToastComponent,
@@ -79,6 +71,7 @@ import { AuthModule } from './modules/feature_modules/auth/auth.module';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    SharedModule,
     AuthModule,
     BrowserAnimationsModule,
     HttpClientModule,

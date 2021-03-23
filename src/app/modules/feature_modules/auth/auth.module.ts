@@ -12,11 +12,15 @@ import { StoreModule } from '@ngrx/store';
 import { AuthReducer } from 'src/app/store/auth/auth.reducer';
 import { environment } from 'src/environments/environment';
 import { AuthRoutingModule } from '../../routing_modules/auth-routing/auth-routing.module';
+import { ErrorComponent } from 'src/app/components/shared/error/error.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
+import { SharedModule } from '../../shared_modules/shared.module';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, SocialComponent],
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

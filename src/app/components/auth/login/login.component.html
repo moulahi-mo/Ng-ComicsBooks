@@ -15,7 +15,10 @@
         <!-- ? if Error-->
         <app-error *ngIf="isError" [message]="isError"></app-error>
         <!-- ? is loading -->
-        <app-loading *ngIf="isLoading && !isError" class="my-5"></app-loading>
+        <app-loading
+          *ngIf="isLoading && !isError"
+          class="my-5 w-100"
+        ></app-loading>
 
         <!-- * Login Form  start---------------------------------------------------->
         <section *ngIf="!isLoading" class="mx-auto w-100">

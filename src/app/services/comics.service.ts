@@ -13,7 +13,7 @@ export class ComicsService {
   apiKey: string = environment.apiKey;
   constructor(private http: HttpClient) {}
 
-  //! fetch all commics (limit 20 items)
+  //! fetch all commics (limit 20 items by default)
   public getComics(): Observable<any> {
     return this.http
       .get<Comic[]>(this.url + '?' + this.apiKey + '&orderBy=title')
@@ -43,7 +43,7 @@ export class ComicsService {
         catchError(this.HundleErrors)
       );
   }
-
+  //! get single comic
   public getSingleComic(id: string): Observable<any> {
     return this.http.get<Comic>(this.url + `/${id}` + '?' + this.apiKey).pipe(
       map((data: any) => {
@@ -99,7 +99,7 @@ export class ComicsService {
     }
   }
 
-  //! fetch chars infos after getting the comic by id
+  //! fetch all chars infos / comic :: after getting the comic id
 
   private fetchCharsInfos = async (char: any) => {
     try {

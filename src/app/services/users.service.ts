@@ -1,9 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
 import { User } from '../models/interfaces';
 import { catchError, switchMap } from 'rxjs/operators';

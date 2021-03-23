@@ -7,7 +7,6 @@ import {
 } from '@angular/animations';
 
 const fadeAnimation = trigger('fade', [
-  // ...
   state(
     'fadeIn',
     style({

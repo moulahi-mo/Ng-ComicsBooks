@@ -38,7 +38,7 @@ export class AuthService {
       (user) => {
         if (user) {
           this.store.dispatch(authActions.login({ uid: user.uid }));
-          console.log(user);
+
           this.getUser(user);
         } else {
           this.store.dispatch(authActions.logout());
@@ -65,7 +65,6 @@ export class AuthService {
     } else if (user.displayName == null) {
       ///* if regular user
       this.Cservice.getUserById(user.uid).subscribe((user: User) => {
-        console.log(user);
         this.UserInfos.next({ ...user });
         return user;
       });
@@ -76,7 +75,6 @@ export class AuthService {
     this.uid$ = this.store.select('auth');
     this.uid$.subscribe(
       (uid) => {
-        console.log(uid);
         this.idUser = uid;
       },
       (err) => null

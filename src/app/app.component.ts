@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
-
 declare var jQuery: any;
 
 @Component({
@@ -11,8 +9,8 @@ declare var jQuery: any;
 })
 export class AppComponent implements OnInit {
   constructor(private auth: AuthService) {}
-
   ngOnInit() {
+    //! init auth state
     this.auth.authCheck();
   }
 }

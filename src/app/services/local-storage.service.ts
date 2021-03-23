@@ -17,12 +17,7 @@ export class LocalStorageService {
       return [];
     }
   }
-
   public removeItem(item: string) {
     localStorage.removeItem(item);
-  }
-
-  public clearItems() {
-    localStorage.clear();
   }
 }

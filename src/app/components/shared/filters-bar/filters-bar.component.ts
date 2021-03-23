@@ -21,16 +21,14 @@ export class FiltersBarComponent implements OnInit {
   selectedChar: Character | any;
   isSelected: boolean = false;
   isClicked: boolean = false;
-  search: string;
+  search: string = null;
   isError: string = null;
   limit: number = 20;
   skip: number = 0;
   constructor(private comicFilter: FiltersServiceService) {}
 
-  ngOnInit(): void {
-    this.search = null;
-  }
-  //! serach bar
+  ngOnInit(): void {}
+  //! serach bar ons search comics
   public onSearch() {
     this.comicFilter.getComicByTitle(this.search.trim()).subscribe(
       (data: any) => {
@@ -40,18 +38,17 @@ export class FiltersBarComponent implements OnInit {
     );
   }
 
-  //! characters list clicked
+  //! characters input clicked
   public onCharacterClicked() {
     this.isClicked = !this.isClicked;
     this.comicFilter.getCharacters().subscribe(
       (chars: any) => {
         this.characters = chars;
-        console.log(this.characters);
       },
       (err) => (this.isError = err)
     );
   }
-  //! character selected
+  //! character list selected character from the list
   public onCharacterSelected(id: number) {
     this.isClicked = false;
     this.isSelected = true;
@@ -60,7 +57,6 @@ export class FiltersBarComponent implements OnInit {
     //! get comics by selected char id
     this.comicFilter.getSingleCharacterComicsList(id).subscribe(
       (comics: Comic[]) => {
-        console.log(comics);
         //!emit the result to the parent
         this.onSingleCharacterSelected.emit({
           comics: [...comics],
@@ -76,9 +72,8 @@ export class FiltersBarComponent implements OnInit {
     this.selectedChar = this.characters.filter((char) => {
       return char.id == id;
     });
-    console.log(this.selectedChar);
   }
-  //! order comics
+  //! select by order
   public onOrderBy(selected: string) {
     switch (selected) {
       //* Alphabetic
@@ -87,7 +82,7 @@ export class FiltersBarComponent implements OnInit {
           a.title.localeCompare(b.title)
         );
         this.onOrderComic.emit(this.comicsList);
-        console.log('title', this.comicsList);
+
         break;
       //* Most recent
       case '-onsaleDate':
@@ -95,19 +90,19 @@ export class FiltersBarComponent implements OnInit {
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
         this.onOrderComic.emit(this.comicsList);
-        console.log('title', this.comicsList);
+
         break;
       //* Price Hight to Low
       case 'priceInc':
         this.comicsList = this.comicsList.sort((a, b) => a.price - b.price);
         this.onOrderComic.emit(this.comicsList);
-        console.log('priceInc', this.comicsList);
+
         break;
       // * Price Low to Hight
       case 'priceDesc':
         this.comicsList = this.comicsList.sort((a, b) => b.price - a.price);
         this.onOrderComic.emit(this.comicsList);
-        console.log('priceDesc', this.comicsList);
+
         break;
 
       default:
@@ -115,12 +110,10 @@ export class FiltersBarComponent implements OnInit {
     }
   }
 
-  //! quantity
+  //! select by quantity
   public onQuantity(quantity: number) {
-    console.log(quantity);
     this.comicFilter.getComicsByQuantity(quantity).subscribe(
       (comics: Comic[]) => {
-        console.log(comics);
         this.onQuantityComic.emit(comics);
       },
       (err) => (this.isError = err)
@@ -129,14 +122,13 @@ export class FiltersBarComponent implements OnInit {
 
   //!  on scrolling lazy loading chars
   public onScroll() {
+    //* increment skip for every time scrooling on bottom and get chars from API by limit (limit & skip )
     this.skip += this.limit;
-    console.log('is loading');
     this.comicFilter
       .getCharactersByLazyLoading(this.limit, this.skip)
       .subscribe(
         (chars: any) => {
           this.characters = [...this.characters, ...chars];
-          console.log(this.characters);
         },
         (err) => (this.isError = err)
       );

@@ -1,5 +1,5 @@
 <section class="my-5 d-flex w-100 filter-bar justify-content-around">
-  <!-- ! serach input-->
+  <!-- ! search bar ------------>
   <form
     (ngSubmit)="onSearch()"
     class="form-search d-flex bg-white p-0 mt-2 w-50 form-group bg-white"
@@ -19,7 +19,7 @@
       ></i>
     </button>
   </form>
-  <!-- ! characters select-->
+  <!-- ! characters select --------------------------->
   <div class="form-group char-wrapper">
     <input
       (click)="onCharacterClicked()"
@@ -30,7 +30,8 @@
     />
 
     <i class="fa fa-chevron-down" aria-hidden="true"></i>
-    <!-- * list characters-->
+
+    <!-- * list characters  show/ hide  -------------------------------------->
 
     <aside
       *ngIf="isClicked"
@@ -41,6 +42,7 @@
         *ngFor="let char of characters"
         class="d-flex my-2 pt-3 pl-2"
       >
+        <!-- ! list charasters to show  ------------>
         <article class="d-flex align-items-center p-2 w-100">
           <img
             [src]="char.image"
@@ -54,13 +56,14 @@
           </h6>
         </article>
       </div>
+      <!-- ! lazy loading compoenent  on scroll ------------>
       <app-lazy-loading-scroll
         (scrolled)="onScroll()"
       ></app-lazy-loading-scroll>
     </aside>
   </div>
 
-  <!-- ! Order By-->
+  <!-- ! Order By ------------------------------------------->
   <div class="form-group">
     <select class="form-control my-2" (change)="onOrderBy(order.value)" #order>
       <option hidden>Alphabetical</option>
@@ -70,7 +73,7 @@
       <option value="priceDesc">Price - High to Low</option>
     </select>
   </div>
-  <!-- ! quantity-->
+  <!-- ! quantity ---------------------------------------->
   <div class="form-group">
     <select
       class="form-control my-2"

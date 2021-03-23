@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Store } from '@ngrx/store';
+
 import { from, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Comic } from '../models/interfaces';
@@ -20,7 +20,7 @@ export class MyComicsService {
   public addNewComic(comic: Comic): Observable<any> {
     //* getting the current creator uid before adding the new comic
     const uid = this.auth.getCurrUserUid();
-    console.log(this.uid);
+
     const comicWithUser = { ...comic, uid };
     return from(
       // * set document id = creator uid + comic id
@@ -33,6 +33,7 @@ export class MyComicsService {
     const uid = this.auth.getCurrUserUid();
     return from(
       this.Afirestore.collection('comics', (ref) =>
+        //! fetch only the comics with the same uid / the currrent auth user not other users
         ref.where('uid', '==', uid)
       ).valueChanges()
     ).pipe(catchError(this.HundleErrors));
