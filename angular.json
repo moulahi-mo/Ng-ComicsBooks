@@ -135,7 +135,7 @@
           "builder": "@netlify-builder/deploy:deploy",
           "options": {
             "outputPath": "dist/comicBooks",
-            "netlifyToken": "jHDTv2orEDw8zmHm605rP1L_m1v4rnp3Cwdqk7zY5js",
+            "netlifyToken": "jxFfCUDsJFoHeMihR2JVIMj1uE7DUIQ0_I_fqNtyTlY",
             "siteId": "d3db8dc0-5b55-48bf-8d5d-9dac3bdfcefc"
           }
         }

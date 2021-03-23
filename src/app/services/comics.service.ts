@@ -81,7 +81,9 @@ export class ComicsService {
     items: [{ name: string; resourceURI: string }];
   }) {
     if (characters.count > 0) {
-      let listChars = characters.items;
+      //* replacing all urls http by adding (s) to by pass mixed content blaquage
+      let listChars = this.replaceHttpByHttps(characters);
+      characters.items;
       const charactersList = await this.fetchCharsInfos(listChars);
       const list = charactersList.map((item: any) => {
         const dataChar = item.data.results[0];
@@ -117,6 +119,18 @@ export class ComicsService {
       console.log(err);
     }
   };
+
+  //! replace http bu https to by pass blocked Mixed Content
+  private replaceHttpByHttps(characters: any) {
+    characters.items
+      .filter((item) => {
+        return !item.resourceURI.includes('https');
+      })
+      .forEach((item) => {
+        item.resourceURI = item.resourceURI.replace('http', 'https');
+      });
+    return characters.items;
+  }
 
   //! hundling errors
   private HundleErrors(error: HttpErrorResponse) {
