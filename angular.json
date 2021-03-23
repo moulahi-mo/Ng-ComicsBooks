@@ -100,9 +100,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },
@@ -114,9 +112,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -135,8 +131,8 @@
           "builder": "@netlify-builder/deploy:deploy",
           "options": {
             "outputPath": "dist/comicBooks",
-            "netlifyToken": "jxFfCUDsJFoHeMihR2JVIMj1uE7DUIQ0_I_fqNtyTlY",
-            "siteId": "d3db8dc0-5b55-48bf-8d5d-9dac3bdfcefc"
+            "netlifyToken": "6E0lQlhtOEenEKEh6YfFCtCHw5jh2arGLovDub4sFeg",
+            "siteId": "b1ad13e6-23f7-486e-82ba-2a28459263e8"
           }
         }
       }

@@ -4,7 +4,7 @@ Project Marvel Comics Books.
 
 ## Demo
 
-Live demo [Here](https://comics-marvel.netlify.app)
+Live demo [Here](https://marvels-comics.netlify.app/)
 
 ## Extra Features added in this project
 
