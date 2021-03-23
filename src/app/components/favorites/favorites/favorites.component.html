@@ -14,7 +14,7 @@
     ></app-no-data>
     <!--! drag drop directives -->
     <div class="w-100" cdkDropList (cdkDropListDropped)="drop($event)">
-      <!--! comics list -->
+      <!--! comics list cards -->
       <app-comic-card
         [ngStyle]="{ cursor: 'all-scroll' }"
         cdkDrag
@@ -24,6 +24,7 @@
         [page]="'favorites'"
         [isCreator]="'false'"
       >
+        <!--* adding placeholder after draging item -->
         <div class="placeholder-drop invisible display-1" *cdkDragPlaceholder>
           droped element placeholder
         </div>

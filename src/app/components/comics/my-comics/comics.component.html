@@ -10,7 +10,7 @@
       >
         + add comic
       </button>
-      <!--! filter-bar -->
+      <!--! filters - bar -->
       <app-filters-bar
         [comicsList]="comics"
         (onSearchComic)="onSearchComic($event)"
@@ -37,7 +37,7 @@
       *ngIf="character.id"
       [character]="character"
     ></app-character-badge>
-    <!--! comics list -->
+    <!--! comics list by card -->
     <app-comic-card
       class="py-5"
       *ngFor="let comic of comics"
@@ -47,6 +47,7 @@
     ></app-comic-card>
   </div>
 </section>
+
 <!-- !  modal ADD -->
 <app-add-modal
   (onNewComicAdded)="onNewComicAdded($event)"

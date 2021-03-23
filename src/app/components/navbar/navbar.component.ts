@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // ! get curr auth user
   public getCurrentUser() {
     this.unsb = this.auth.UserInfos.subscribe((user) => {
-      console.log(user);
       this.LogginUser = user;
     });
   }
@@ -49,14 +48,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isAuth$.subscribe((id: string) => {
       if (id) {
         this.isInit = false;
-        console.log(id);
       } else {
         this.isInit = false;
-        console.log('no user found');
       }
     });
   }
-
+  //! destroy isAuth$ obs
   ngOnDestroy() {
     this.unsb.unsubscribe();
   }

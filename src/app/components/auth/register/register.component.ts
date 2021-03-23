@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit {
     setTimeout(() => {
       this.isShown = true;
     }, 500);
+    //! init propreties
     this.isError = null;
     this.isLoading = false;
 
@@ -40,7 +41,7 @@ export class RegisterComponent implements OnInit {
       password: null,
     };
   }
-  //! compare confirm password
+  //! compare confirm password to the typed password
   public checkPassword(e: Event) {
     const password = this.form.value.password;
     const confirm_new_password = (e.target as any).value;
@@ -61,13 +62,12 @@ export class RegisterComponent implements OnInit {
     const name = form.value.name.trim();
     const email = form.value.email.trim();
     const password = form.value.password.trim();
-    console.log(form.value);
+
     //* signup with fire auth
     this.auth
       .signUp(email, password)
       //! success
       .then((response) => {
-        console.log(response);
         if (response.user.uid) {
           // * create new user
           const newUser = {

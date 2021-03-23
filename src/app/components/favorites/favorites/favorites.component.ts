@@ -20,7 +20,7 @@ export class FavoritesComponent implements OnInit {
   ngOnInit(): void {
     this.getAllFavorites();
   }
-
+  // ! get favorites from db firebase
   public getAllFavorites() {
     this.isError = null;
     this.isloading = true;
@@ -39,7 +39,6 @@ export class FavoritesComponent implements OnInit {
             new Date(b.favorite_date).getTime() -
             new Date(a.favorite_date).getTime()
         );
-        console.log(this.comics);
         this.isloading = false;
       },
       (err) => {
@@ -50,9 +49,8 @@ export class FavoritesComponent implements OnInit {
     );
   }
 
-  // ! drag drop
+  // ! drag drop hundler
   public drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.comics, event.previousIndex, event.currentIndex);
   }
-  public onDrag() {}
 }

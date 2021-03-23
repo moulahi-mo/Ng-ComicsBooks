@@ -5,7 +5,7 @@
   <app-error *ngIf="isError" [message]="isError" class="my-5"></app-error>
 
   <section *ngIf="!isError && comic.id" class="comic-details mt-0">
-    <!-- * background image blured poster  -->
+    <!-- * background image blured poster  -------------->
     <img class="poster-background" [src]="comic?.poster" [alt]="comic?.title" />
     <div class="container mt-0 pt-0">
       <article class="d-flex flex-column card-details bg-transparent mt-0">
@@ -35,7 +35,7 @@
           class="row my-5"
         ></app-comic-more-details>
       </article>
-      <!-- ! chars section lis ---------------------------------------------------------------------------->
+      <!-- ! characters section list  ( image / name ) -------------------------------------------------------------->
       <section *ngIf="!isloading" class="characters text-white">
         <h3 class="font-weight-bold text-left text-capitalize my-2">
           characters

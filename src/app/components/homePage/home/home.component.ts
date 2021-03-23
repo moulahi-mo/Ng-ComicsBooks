@@ -1,9 +1,4 @@
-import {
-  AfterContentChecked,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -19,7 +14,7 @@ import { MyComicsService } from 'src/app/services/my-comics.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, AfterContentChecked {
+export class HomeComponent implements OnInit {
   isAuth$: Observable<string>;
   comics: Comic[] = [];
   character: Character;
@@ -68,44 +63,31 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.getlocalComics();
   }
 
-  ngAfterContentChecked() {
-    this.isFetched = true;
-  }
-  //! get cached comics or from api if no cache found
+  //! get cached comics or from api if no cache (local storage) found
   private getlocalComics() {
     const myComics = this.localService.getItem('comics');
-
-    // this.comics = [...this.localService.getItem('comics'), ...myComics];
-    // //* filtring list from any double comic
-    // const temporary = this.comics;
-    // const filtredFavorites = this.comics.filter((comic) => {
-    //   for (let item of temporary) {
-    //     return comic.id !== item.id;
-    //   }
-    // });
-    // this.comics = filtredFavorites;
     this.comics = myComics;
+    // * if the local storage list is empty fire fetching
     if (myComics.length <= 0) {
       this.fetchComics();
     }
   }
 
-  //! fetch my comics {
+  //! fetch my comics from firebase db
   public fetchMyComics() {
     this.myComics.getAllComics().subscribe(
       (myComics: Comic[]) => {
-        console.log(myComics);
         this.myComicsList = myComics;
+        //* add my comics list to home page list of comics
         this.comics = [...this.comics, ...this.myComicsList];
         const temporary = this.comics;
+        //* filter the comics list from doubles
         const filtredFavorites = this.comics.filter((comic) => {
           for (let item of temporary) {
             return comic.id !== item.id;
           }
         });
         this.comics = filtredFavorites;
-
-        // this.localService.setItem('myComics', this.myComicsList);
       },
       (err) => {
         this.isloading = false;
@@ -115,21 +97,23 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     );
   }
 
-  // ! fetch comics
+  // ! fetch comics from Marvel API
   public fetchComics() {
     this.isError = null;
     this.isloading = true;
+    //* fetch from A¨PI
     this.comicsService.getComics().subscribe(
       (list: any) => {
         this.comics = list;
+        //* fetch from my comics firebase
         this.myComics.getAllComics().subscribe(
           (myComics: Comic[]) => {
             this.myComicsList = myComics;
+            //* spreade list in the main list of comics
             this.comics = [...list, ...myComics];
             this.isloading = false;
-            console.log(this.comics);
+            //* store list on local storage for cahe
             this.localService.setItem('comics', this.comics);
-            // this.localService.setItem('myComics', this.myComicsList);
           },
           (err) => {
             this.isloading = false;
@@ -172,12 +156,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.isNoData = true;
     }
   }
-  //! on select character
+  //! on selected character
   public onSingleCharacterSelected(selectedComic: {
     character: Character;
     comics: Comic[];
   }) {
-    console.log(selectedComic);
     this.comics = selectedComic.comics;
     this.character = selectedComic.character;
   }
@@ -191,7 +174,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       .subscribe((comics: Comic[]) => {
         this.isFetched = true;
         this.comics = [...this.comics, ...comics];
-        console.log(comics);
       });
   }
 }

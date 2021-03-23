@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Comic } from 'src/app/models/interfaces';
-import { AuthService } from 'src/app/services/auth.service';
 import { ComicsService } from 'src/app/services/comics.service';
 import { MyComicsService } from 'src/app/services/my-comics.service';
 
@@ -23,15 +22,15 @@ export class ComicsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //! query
+    //! query a params
     const query = this.route.snapshot.queryParams.creator;
-    //! check if user is auth
+    const id = this.route.snapshot.paramMap.get('id');
+    //! check if user is auth (if he is the creator of the comic?)
     this.isCreator = query === 'true' ? true : false;
 
+    //! init values
     this.isError = null;
     this.isloading = false;
-    const id = this.route.snapshot.paramMap.get('id');
-
     this.comic = {
       id: null,
       format: null,
@@ -50,6 +49,7 @@ export class ComicsDetailsComponent implements OnInit {
 
     this.fetchComicDetails(id);
   }
+  //! fetch comic detail depending on :: creator state
   public fetchComicDetails(id: string) {
     this.isError = null;
     this.isloading = true;
@@ -60,7 +60,6 @@ export class ComicsDetailsComponent implements OnInit {
           this.isloading = false;
           comic.owner = comic.owner ? comic.owner : '';
           this.comic = comic;
-          console.log(this.comic);
         },
         (err) => {
           this.isloading = false;
@@ -72,19 +71,9 @@ export class ComicsDetailsComponent implements OnInit {
       //! if it is an ordinaire  comic get it from firebase Marvel APi
       this.comicsService.getSingleComic(id).subscribe(
         (comic: Comic) => {
-          // const truncateNames = comic.characters.map((char) => {
-          //   const index = char.name.indexOf('(');
-          //   if (index > 10) {
-          //     return char.name.split('(', 1);
-          //   } else {
-          //     return char.name;
-          //   }
-          // });
-          // console.log(truncateNames);
           this.isloading = false;
           comic.owner = comic?.owner ? comic?.owner : '';
           this.comic = comic;
-          console.log(this.comic);
         },
         (err) => {
           this.isloading = false;

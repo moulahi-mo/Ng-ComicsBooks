@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.isShown = true;
     }, 500);
-
+    //! init propreties
     this.isError = null;
     this.isLoading = false;
 
@@ -40,13 +40,12 @@ export class LoginComponent implements OnInit {
     this.isError = null;
     const email = form.value.email.trim();
     const password = form.value.password.trim();
-    console.log(form.value);
+
     //* signup with fire auth
     this.auth
       .login(email, password)
       //! success
       .then((response) => {
-        console.log(response);
         if (response.user.uid) {
           this.isLoading = false;
           this.router.navigate(['/']);

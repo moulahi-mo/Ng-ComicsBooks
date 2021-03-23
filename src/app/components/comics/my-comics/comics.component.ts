@@ -21,6 +21,7 @@ export class ComicsComponent implements OnInit {
   constructor(private Mycomics: MyComicsService) {}
 
   ngOnInit(): void {
+    //! init values
     this.comicDetailsIsHere = {
       id: null,
       format: null,
@@ -41,11 +42,11 @@ export class ComicsComponent implements OnInit {
       image: null,
       name: null,
     };
-
+    // !fetch my comics
     this.getPersonalComics();
   }
 
-  //! on search
+  //! on search box action
   public onSearchComic(comicsByTile: Comic[]) {
     if (comicsByTile.length > 0) {
       this.comics = comicsByTile;
@@ -54,7 +55,7 @@ export class ComicsComponent implements OnInit {
       this.isNoData = true;
     }
   }
-  //!on order
+  //!on order filter action
   public onOrderComic(comicsByOrder: Comic[]) {
     if (comicsByOrder.length > 0) {
       this.comics = comicsByOrder;
@@ -63,7 +64,7 @@ export class ComicsComponent implements OnInit {
       this.isNoData = true;
     }
   }
-  //!on quantity
+  //!on quantity filter action
   public onQuantityComic(comicsByOrder: Comic[]) {
     if (comicsByOrder.length > 0) {
       this.comics = comicsByOrder;
@@ -72,40 +73,35 @@ export class ComicsComponent implements OnInit {
       this.isNoData = true;
     }
   }
-  //! on select character
+  //! on select character from the list chars (filter bar)
   public onSingleCharacterSelected(selectedComic: {
     character: Character;
     comics: Comic[];
   }) {
-    console.log(selectedComic);
     this.comics = selectedComic.comics;
     this.character = selectedComic.character;
   }
 
-  //! add button new comic
+  //! add button new comic by add modal
   public onNewComicAdded(newComic: Comic) {
-    console.log(newComic);
     this.isNotClosed = false;
-    //! store it to firebase db
+    //* store it to firebase db & adding date creation
     if (newComic.id) {
       this.Mycomics.addNewComic({
         ...newComic,
         mycomic_date: new Date(),
       }).subscribe(
-        (data: any) => {
-          console.log(data, 'data added successfully');
-        },
+        () => {},
         (err) => (this.isError = err)
       );
     }
   }
-  //! get all comics for the user
+  //! get all comics only for the current user
   public getPersonalComics() {
     this.isError = null;
     this.isloading = true;
     this.Mycomics.getAllComics().subscribe(
       (comics: Comic[]) => {
-        console.log(comics);
         //* sorting by most recent date
         this.comics = [...new Set(comics)].sort(
           (a, b) =>

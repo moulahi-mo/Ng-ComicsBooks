@@ -20,14 +20,12 @@ export class ComicMoreDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   public onComicEdited(comicEdited: Comic) {
-    console.log(comicEdited);
     comicEdited.pages = comicEdited.pages ? comicEdited.pages : 0;
     //! store it to firebase db
     if (comicEdited.id) {
       this.myComicService.addNewComic(comicEdited).subscribe(
-        (data: any) => {
+        () => {
           this.comic = comicEdited;
-          console.log(data, 'comic edited success successfully');
         },
         (err) => console.log(err)
       );
@@ -35,6 +33,7 @@ export class ComicMoreDetailsComponent implements OnInit {
   }
 
   // ! toast actions
+
   public onBuyClicked(id: string) {
     this.isBuyOrFav = 'buy';
     if (id == this.comic.id) {

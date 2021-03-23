@@ -14,22 +14,20 @@ export class SocialComponent implements OnInit {
   constructor(public authService: UsersService, private router: Router) {}
 
   ngOnInit(): void {}
-
+  //! google sign in
   public onGoogleSignin() {
     this.authService
       .googleSignin()
       .then((user) => {
-        console.log(user, 'is here google');
         this.router.navigate(['/']);
       })
       .catch((err) => (this.isError = err));
   }
-
+  //! facebook sign in
   public onFacebookSignin() {
     this.authService
       .FacebookAuth()
       .then((user) => {
-        console.log(user, 'is here facebook');
         this.router.navigate(['/']);
       })
       .catch((err) => (this.isError = err));

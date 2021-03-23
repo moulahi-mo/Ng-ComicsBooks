@@ -1,5 +1,6 @@
 <section class="homePage">
   <div class="container my-5">
+    <!--! filters bar-->
     <app-filters-bar
       [comicsList]="comics"
       (onSearchComic)="onSearchComic($event)"
@@ -29,6 +30,7 @@
       [comic]="comic"
       [page]="'home'"
     ></app-comic-card>
+    <!--* lazy loading component wrapp image loading-->
     <app-lazy-loading-scroll (scrolled)="onScroll()">
       <img
         src="../../../../assets/images/spinner.gif"
@@ -38,6 +40,5 @@
         class="d-block mx-auto my-5"
       />
     </app-lazy-loading-scroll>
-    <!-- *ngIf="isFetched && !isloading" -->
   </div>
 </section>
