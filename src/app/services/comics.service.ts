@@ -9,7 +9,7 @@ import { Comic } from '../models/interfaces';
   providedIn: 'root',
 })
 export class ComicsService {
-  url: string = 'http://gateway.marvel.com/v1/public/comics';
+  url: string = 'https://gateway.marvel.com/v1/public/comics';
   apiKey: string = environment.apiKey;
   constructor(private http: HttpClient) {}
 

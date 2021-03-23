@@ -105,22 +105,9 @@ export class HomeComponent implements OnInit {
     this.comicsService.getComics().subscribe(
       (list: any) => {
         this.comics = list;
-        //* fetch from my comics firebase
-        this.myComics.getAllComics().subscribe(
-          (myComics: Comic[]) => {
-            this.myComicsList = myComics;
-            //* spreade list in the main list of comics
-            this.comics = [...list, ...myComics];
-            this.isloading = false;
-            //* store list on local storage for cahe
-            this.localService.setItem('comics', this.comics);
-          },
-          (err) => {
-            this.isloading = false;
-            this.isError = err;
-            console.log(err);
-          }
-        );
+        //* store list on local storage for cahe
+        this.localService.setItem('comics', this.comics);
+        this.isloading = false;
       },
       (err) => {
         this.isloading = false;

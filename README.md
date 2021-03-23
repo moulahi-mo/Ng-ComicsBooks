@@ -1,27 +1,16 @@
 # ComicBooks
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
+Project Marvel Comics Books.
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Live demo [Here](https://comics-marvel.netlify.app)
 
-## Code scaffolding
+## Extra Features added in this project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular animation For Login & Register page .
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- AuthGuard for routes ( Favorites | My comics ) .
+- Sever workers `PWA` for a beter user experience .
+- adding feature Modules , shared Module, core Module and routing Modules .
+- lazy loading added for `Auth` routes .

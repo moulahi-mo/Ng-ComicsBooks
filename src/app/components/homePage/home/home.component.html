@@ -33,6 +33,7 @@
     <!--* lazy loading component wrapp image loading-->
     <app-lazy-loading-scroll (scrolled)="onScroll()">
       <img
+        *ngIf="!isloading"
         src="../../../../assets/images/spinner.gif"
         alt="spinner"
         width="50px"

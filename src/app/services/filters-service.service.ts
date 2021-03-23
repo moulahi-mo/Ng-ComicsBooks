@@ -14,8 +14,8 @@ import { Character, Comic } from '../models/interfaces';
 })
 export class FiltersServiceService {
   apiKey: string = environment.apiKey;
-  url: string = `http://gateway.marvel.com/v1/public/comics?${this.apiKey}`;
-  urlChar: string = `http://gateway.marvel.com/v1/public/characters?${this.apiKey}`;
+  url: string = `https://gateway.marvel.com/v1/public/comics?${this.apiKey}`;
+  urlChar: string = `https://gateway.marvel.com/v1/public/characters?${this.apiKey}`;
 
   constructor(private http: HttpClient) {}
 
@@ -113,7 +113,7 @@ export class FiltersServiceService {
   public getSingleCharacterComicsList(id: number): Observable<Comic[]> {
     return this.http
       .get<Comic[]>(
-        `http://gateway.marvel.com/v1/public/characters/${id}/comics?${this.apiKey}`
+        `https://gateway.marvel.com/v1/public/characters/${id}/comics?${this.apiKey}`
       )
       .pipe(
         map((data: any) => {
