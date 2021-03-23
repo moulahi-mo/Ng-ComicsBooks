@@ -8,5 +8,17 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  // waiting for angular to load bootstrapping and then only loading service worker
+  .then(() => {
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker
+        .register('ngsw-worker.js', { scope: '/' })
+        .then(function () {})
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  })
+  .catch((err) => console.log(err));
