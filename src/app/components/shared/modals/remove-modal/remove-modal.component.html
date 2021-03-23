@@ -21,7 +21,7 @@
         <p class="text-capitalize font-weight-bold lead">
           do you realy want to remove this comic ?
         </p>
-        <!-- !  buttons -->
+        <!-- !  button Yes  -->
         <div class="d-flex justify-content-around w-100">
           <button
             (click)="onRemove()"
@@ -32,7 +32,9 @@
           >
             yes
           </button>
+          <!-- !  button No  -->
           <button
+            (click)="onClose()"
             type="button"
             data-dismiss="modal"
             class="btn-no close btn btn-accent btn-block text-uppercase d-block ml-2 mt-0"

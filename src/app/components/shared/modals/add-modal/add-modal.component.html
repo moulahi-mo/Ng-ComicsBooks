@@ -7,6 +7,7 @@
             {{ mode === "edit" ? "edit comic" : "+ add comic" }}
           </h5>
           <button
+            (click)="onClose()"
             type="button"
             class="close"
             data-dismiss="modal"
@@ -76,8 +77,8 @@
               <aside class="list-Searchs d-flex justify-content-between p-3">
                 <div class="d-flex my-2 w-75">
                   <img
-                    [src]="selectedComic?.cover"
-                    [alt]="selectedComic?.title"
+                    [src]="selectedComic.cover"
+                    [alt]="selectedComic.title"
                     width="60px"
                     height="80px"
                   />
@@ -86,19 +87,17 @@
                   >
                     <p class="mb-0">
                       title:
-                      <span>{{ selectedComic?.title | titlecase }} </span>
+                      <span>{{ selectedComic.title | titlecase }} </span>
                     </p>
                     <p class="my-1">
                       format:
-                      <span>{{ selectedComic?.format | titlecase }}</span>
+                      <span>{{ selectedComic.format | titlecase }}</span>
                     </p>
                     <p>
                       pages number:
                       <span>
                         {{
-                          selectedComic?.pageCount
-                            ? selectedComic?.pageCount
-                            : 0
+                          selectedComic.pageCount ? selectedComic.pageCount : 0
                         }}</span
                       >
                     </p>
@@ -113,7 +112,7 @@
             </div>
           </article>
 
-          <!-- !Form Add ********************-->
+          <!-- !Form Add ------------------------------------------->
           <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
             <!-- * Condition -->
             <div class="form-group">

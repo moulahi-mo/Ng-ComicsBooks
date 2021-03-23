@@ -5,3 +5,13 @@
 .fa {
   font-size: 2.2rem;
 }
+.footer-left {
+  position: relative;
+  .logo-footer {
+    position: absolute;
+    width: 65px;
+    height: 20px;
+    top: 37px;
+    left: 13px;
+  }
+}

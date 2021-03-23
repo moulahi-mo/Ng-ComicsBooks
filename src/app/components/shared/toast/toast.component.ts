@@ -14,8 +14,10 @@ export class ToastComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    //! invok modal by jquery
     $('.toast').toast('show');
   }
+  // * on close toast
   public onCloseToastFn() {
     this.onCloseToast.emit(true);
   }

@@ -1,11 +1,4 @@
-import {
-  AfterViewChecked,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Comic } from 'src/app/models/interfaces';
@@ -31,10 +24,7 @@ export class FavoriteBuyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // $('.showtoast').click(function () {
-    //   $('.toast').toast('show');
-    // });
-
+    //! init auth check
     this.checkAuth();
   }
 
@@ -54,20 +44,16 @@ export class FavoriteBuyComponent implements OnInit {
     );
   }
 
-  // ! onfavorite add favorite to db
+  // ! on favorite btn clicked add favorite to db
   public onFavorite() {
     delete this.comic.characters;
-    console.log(this.comic);
     const favoriteComic = { ...this.comic, favorite_date: new Date() };
-    this.favoriteService
-      .addNewFavorite(favoriteComic)
-      .subscribe((data: any) => {
-        this.onFavClicked.emit(this.comic.id);
-        console.log('added favorite', data, this.isAuth);
-        this.isFavorite = true;
-      });
+    this.favoriteService.addNewFavorite(favoriteComic).subscribe(() => {
+      this.onFavClicked.emit(this.comic.id);
+      this.isFavorite = true;
+    });
   }
-  // ! on buy button clicked
+  // ! on buy button clicked emit to parent card
   public onBuy() {
     this.onBuyClicked.emit(this.comic.id);
   }

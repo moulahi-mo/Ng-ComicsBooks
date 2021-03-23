@@ -18,16 +18,17 @@ export class LazyLoadingScrollComponent implements OnInit, OnDestroy {
   @Input() options = {};
   @Output() scrolled = new EventEmitter();
   @ViewChild('anchor', { static: true }) anchor: ElementRef<HTMLElement>;
-
+  //! create observer
   private observer: IntersectionObserver;
 
   constructor(private host: ElementRef) {}
-
+  // !to get accec to dom native element
   get element() {
     return this.host.nativeElement;
   }
 
   ngOnInit() {
+    //!check thee position of the native element and fire the scroll event to the parent eleemnt
     const options = {
       root: this.isHostScrollable() ? this.host.nativeElement : null,
       ...this.options,
@@ -39,7 +40,7 @@ export class LazyLoadingScrollComponent implements OnInit, OnDestroy {
 
     this.observer.observe(this.anchor.nativeElement);
   }
-
+  //! check the scrollability of the element
   private isHostScrollable() {
     const style = window.getComputedStyle(this.element);
 
@@ -48,7 +49,7 @@ export class LazyLoadingScrollComponent implements OnInit, OnDestroy {
       style.getPropertyValue('overflow-y') === 'scroll'
     );
   }
-
+  // ! destroy observable
   ngOnDestroy() {
     this.observer.disconnect();
   }

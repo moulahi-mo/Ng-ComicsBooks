@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Comic } from 'src/app/models/interfaces';
-import { ComicsService } from 'src/app/services/comics.service';
+
 import { FiltersServiceService } from 'src/app/services/filters-service.service';
-import { MyComicsService } from 'src/app/services/my-comics.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -24,17 +23,15 @@ export class AddModalComponent implements OnInit {
     condition: string;
     description: string;
   };
-  selectedComic: Comic;
+  selectedComic: any;
   isSearching: boolean;
 
   isSelected: boolean;
 
-  constructor(
-    private filerService: FiltersServiceService,
-    private Mycomics: MyComicsService
-  ) {}
+  constructor(private filerService: FiltersServiceService) {}
 
   ngOnInit() {
+    // * init fields modal
     this.isSearching = false;
     this.isSelected = false;
     this.selectedComic = {
@@ -51,99 +48,39 @@ export class AddModalComponent implements OnInit {
       characters: null,
       poster: null,
     };
-    // this.comicDetailsIsHere = {
-    //   id: null,
-    //   format: null,
-    //   pages: null,
-    //   title: null,
-    //   description: null,
-    //   price: null,
-    //   date: null,
-    //   cover: null,
-    //   owner: null,
-    //   condition: null,
-    //   characters: null,
-    //   poster: null,
-    // };
 
     this.addOptions = {
       price: null,
-      condition: null,
+      condition: 'Good',
       description: null,
     };
+    //! check if Comic Is In My Comics Page
     this.checkComicIsInMyComicsPage();
   }
-  //! check if Comic Is In My Comics Page
+
   public checkComicIsInMyComicsPage() {
-    console.log(this.comicDetailsIsHere);
-
+    //! verify if it is on edit mode ( edit button clicked )
     this.mode == 'edit' ? this.getComicToEdit() : '';
-    //  (this.selectedComic = this.comicDetailsIsHere) : '';
-    // //* init comic fields
-    // this.isSearching = false;
-    // this.addOptions = {
-    //   price: this.comicDetailsIsHere.price,
-    //   condition: this.comicDetailsIsHere.condition,
-    //   description: this.comicDetailsIsHere.description,
-    // };
-    // this.isSelected = true;
-    // if (this.mode == 'edit') {
-    //   //! verify if it is on edit mode ( edit button clicked )
-    //    this.selectedComic=this.comicDetailsIsHere;
-    //   this.selectedComic = {
-    //     id: this.comicDetailsIsHere.id,
-    //     format: this.comicDetailsIsHere.format,
-    //     pages: this.comicDetailsIsHere.pages,
-    //     title: this.comicDetailsIsHere.title,
-    //     description: this.comicDetailsIsHere.description,
-    //     price: this.comicDetailsIsHere.price,
-    //     date: this.comicDetailsIsHere.date,
-    //     cover: this.comicDetailsIsHere.cover,
-    //     owner: this.comicDetailsIsHere.owner,
-    //     condition: this.comicDetailsIsHere.condition,
-    //     poster: this.comicDetailsIsHere.poster,
-    //   };
-    //   this.addOptions = {
-    //     price: this.comicDetailsIsHere.price,
-    //     condition: this.comicDetailsIsHere.condition,
-    //     description: this.comicDetailsIsHere.description,
-    //   };
-    //   this.isSelected = true;
-    //   this.isSearching = false;
-
-    //   //   if (this.page == 'details') {
-    //   // } else if (this.page == 'myComics') {
-    //   //   this.getComicToEdit();
-    //   // }
-    // }
   }
 
-  //! get single comic by id to edit
+  //! get the comic to edit from card parent
   public getComicToEdit() {
-    this.Mycomics.getComicById(this.comicDetailsIsHere.id).subscribe(
-      (comic: Comic) => {
-        //* init comic fields
-        this.isSearching = false;
-        this.isSelected = true;
-
-        this.selectedComic = { ...comic };
-        this.addOptions = {
-          price: comic?.price,
-          condition: comic?.condition,
-          description: comic?.description,
-        };
-        console.log('******************', this.selectedComic, this.addOptions);
-      }
-    );
+    this.isSearching = false;
+    this.isSelected = true;
+    this.selectedComic = { ...this.comicDetailsIsHere };
+    this.addOptions = {
+      price: this.comicDetailsIsHere.price,
+      condition: this.comicDetailsIsHere.condition,
+      description: this.comicDetailsIsHere.description,
+    };
   }
 
   //! on search
   public onSearch(e: Event) {
     const term: string = (e.target as any).value.trim();
-    console.log((e.target as any).value);
+
     term ? (this.isSearching = true) : (this.isSearching = false);
     this.filerService.getComicByTitle(term).subscribe((comics: Comic[]) => {
-      console.log(comics);
       this.comics = comics;
     });
   }
@@ -151,7 +88,6 @@ export class AddModalComponent implements OnInit {
   public onSelect(comic: Comic) {
     this.isSearching = false;
     this.isSelected = true;
-    console.log(comic);
     this.selectedComic = comic;
   }
   // ! on add commic / Edit comic
@@ -169,25 +105,23 @@ export class AddModalComponent implements OnInit {
       form.reset();
     }
   }
-  // ! on sent
+  // ! on submit button clicked invok submit function
   public onSent(form: NgForm) {
     this.onSubmit(form);
   }
+
   // ! on closing modal
-  // public onClose() {
-  //   this.comicDetailsIsHere = {
-  //     id: null,
-  //     format: null,
-  //     pages: null,
-  //     title: null,
-  //     description: null,
-  //     price: null,
-  //     date: null,
-  //     cover: null,
-  //     owner: null,
-  //     condition: null,
-  //     characters: null,
-  //     poster: null,
-  //   };
-  // }
+
+  public onClose() {
+    if (this.mode !== 'edit') {
+      this.isSearching = false;
+      this.isSelected = false;
+
+      this.addOptions = {
+        price: null,
+        condition: 'Good',
+        description: null,
+      };
+    }
+  }
 }

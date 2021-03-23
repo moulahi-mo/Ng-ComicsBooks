@@ -11,6 +11,7 @@ export class SoonComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // redirect to login page after 5 s
     this.type = this.route.snapshot.queryParams.type;
     setTimeout(() => {
       this.router.navigate(['/auth/login']);

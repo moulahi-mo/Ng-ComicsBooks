@@ -19,6 +19,8 @@ export class ComicCardComponent implements OnInit {
   isInit: boolean = true;
   isToast: boolean = false;
   isBuyOrFav: 'fav' | 'buy';
+  isEdited: boolean = false;
+  isOnRemove: boolean = false;
   constructor(
     private myComicService: MyComicsService,
     private auth: AuthService,
@@ -56,11 +58,10 @@ export class ComicCardComponent implements OnInit {
       }
     });
   }
-
+  //! store edited comic into firebase db
   public onComicEdited(comicEdited: Comic) {
     console.log('from card', comicEdited);
 
-    //! store it to firebase db
     if (comicEdited.id) {
       this.myComicService.editComic(comicEdited).subscribe(
         (data: any) => {
@@ -71,22 +72,39 @@ export class ComicCardComponent implements OnInit {
       );
     }
   }
-  // ! toast actions
+  // ! toast actions Buy
   public onBuyClicked(id: string) {
     this.isBuyOrFav = 'buy';
     if (id == this.comic.id) {
       this.isToast = true;
     }
   }
-
+  // ! toast actions favorite
   public onFavClicked(id: string) {
     this.isBuyOrFav = 'fav';
     if (id == this.comic.id) {
       this.isToast = true;
     }
   }
-
+  // ! toast actions on toast closed
   public onCloseToast() {
     this.isToast = false;
+  }
+
+  // * toast add / edit / remove Modals (on close/on click)  states hundlers
+
+  public onEditClicked() {
+    this.isEdited = true;
+  }
+
+  public onCloseModalEdit() {
+    this.isEdited = false;
+  }
+  public onCloseModalRemove() {
+    this.isOnRemove = false;
+  }
+
+  public onRemoveClicked() {
+    this.isOnRemove = true;
   }
 }

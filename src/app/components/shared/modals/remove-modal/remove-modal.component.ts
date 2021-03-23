@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { MyComicsService } from 'src/app/services/my-comics.service';
 
@@ -8,6 +8,7 @@ import { MyComicsService } from 'src/app/services/my-comics.service';
   styleUrls: ['./remove-modal.component.scss'],
 })
 export class RemoveModalComponent implements OnInit {
+  @Output() onCloseModalRemove: EventEmitter<boolean> = new EventEmitter();
   @Input() id: string;
   @Input() comicId: string;
   constructor(
@@ -16,15 +17,15 @@ export class RemoveModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
+  // ! on button Yes clicked remove item from db
   public onRemove() {
     const uid = this.auth.getCurrUserUid();
-    console.log(uid + this.comicId.toString());
     this.myComicService.removeComic(uid + this.comicId.toString()).subscribe(
-      () => {
-        console.log('comic deleted');
-      },
+      () => {},
       (err) => console.log(err)
     );
+  }
+  public onClose() {
+    this.onCloseModalRemove.emit();
   }
 }

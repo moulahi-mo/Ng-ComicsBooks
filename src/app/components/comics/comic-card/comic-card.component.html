@@ -97,6 +97,7 @@
 
         <!-- * edit botton -->
         <button
+          (click)="onEditClicked()"
           data-toggle="modal"
           data-target="#editModal"
           type="button"
@@ -107,6 +108,7 @@
         </button>
         <!-- * remove botton -->
         <button
+          (click)="onRemoveClicked()"
           data-toggle="modal"
           data-target="#removeModal"
           type="button"
@@ -137,15 +139,17 @@
 <!-- ? remove Modal -->
 
 <app-remove-modal
-  *ngIf="isCreator"
+  (onCloseModalRemove)="onCloseModalRemove()"
+  *ngIf="isCreator && isOnRemove"
   [id]="'removeModal'"
   [comicId]="comic.id"
 ></app-remove-modal>
 
 <!-- ? edit Modal -->
 <app-add-modal
+  (onCloseModalEdit)="onCloseModalEdit()"
   [page]="'myComics'"
-  *ngIf="isCreator"
+  *ngIf="isCreator && isEdited"
   (onComicEdited)="onComicEdited($event)"
   [id]="'editModal'"
   [mode]="'edit'"
