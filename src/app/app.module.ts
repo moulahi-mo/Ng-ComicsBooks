@@ -72,7 +72,6 @@ import { SharedModule } from './modules/shared_modules/shared.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    AuthModule,
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({ auth: AuthReducer }, {}),
@@ -83,6 +82,7 @@ import { SharedModule } from './modules/shared_modules/shared.module';
     DragDropModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
+      registrationStrategy: 'registerImmediately',
     }),
   ],
   bootstrap: [AppComponent],
